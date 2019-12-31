@@ -1,8 +1,8 @@
 package com.wolf.hookahshopee.repository;
 
+import com.wolf.hookahshopee.model.City;
 import com.wolf.hookahshopee.model.Role;
 import com.wolf.hookahshopee.model.Seller;
-import com.wolf.hookahshopee.model.Shop;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,5 +16,5 @@ public interface SellerRepository extends JpaRepository<Seller, Long> {
 
     List<Seller> findAllByRole(Role role);
 
-    List<Seller> findAllByShop(Shop shop);
+    List<Seller> findAllByCity(City city);
 }

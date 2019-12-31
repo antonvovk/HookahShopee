@@ -25,7 +25,7 @@ public class City {
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "city")
-    private List<Shop> shops;
+    private List<Seller> sellers;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "city")
     private List<Client> clients;

@@ -38,8 +38,8 @@ public class Seller {
     private Role role;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "SHOP_ID", nullable = false)
-    private Shop shop;
+    @JoinColumn(name = "CITY_ID", nullable = false)
+    private City city;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "seller")
     private List<Order> orders;

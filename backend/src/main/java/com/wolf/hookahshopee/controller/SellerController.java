@@ -59,9 +59,9 @@ public class SellerController {
     }
 
     @Async
-    @GetMapping(value = "/byShop/{shopId}")
-    public CompletableFuture<ResponseEntity<List<SellerDTO>>> findAllByShop(@PathVariable(value = "shopId") Long shopId) {
-        return CompletableFuture.completedFuture(ResponseEntity.ok(sellerService.findAllByShop(shopId)));
+    @GetMapping(value = "/byCity/{cityId}")
+    public CompletableFuture<ResponseEntity<List<SellerDTO>>> findAllByCity(@PathVariable(value = "cityId") Long cityId) {
+        return CompletableFuture.completedFuture(ResponseEntity.ok(sellerService.findAllByCity(cityId)));
     }
 
     @Async

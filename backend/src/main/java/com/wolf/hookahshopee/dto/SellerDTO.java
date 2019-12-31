@@ -16,5 +16,5 @@ public class SellerDTO {
 
     private Role role;
 
-    private ShopDTO shop;
+    private CityDTO city;
 }

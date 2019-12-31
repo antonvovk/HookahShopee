@@ -16,7 +16,7 @@ public interface SellerService {
 
     List<SellerDTO> findAllByRole(Role role);
 
-    List<SellerDTO> findAllByShop(Long shopId);
+    List<SellerDTO> findAllByCity(Long cityId);
 
     void create(SellerLightDTO sellerDTO);
 

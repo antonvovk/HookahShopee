@@ -32,5 +32,5 @@ public class SellerLightDTO {
 
     @NotNull
     @Min(0)
-    private Long shopId;
+    private Long cityId;
 }

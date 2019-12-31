@@ -4,11 +4,11 @@ import com.wolf.hookahshopee.dto.SellerDTO;
 import com.wolf.hookahshopee.dto.SellerLightDTO;
 import com.wolf.hookahshopee.exception.EntityNotFoundException;
 import com.wolf.hookahshopee.mapper.SellerMapper;
+import com.wolf.hookahshopee.model.City;
 import com.wolf.hookahshopee.model.Role;
 import com.wolf.hookahshopee.model.Seller;
-import com.wolf.hookahshopee.model.Shop;
+import com.wolf.hookahshopee.repository.CityRepository;
 import com.wolf.hookahshopee.repository.SellerRepository;
-import com.wolf.hookahshopee.repository.ShopRepository;
 import com.wolf.hookahshopee.service.SellerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +23,14 @@ public class SellerServiceImpl implements SellerService {
 
     private final SellerRepository sellerRepository;
 
-    private final ShopRepository shopRepository;
+    private final CityRepository cityRepository;
 
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public SellerServiceImpl(SellerRepository sellerRepository, ShopRepository shopRepository, BCryptPasswordEncoder passwordEncoder) {
+    public SellerServiceImpl(SellerRepository sellerRepository, CityRepository cityRepository, BCryptPasswordEncoder passwordEncoder) {
         this.sellerRepository = sellerRepository;
-        this.shopRepository = shopRepository;
+        this.cityRepository = cityRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -67,22 +67,22 @@ public class SellerServiceImpl implements SellerService {
     }
 
     @Override
-    public List<SellerDTO> findAllByShop(Long shopId) {
-        Shop shop = shopRepository.findById(shopId).orElse(null);
+    public List<SellerDTO> findAllByCity(Long cityId) {
+        City city = cityRepository.findById(cityId).orElse(null);
 
-        if (shop == null) {
-            throw new EntityNotFoundException(Shop.class, "shopId", shopId.toString());
+        if (city == null) {
+            throw new EntityNotFoundException(City.class, "cityId", cityId.toString());
         }
 
-        return SellerMapper.INSTANCE.toDto(sellerRepository.findAllByShop(shop));
+        return SellerMapper.INSTANCE.toDto(sellerRepository.findAllByCity(city));
     }
 
     @Override
     public void create(SellerLightDTO sellerDTO) {
-        Shop shop = shopRepository.findById(sellerDTO.getShopId()).orElse(null);
+        City city = cityRepository.findById(sellerDTO.getCityId()).orElse(null);
 
-        if (shop == null) {
-            throw new EntityNotFoundException(Shop.class, "shopId", sellerDTO.getShopId().toString());
+        if (city == null) {
+            throw new EntityNotFoundException(City.class, "cityId", sellerDTO.getCityId().toString());
         }
 
         Seller seller = Seller.builder()
@@ -91,7 +91,7 @@ public class SellerServiceImpl implements SellerService {
                 .lastName(sellerDTO.getLastName())
                 .password(passwordEncoder.encode(sellerDTO.getPassword()))
                 .role(sellerDTO.getRole())
-                .shop(shop)
+                .city(city)
                 .build();
 
         sellerRepository.save(seller);
@@ -105,10 +105,10 @@ public class SellerServiceImpl implements SellerService {
             throw new EntityNotFoundException(Seller.class, "id", id.toString());
         }
 
-        Shop shop = shopRepository.findById(sellerDTO.getShopId()).orElse(null);
+        City city = cityRepository.findById(sellerDTO.getCityId()).orElse(null);
 
-        if (shop == null) {
-            throw new EntityNotFoundException(Shop.class, "shopId", sellerDTO.getShopId().toString());
+        if (city == null) {
+            throw new EntityNotFoundException(City.class, "cityId", sellerDTO.getCityId().toString());
         }
 
         seller.setPhoneNumber(sellerDTO.getPhoneNumber());
@@ -116,7 +116,7 @@ public class SellerServiceImpl implements SellerService {
         seller.setLastName(sellerDTO.getLastName());
         seller.setPassword(passwordEncoder.encode(sellerDTO.getPassword()));
         seller.setRole(sellerDTO.getRole());
-        seller.setShop(shop);
+        seller.setCity(city);
 
         sellerRepository.save(seller);
     }
