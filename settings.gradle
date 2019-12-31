@@ -1,0 +1,3 @@
+rootProject.name = 'hookah-shopee'
+include 'backend'
+//include 'frontend'
