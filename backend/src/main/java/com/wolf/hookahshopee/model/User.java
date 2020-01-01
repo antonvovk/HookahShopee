@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,8 +15,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 
-@Entity(name = "SELLER")
-public class Seller {
+@Entity(name = "USR")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +44,12 @@ public class Seller {
     private City city;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "seller")
-    private List<Order> orders;
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<Order> sellerOrders;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "client")
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<Order> clientOrders;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "seller")
     private List<ProductItem> productItems;

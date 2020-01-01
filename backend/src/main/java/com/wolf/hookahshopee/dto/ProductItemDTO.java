@@ -9,5 +9,5 @@ public class ProductItemDTO {
 
     private ProductDTO product;
 
-    private SellerDTO seller;
+    private UserDTO seller;
 }

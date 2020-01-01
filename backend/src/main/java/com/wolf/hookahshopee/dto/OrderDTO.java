@@ -17,9 +17,9 @@ public class OrderDTO {
 
     private Long price;
 
-    private SellerDTO seller;
+    private UserDTO seller;
 
-    private ClientDTO client;
+    private UserDTO client;
 
     private List<OrderItemDTO> orderItems;
 }

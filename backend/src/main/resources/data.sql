@@ -12,22 +12,17 @@ VALUES ('Serbetli');
 INSERT INTO MANUFACTURER
 VALUES ('Milano');
 
-INSERT INTO SHOP
-VALUES ('bohdan.dankovych@gmail.com', '380963587506', 'Monday - Friday: 8:00 - 22:00', 1);
-INSERT INTO SHOP
-VALUES ('bohdan.dankovych@gmail.com', '380963587506', 'Monday - Friday: 8:00 - 22:00', 2);
-
-INSERT INTO SELLER
+INSERT INTO USR
 VALUES ('Dankovych', 'Bohdan', '$2y$12$hdOskOQGvuBxznq3J0ZJZusl8NGQYX1cV6gkMVVdTiE1ih3QjT4My', '380963587506',
-        'SUPER_ADMIN', 1);
-INSERT INTO SELLER
-VALUES ('Dankovych', 'Tanya', '$2y$12$hdOskOQGvuBxznq3J0ZJZusl8NGQYX1cV6gkMVVdTiE1ih3QjT4My', '380970362116', 'ADMIN',
+        'ADMIN', 1);
+INSERT INTO USR
+VALUES ('Dankovych', 'Tanya', '$2y$12$hdOskOQGvuBxznq3J0ZJZusl8NGQYX1cV6gkMVVdTiE1ih3QjT4My', '380970362116', 'SELLER',
         1);
-INSERT INTO SELLER
-VALUES ('Taras', 'Kalik', '$2y$12$hdOskOQGvuBxznq3J0ZJZusl8NGQYX1cV6gkMVVdTiE1ih3QjT4My', '380958674875', 'ADMIN', 2);
+INSERT INTO USR
+VALUES ('Taras', 'Kalik', '$2y$12$hdOskOQGvuBxznq3J0ZJZusl8NGQYX1cV6gkMVVdTiE1ih3QjT4My', '380958674875', 'SELLER', 2);
 
-INSERT INTO CLIENT
-VALUES ('Vovk', 'Anton', '$2y$12$hdOskOQGvuBxznq3J0ZJZusl8NGQYX1cV6gkMVVdTiE1ih3QjT4My', '380963587506', 'CLIENT', 1);
+INSERT INTO USR
+VALUES ('Vovk', 'Anton', '$2y$12$hdOskOQGvuBxznq3J0ZJZusl8NGQYX1cV6gkMVVdTiE1ih3QjT4My', '380965876896', 'CLIENT', 1);
 
 INSERT INTO PRODUCT
 VALUES ('Good shit', 0, 75, 'Adalya Blue Peach Mint', 75, 1);

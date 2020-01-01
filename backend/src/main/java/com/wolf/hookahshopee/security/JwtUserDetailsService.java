@@ -1,10 +1,8 @@
 package com.wolf.hookahshopee.security;
 
 import com.wolf.hookahshopee.exception.EntityNotFoundException;
-import com.wolf.hookahshopee.model.Client;
-import com.wolf.hookahshopee.model.Seller;
-import com.wolf.hookahshopee.repository.ClientRepository;
-import com.wolf.hookahshopee.repository.SellerRepository;
+import com.wolf.hookahshopee.model.User;
+import com.wolf.hookahshopee.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,30 +14,21 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class JwtUserDetailsService implements UserDetailsService {
 
-    private final SellerRepository sellerRepository;
-
-    private final ClientRepository clientRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public JwtUserDetailsService(SellerRepository sellerRepository, ClientRepository clientRepository) {
-        this.sellerRepository = sellerRepository;
-        this.clientRepository = clientRepository;
+    public JwtUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Seller seller = sellerRepository.findByPhoneNumber(username).orElse(null);
+        User user = userRepository.findByPhoneNumber(username).orElse(null);
 
-        if (seller == null) {
-            Client client = clientRepository.findByPhoneNumber(username).orElse(null);
-
-            if (client == null) {
-                throw new EntityNotFoundException(JwtUser.class, "username", username);
-            }
-
-            return JwtUserFactory.create(client);
+        if (user == null) {
+            throw new EntityNotFoundException(User.class, "username", username);
         }
 
-        return JwtUserFactory.create(seller);
+        return JwtUserFactory.create(user);
     }
 }

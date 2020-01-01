@@ -25,8 +25,5 @@ public class City {
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "city")
-    private List<Seller> sellers;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "city")
-    private List<Client> clients;
+    private List<User> users;
 }

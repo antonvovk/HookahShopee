@@ -4,15 +4,13 @@ import com.wolf.hookahshopee.model.Role;
 import lombok.Data;
 
 @Data
-public class ClientDTO {
+public class UserDTO {
 
     private String phoneNumber;
 
     private String firstName;
 
     private String lastName;
-
-    private String password;
 
     private Role role;
 

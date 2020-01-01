@@ -36,11 +36,11 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "SELLER_ID", nullable = false)
-    private Seller seller;
+    private User seller;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "CLIENT_ID", nullable = false)
-    private Client client;
+    private User client;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "order")
     private List<OrderItem> orderItems;
