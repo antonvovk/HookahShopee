@@ -1,0 +1,42 @@
+<div *ngIf="!addNewOpened" style="margin-top: 2vh;">
+  <div *ngFor="let seller of sellers" class="full-width">
+    <div fxLayout="row" fxLayoutAlign="start baseline" fxLayoutGap="1vw">
+      <div class="full-width" fxFlex="90">
+        {{seller.firstName}} {{seller.lastName}}
+      </div>
+
+      <div fxFlex="" fxHide.xs>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-select value="{{seller.role}}">
+            <mat-option *ngFor="let role of roles" value="{{role}}">
+              {{role}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex="" fxHide.xs>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-select value="{{seller.city.name}}">
+            <mat-option *ngFor="let city of cities" value="{{city.name}}">
+              {{city.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <button class="delete-btn" color="primary" mat-stroked-button>Редагувати</button>
+      </div>
+
+      <div fxLayoutAlign="end">
+        <button class="delete-btn" color="primary" mat-stroked-button style="margin-right: 2vw;">Видалити</button>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <button (click)="addNewClicked()" class="delete-btn" color="primary" mat-stroked-button>Додати нового</button>
+  </div>
+</div>
+<app-add-seller *ngIf="addNewOpened"></app-add-seller>

@@ -1,0 +1,46 @@
+plugins {
+  id 'base'
+  id "com.moowork.node" version "1.3.1"
+}
+
+node {
+  version = '13.5.0'
+  npmVersion = '6.13.4'
+  download = false
+}
+
+npm_run_build {
+  inputs.files fileTree('src')
+  inputs.file 'package.json'
+  inputs.file 'package-lock.json'
+  outputs.dir 'dist/HookahShopee'
+}
+
+task packageNpmApp(type: Zip) {
+  dependsOn npm_run_build
+  baseName 'frontend'
+  extension 'jar'
+  destinationDir file("${projectDir}/build")
+  from('dist/HookahShopee') {
+    into 'static'
+  }
+}
+
+configurations {
+  npmResources
+}
+
+configurations.default.extendsFrom(configurations.npmResources)
+
+artifacts {
+  npmResources(packageNpmApp.archivePath) {
+    builtBy packageNpmApp
+    type 'jar'
+  }
+}
+
+assemble.dependsOn packageNpmApp
+
+clean {
+  delete packageNpmApp.archivePath
+}

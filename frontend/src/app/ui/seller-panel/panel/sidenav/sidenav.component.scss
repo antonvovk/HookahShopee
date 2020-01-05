@@ -1,0 +1,36 @@
+.fill-height {
+  height: 93vh;
+}
+
+.menu-container {
+  height: 90vh;
+  width: 90%;
+  border-right: 1px solid #7f7f7f;
+}
+
+@media screen and (max-width: 690px) {
+  img {
+    max-height: 100%;
+    max-width: 95%;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  img {
+    max-height: 100%;
+    max-width: 4vw;
+  }
+}
+
+.big-text {
+  font-weight: 500;
+  font-size: 1vw;
+}
+
+.menu-item {
+  cursor: pointer;
+}
+
+.menu-item-selected {
+  border-bottom: 2px solid #FF0000;
+}

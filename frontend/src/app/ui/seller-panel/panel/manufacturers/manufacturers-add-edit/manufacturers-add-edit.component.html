@@ -1,0 +1,54 @@
+<div *ngIf="!edit_addMenuOpened">
+  <div class="top-flex-container">
+    <div class="logo-container">
+      <img alt="manufacturer-logo" src="../../../../../../assets/img/Rectangle%208.png">
+    </div>
+    <div class="info-container">
+      <div class="text-container">
+        <mat-form-field appearance="outline">
+          <mat-label>Назва</mat-label>
+          <input [formControl]="name" matInput placeholder="">
+        </mat-form-field>
+      </div>
+      <div class="buttons-container">
+        <button (click)="onSave()" class="red-btn" color="primary" fxFlexOffset="30px" mat-stroked-button>Зберегти
+        </button>
+        <button (click)="onDelete()" class="red-btn" color="primary" fxFlexOffset="30px" mat-stroked-button>Видалити
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="manufacturer != null" class="bottom-flex-container">
+    Продукти
+  </div>
+
+  <div *ngIf="manufacturer != null" class="flex-container">
+    <div (click)="menuOpened(null)" class="item-container-first">
+      <div class="manufacturer-logo">
+        <img alt="manufacturer-logo" src="../../../../../../assets/img/+.png">
+      </div>
+    </div>
+
+
+    <div (click)="menuOpened(product)" *ngFor="let product of products"
+         class="item-container">
+      <div class="manufacturer-logo">
+        <img alt="manufacturer-logo" src="../../../../../../assets/img/Rectangle%208.png">
+      </div>
+      <div class="manufacturer-name">
+        {{product.name}}
+      </div>
+      <div *ngFor="let quantity of getByProductName(product.name)" class="manufacturer-name">
+        <div [ngClass]="{'red': quantity.quantity === 0, 'green': quantity.quantity !== 0}">
+          {{quantity.cityName}}: {{quantity.quantity}}
+        </div>
+      </div>
+      <div class="manufacturer-name">
+        {{product.finalPrice}} грн
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-product (returned)="onReturn($event)" *ngIf="edit_addMenuOpened" [product]="product"></app-product>

@@ -1,0 +1,20 @@
+<div *ngIf="!edit_addMenuOpened" class="flex-container">
+  <div (click)="menuOpened(null)" class="item-container-first">
+    <div class="manufacturer-logo">
+      <img alt="manufacturer-logo" src="../../../../../assets/img/+.png">
+    </div>
+  </div>
+
+
+  <div (click)="menuOpened(manufacturer)" *ngFor="let manufacturer of manufacturers" class="item-container">
+    <div class="manufacturer-logo">
+      <img alt="manufacturer-logo" src="../../../../../assets/img/Rectangle%208.png">
+    </div>
+    <div class="manufacturer-name">
+      {{manufacturer.name}}
+    </div>
+  </div>
+</div>
+
+<app-manufacturers-add-edit (returned)="onReturn($event)" *ngIf="edit_addMenuOpened"
+                            [manufacturer]="this.manufacturer"></app-manufacturers-add-edit>

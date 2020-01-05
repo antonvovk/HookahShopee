@@ -1,0 +1,20 @@
+<div fxFlexFill fxLayoutAlign="center center">
+  <div fxFlex fxLayout="column" fxLayoutGap="80px">
+    <div fxFlex fxLayoutAlign="center center">
+      <img alt="Logo image" src="../../../../assets/img/hookah-img-1.png">
+    </div>
+    <form (ngSubmit)="onSubmit()" [formGroup]="loginForm" class="mr-left-right-20" fxFlex fxLayout="column">
+      <mat-form-field appearance="outline">
+        <mat-label>Логін</mat-label>
+        <input formControlName="username" matInput placeholder="">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Пароль</mat-label>
+        <input formControlName="password" matInput placeholder="">
+      </mat-form-field>
+
+      <button class="login-btn" color="primary" fxFlexOffset="30px" mat-stroked-button>Увійти</button>
+    </form>
+  </div>
+</div>

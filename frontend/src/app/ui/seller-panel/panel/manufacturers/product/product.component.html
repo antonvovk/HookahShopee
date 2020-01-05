@@ -1,0 +1,52 @@
+<div class="bottom-flex-container">
+  <div (click)="goBack()" class="go-back-area">
+    {{product.manufacturer.name}}
+  </div>
+  &nbsp;> {{product.name}}
+</div>
+
+<div class="top-flex-container">
+  <div class="logo-container">
+    <img alt="manufacturer-logo" src="../../../../../../assets/img/Rectangle%208.png">
+  </div>
+  <div class="info-container">
+    <div class="text-container">
+      <mat-form-field appearance="outline">
+        <mat-label>Назва</mat-label>
+        <input matInput placeholder="">
+      </mat-form-field>
+    </div>
+    <div class="text-container">
+      <mat-form-field appearance="outline">
+        <mat-label>Ціна</mat-label>
+        <input matInput placeholder="">
+      </mat-form-field>
+    </div>
+    <div class="text-container">
+      <mat-form-field appearance="outline">
+        <mat-label>Знижка</mat-label>
+        <input matInput placeholder="">
+      </mat-form-field>
+    </div>
+    <div class="buttons-container">
+      <button (click)="onSave()" class="red-btn" color="primary" fxFlexOffset="30px" mat-stroked-button>Зберегти
+      </button>
+      <button (click)="onDelete()" class="red-btn" color="primary" fxFlexOffset="30px" mat-stroked-button>Видалити
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="bottom-flex-container">
+  Кількість
+</div>
+
+<div class="quantity-flex-container">
+  <div *ngFor="let productQuantity of productQuantities" class="text-container2">
+    {{productQuantity.user.firstName}} {{productQuantity.user.lastName}}
+    <mat-form-field appearance="outline">
+      <mat-label>Кількість</mat-label>
+      <input [value]="productQuantity.quantity.toString()" matInput placeholder="">
+    </mat-form-field>
+  </div>
+</div>
