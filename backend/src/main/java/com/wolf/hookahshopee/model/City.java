@@ -21,7 +21,7 @@ public class City {
     @Column(name = "ID", columnDefinition = "BIGINT", unique = true, nullable = false)
     private Long id;
 
-    @Column(name = "NAME", columnDefinition = "VARCHAR(50)", nullable = false)
+    @Column(name = "NAME", columnDefinition = "VARCHAR(50)", unique = true, nullable = false)
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "city")

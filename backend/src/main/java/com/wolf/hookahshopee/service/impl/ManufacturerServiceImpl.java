@@ -1,6 +1,8 @@
 package com.wolf.hookahshopee.service.impl;
 
 import com.wolf.hookahshopee.dto.ManufacturerDTO;
+import com.wolf.hookahshopee.exception.EntityAlreadyExistsException;
+import com.wolf.hookahshopee.exception.EntityHasRelationshipsException;
 import com.wolf.hookahshopee.exception.EntityNotFoundException;
 import com.wolf.hookahshopee.mapper.ManufacturerMapper;
 import com.wolf.hookahshopee.model.Manufacturer;
@@ -22,11 +24,11 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     }
 
     @Override
-    public ManufacturerDTO findById(Long id) throws EntityNotFoundException {
-        Manufacturer manufacturer = manufacturerRepository.findById(id).orElse(null);
+    public ManufacturerDTO findByName(String name) {
+        Manufacturer manufacturer = manufacturerRepository.findByName(name).orElse(null);
 
         if (manufacturer == null) {
-            throw new EntityNotFoundException(Manufacturer.class, "id", id.toString());
+            throw new EntityNotFoundException(Manufacturer.class, "name", name);
         }
 
         return ManufacturerMapper.INSTANCE.toDto(manufacturer);
@@ -39,6 +41,10 @@ public class ManufacturerServiceImpl implements ManufacturerService {
 
     @Override
     public void create(ManufacturerDTO manufacturerDTO) {
+        if (manufacturerRepository.existsByName(manufacturerDTO.getName())) {
+            throw new EntityAlreadyExistsException(Manufacturer.class, "name", manufacturerDTO.getName());
+        }
+
         Manufacturer manufacturer = Manufacturer.builder()
                 .name(manufacturerDTO.getName())
                 .build();
@@ -47,11 +53,11 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     }
 
     @Override
-    public void update(ManufacturerDTO manufacturerDTO, Long id) throws EntityNotFoundException {
-        Manufacturer manufacturer = manufacturerRepository.findById(id).orElse(null);
+    public void update(String name, ManufacturerDTO manufacturerDTO) {
+        Manufacturer manufacturer = manufacturerRepository.findByName(name).orElse(null);
 
         if (manufacturer == null) {
-            throw new EntityNotFoundException(Manufacturer.class, "id", id.toString());
+            throw new EntityNotFoundException(Manufacturer.class, "name", name);
         }
 
         manufacturer.setName(manufacturerDTO.getName());
@@ -59,11 +65,15 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     }
 
     @Override
-    public void delete(Long id) {
-        Manufacturer manufacturer = manufacturerRepository.findById(id).orElse(null);
+    public void delete(String name) {
+        Manufacturer manufacturer = manufacturerRepository.findByName(name).orElse(null);
 
         if (manufacturer == null) {
-            throw new EntityNotFoundException(Manufacturer.class, "id", id.toString());
+            throw new EntityNotFoundException(Manufacturer.class, "name", name);
+        }
+
+        if (!manufacturer.getProducts().isEmpty()) {
+            throw new EntityHasRelationshipsException(Manufacturer.class, "name", name);
         }
 
         manufacturerRepository.delete(manufacturer);

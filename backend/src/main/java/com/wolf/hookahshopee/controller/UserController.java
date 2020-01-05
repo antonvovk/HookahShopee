@@ -59,6 +59,12 @@ public class UserController {
     }
 
     @Async
+    @GetMapping(value = "/sellers")
+    public CompletableFuture<ResponseEntity<List<UserDTO>>> findAllSellers() {
+        return CompletableFuture.completedFuture(ResponseEntity.ok(userService.findAllSellers()));
+    }
+
+    @Async
     @GetMapping(value = "/byCity/{cityId}")
     public CompletableFuture<ResponseEntity<List<UserDTO>>> findAllByCity(@PathVariable(value = "cityId") Long cityId) {
         return CompletableFuture.completedFuture(ResponseEntity.ok(userService.findAllByCity(cityId)));

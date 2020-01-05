@@ -14,6 +14,8 @@ public interface UserService {
 
     List<UserDTO> findAll();
 
+    List<UserDTO> findAllSellers();
+
     List<UserDTO> findAllByRole(Role role);
 
     List<UserDTO> findAllByCity(Long cityId);

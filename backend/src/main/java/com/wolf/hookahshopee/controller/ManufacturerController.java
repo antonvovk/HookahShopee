@@ -22,9 +22,9 @@ public class ManufacturerController {
     }
 
     @Async
-    @GetMapping(value = "/{id}")
-    public CompletableFuture<ResponseEntity<ManufacturerDTO>> findById(@PathVariable(name = "id") Long id) {
-        return CompletableFuture.completedFuture(ResponseEntity.ok(manufacturerService.findById(id)));
+    @GetMapping(value = "/{name}")
+    public CompletableFuture<ResponseEntity<ManufacturerDTO>> findById(@PathVariable(name = "name") String name) {
+        return CompletableFuture.completedFuture(ResponseEntity.ok(manufacturerService.findByName(name)));
     }
 
     @Async
@@ -41,17 +41,17 @@ public class ManufacturerController {
     }
 
     @Async
-    @PutMapping(value = "/{id}")
-    public CompletableFuture<ResponseEntity<Object>> update(@RequestBody @Valid ManufacturerDTO manufacturerDTO,
-                                                            @PathVariable(name = "id") Long id) {
-        manufacturerService.update(manufacturerDTO, id);
+    @PutMapping
+    public CompletableFuture<ResponseEntity<Object>> update(@RequestParam(name = "name") String name,
+                                                            @RequestBody @Valid ManufacturerDTO manufacturerDTO) {
+        manufacturerService.update(name, manufacturerDTO);
         return CompletableFuture.completedFuture(ResponseEntity.ok().build());
     }
 
     @Async
-    @DeleteMapping(value = "/{id}")
-    public CompletableFuture<ResponseEntity<Object>> delete(@PathVariable(name = "id") Long id) {
-        manufacturerService.delete(id);
+    @DeleteMapping
+    public CompletableFuture<ResponseEntity<Object>> delete(@RequestParam(name = "name") String name) {
+        manufacturerService.delete(name);
         return CompletableFuture.completedFuture(ResponseEntity.ok().build());
     }
 }

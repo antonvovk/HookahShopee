@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -59,6 +60,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDTO> findAll() {
         return UserMapper.INSTANCE.toDto(userRepository.findAll());
+    }
+
+    @Override
+    public List<UserDTO> findAllSellers() {
+        return UserMapper.INSTANCE.toDto(userRepository.findAllByRoleIn(Arrays.asList(Role.ADMIN, Role.SELLER)));
     }
 
     @Override

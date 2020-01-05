@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface ManufacturerService {
 
-    ManufacturerDTO findById(Long id);
+    ManufacturerDTO findByName(String name);
 
     List<ManufacturerDTO> findAll();
 
     void create(ManufacturerDTO manufacturerDTO);
 
-    void update(ManufacturerDTO manufacturerDTO, Long id);
+    void update(String name, ManufacturerDTO manufacturerDTO);
 
-    void delete(Long id);
+    void delete(String name);
 }

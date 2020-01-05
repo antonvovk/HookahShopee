@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class AuthenticatedDTO {
+public class ProductQuantityForCitiesDTO {
 
-    private String token;
+    private Long quantity;
 
-    private UserDTO user;
+    private CityDTO city;
 }

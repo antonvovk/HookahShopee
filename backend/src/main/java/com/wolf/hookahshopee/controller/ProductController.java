@@ -2,6 +2,8 @@ package com.wolf.hookahshopee.controller;
 
 import com.wolf.hookahshopee.dto.ProductDTO;
 import com.wolf.hookahshopee.dto.ProductLightDTO;
+import com.wolf.hookahshopee.dto.ProductQuantityForCitiesDTO;
+import com.wolf.hookahshopee.dto.ProductQuantityForSellersDTO;
 import com.wolf.hookahshopee.service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,9 +44,29 @@ public class ProductController {
     }
 
     @Async
-    @GetMapping(value = "/byManufacturer/{manufacturerId}")
-    public CompletableFuture<ResponseEntity<List<ProductDTO>>> findAllByManufacturer(@PathVariable(name = "manufacturerId") Long manufacturerId) {
-        return CompletableFuture.completedFuture(ResponseEntity.ok(productService.findAllByManufacturer(manufacturerId)));
+    @GetMapping(value = "/byManufacturer/{manufacturerName}")
+    public CompletableFuture<ResponseEntity<List<ProductDTO>>> findAllByManufacturer(@PathVariable(name = "manufacturerName") String manufacturerName) {
+        return CompletableFuture.completedFuture(ResponseEntity.ok(productService.findAllByManufacturer(manufacturerName)));
+    }
+
+    @Async
+    @GetMapping(value = "/{name}/quantity/byCity/{cityName}")
+    public CompletableFuture<ResponseEntity<Long>> getQuantityByCity(@PathVariable(name = "name") String name,
+                                                                     @PathVariable(name = "cityName") String cityName) {
+
+        return CompletableFuture.completedFuture(ResponseEntity.ok(productService.getQuantityByCity(name, cityName)));
+    }
+
+    @Async
+    @GetMapping(value = "/{name}/quantity/byCities")
+    public CompletableFuture<ResponseEntity<List<ProductQuantityForCitiesDTO>>> getQuantitiesByCities(@PathVariable(name = "name") String name) {
+        return CompletableFuture.completedFuture(ResponseEntity.ok(productService.getAllQuantitiesByCities(name)));
+    }
+
+    @Async
+    @GetMapping(value = "/{name}/quantity/bySellers")
+    public CompletableFuture<ResponseEntity<List<ProductQuantityForSellersDTO>>> getQuantitiesBySellers(@PathVariable(name = "name") String name) {
+        return CompletableFuture.completedFuture(ResponseEntity.ok(productService.getAllQuantitiesBySellers(name)));
     }
 
     @Async
