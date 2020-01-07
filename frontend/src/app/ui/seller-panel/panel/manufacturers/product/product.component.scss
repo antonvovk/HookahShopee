@@ -2,7 +2,7 @@
   display: flex;
   flex-flow: row wrap;
   margin-top: 3vh;
-  align-items: start;
+  align-items: flex-start;
 }
 
 .bottom-flex-container {
@@ -31,13 +31,17 @@
 
 .info-container {
   margin-top: 15px;
-  max-width: 300px;
+  max-width: 400px;
   flex: 1;
 }
 
 .text-container {
   display: flex;
   justify-content: center;
+}
+
+.text-container mat-form-field {
+  width: 80%;
 }
 
 .text-container2 {
@@ -74,4 +78,21 @@
 .go-back-area:hover {
   cursor: pointer;
   text-decoration: underline;
+}
+
+.description-header {
+  display: flex;
+  flex-flow: row wrap;
+  margin-top: 5vh;
+  margin-left: 1vw;
+  font-weight: 500;
+  font-size: 36px;
+}
+
+.description-editor-container {
+  display: flex;
+  flex-flow: row wrap;
+  margin-top: 3vh;
+  margin-left: 1vw;
+  width: 90%;
 }

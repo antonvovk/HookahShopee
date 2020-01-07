@@ -2,6 +2,7 @@ package com.wolf.hookahshopee.dto;
 
 import lombok.Data;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -23,10 +24,8 @@ public class ProductLightDTO {
     private Integer discount;
 
     @NotBlank
-    @Size(min = 10, max = 250)
     private String description;
 
-    @NotNull
-    @Min(0)
-    private Long manufacturerId;
+    @Valid
+    private ManufacturerDTO manufacturer;
 }

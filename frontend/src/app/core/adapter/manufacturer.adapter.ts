@@ -9,7 +9,8 @@ export class ManufacturerAdapter implements Adapter<Manufacturer> {
 
   adapt(item: any): Manufacturer {
     return new Manufacturer(
-      item.name
+      item.name,
+      item.imageName
     );
   }
 }

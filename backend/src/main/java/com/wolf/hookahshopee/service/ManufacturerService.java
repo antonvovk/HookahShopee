@@ -14,5 +14,7 @@ public interface ManufacturerService {
 
     void update(String name, ManufacturerDTO manufacturerDTO);
 
+    void updateImage(String name, String imageName);
+
     void delete(String name);
 }

@@ -33,4 +33,8 @@ export class ManufacturersComponent implements OnInit {
     });
     this.edit_addMenuOpened = false;
   }
+
+  getImage(imageName: string) {
+    return 'http://localhost:8080/downloadFile/' + imageName;
+  }
 }

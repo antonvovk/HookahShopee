@@ -34,6 +34,7 @@ import {ManufacturersAddEditComponent} from './ui/seller-panel/panel/manufacture
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {ToastrModule} from "ngx-toastr";
 import {ProductComponent} from './ui/seller-panel/panel/manufacturers/product/product.component';
+import {QuillModule} from "ngx-quill";
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import {ProductComponent} from './ui/seller-panel/panel/manufacturers/product/pr
     MatSidenavModule,
     MatSelectModule,
     MatSnackBarModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    QuillModule.forRoot()
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

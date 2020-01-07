@@ -5,7 +5,6 @@ import {FormControl} from "@angular/forms";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Product} from "../../../../../core/model/product.model";
 import {ProductsService} from "../../../../../services/products.service";
-import {City} from "../../../../../core/model/city.model";
 import {CitiesService} from "../../../../../services/cities.service";
 
 @Component({
@@ -24,7 +23,6 @@ export class ManufacturersAddEditComponent implements OnInit {
   edit_addMenuOpened: boolean = false;
   name = new FormControl('');
   products: Product[] = [];
-  cities: City[] = [];
   quantities: any[] = [];
   product: Product = null;
 
@@ -46,26 +44,17 @@ export class ManufacturersAddEditComponent implements OnInit {
       this.productsService.findAllByManufacturer(this.manufacturer.name).subscribe(
         products => {
           this.products = products;
-
-          this.citiesService.findAll().subscribe(
-            cities => {
-              this.cities = cities;
-
-              for (let i = 0; i < this.products.length; ++i) {
-                for (let j = 0; j < this.cities.length; ++j) {
-                  this.productsService.getQuantityByCity(this.products[i].name, this.cities[j].name).subscribe(
-                    quantity => {
-                      this.quantities.push({
-                        productName: this.products[i].name,
-                        cityName: this.cities[j].name,
-                        quantity: quantity
-                      });
-                    }
-                  );
-                }
-              }
-            }
-          );
+          this.products.forEach(product => {
+            this.productsService.getQuantitiesByCities(product.name).subscribe(
+              productQuantities => {
+                this.quantities.push(
+                  {
+                    productName: product.name,
+                    quantity: productQuantities
+                  }
+                );
+              });
+          });
         }
       );
     }
@@ -97,7 +86,7 @@ export class ManufacturersAddEditComponent implements OnInit {
   }
 
   getByProductName(productName: string) {
-    return this.quantities.filter(quantity => quantity.productName === productName);
+    return this.quantities.find(quantity => quantity.productName === productName);
   }
 
   menuOpened(product: Product) {
@@ -110,28 +99,36 @@ export class ManufacturersAddEditComponent implements OnInit {
     this.productsService.findAllByManufacturer(this.manufacturer.name).subscribe(
       products => {
         this.products = products;
-
-        this.citiesService.findAll().subscribe(
-          cities => {
-            this.cities = cities;
-
-            for (let i = 0; i < this.products.length; ++i) {
-              for (let j = 0; j < this.cities.length; ++j) {
-                this.productsService.getQuantityByCity(this.products[i].name, this.cities[j].name).subscribe(
-                  quantity => {
-                    this.quantities.push({
-                      productName: this.products[i].name,
-                      cityName: this.cities[j].name,
-                      quantity: quantity
-                    });
-                  }
-                );
-              }
-            }
-          }
-        );
+        this.products.forEach(product => {
+          this.productsService.getQuantitiesByCities(product.name).subscribe(
+            productQuantities => {
+              this.quantities.push(
+                {
+                  productName: product.name,
+                  quantity: productQuantities
+                }
+              );
+            });
+        });
       }
     );
     this.edit_addMenuOpened = false;
+  }
+
+  getImage(imageName: string) {
+    return 'http://localhost:8080/downloadFile/' + imageName;
+  }
+
+  handleFileInput(files: any) {
+    const uploadedFiles = files.target.files;
+    this.manufacturersService.updateImage(this.manufacturer.name, uploadedFiles[0]).subscribe(
+      // data => {
+      //   this.manufacturersService.findByName(this.manufacturer.name).subscribe(
+      //     manufacturer => {
+      //       this.manufacturer = manufacturer;
+      //     }
+      //   );
+      // }
+    );
   }
 }

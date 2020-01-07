@@ -21,7 +21,7 @@ public class Product {
     @Column(name = "ID", columnDefinition = "BIGINT", unique = true, nullable = false)
     private Long id;
 
-    @Column(name = "NAME", columnDefinition = "VARCHAR(50)", unique = true, nullable = false)
+    @Column(name = "NAME", columnDefinition = "NVARCHAR(50)", unique = true, nullable = false)
     private String name;
 
     @Column(name = "PRICE", columnDefinition = "INT", nullable = false)
@@ -33,8 +33,11 @@ public class Product {
     @Column(name = "FINAL_PRICE", columnDefinition = "INT", nullable = false)
     private Integer finalPrice;
 
-    @Column(name = "DESCRIPTION", columnDefinition = "VARCHAR(250)", nullable = false)
+    @Column(name = "DESCRIPTION", columnDefinition = "NVARCHAR(MAX)", nullable = false)
     private String description;
+
+    @Column(name = "IMAGE_NAME", columnDefinition = "NVARCHAR(50)")
+    private String imageName;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "MANUFACTURER_ID", nullable = false)

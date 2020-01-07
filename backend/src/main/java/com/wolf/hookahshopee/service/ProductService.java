@@ -25,7 +25,9 @@ public interface ProductService {
 
     void create(ProductLightDTO productDTO);
 
-    void update(ProductLightDTO productDTO, Long id);
+    String update(ProductLightDTO productDTO, String name);
+
+    void updateImage(String name, String imageName);
 
     void delete(Long id);
 }

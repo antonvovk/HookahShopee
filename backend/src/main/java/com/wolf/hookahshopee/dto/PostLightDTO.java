@@ -6,11 +6,12 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Data
-public class ManufacturerDTO {
+public class PostLightDTO {
 
     @NotBlank
-    @Size(min = 4, max = 30)
+    @Size(min = 5, max = 200)
     private String name;
 
-    private String imageName;
+    @NotBlank
+    private String htmlContent;
 }

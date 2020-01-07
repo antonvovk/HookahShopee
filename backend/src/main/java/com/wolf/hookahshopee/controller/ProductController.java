@@ -4,11 +4,14 @@ import com.wolf.hookahshopee.dto.ProductDTO;
 import com.wolf.hookahshopee.dto.ProductLightDTO;
 import com.wolf.hookahshopee.dto.ProductQuantityForCitiesDTO;
 import com.wolf.hookahshopee.dto.ProductQuantityForSellersDTO;
+import com.wolf.hookahshopee.service.FileStorageService;
 import com.wolf.hookahshopee.service.ProductService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -20,8 +23,11 @@ public class ProductController {
 
     private final ProductService productService;
 
-    public ProductController(ProductService productService) {
+    private final FileStorageService fileStorageService;
+
+    public ProductController(ProductService productService, FileStorageService fileStorageService) {
         this.productService = productService;
+        this.fileStorageService = fileStorageService;
     }
 
     @Async
@@ -70,6 +76,16 @@ public class ProductController {
     }
 
     @Async
+    @PutMapping(value = "/{name}/updateImage", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public CompletableFuture<ResponseEntity<Object>> updateImage(@PathVariable(name = "name") String name,
+                                                                 @RequestPart MultipartFile file) {
+
+        String fileName = fileStorageService.storeFile(file);
+        productService.updateImage(name, fileName);
+        return CompletableFuture.completedFuture(ResponseEntity.ok().build());
+    }
+
+    @Async
     @PostMapping
     public CompletableFuture<ResponseEntity<Object>> create(@RequestBody @Valid ProductLightDTO productDTO) {
         productService.create(productDTO);
@@ -77,11 +93,11 @@ public class ProductController {
     }
 
     @Async
-    @PutMapping(value = "/{id}")
-    public CompletableFuture<ResponseEntity<Object>> update(@RequestBody @Valid ProductLightDTO productDTO,
-                                                            @PathVariable(name = "id") Long id) {
-        productService.update(productDTO, id);
-        return CompletableFuture.completedFuture(ResponseEntity.ok().build());
+    @PutMapping(value = "/{name}")
+    public CompletableFuture<ResponseEntity<String>> update(@RequestBody @Valid ProductLightDTO productDTO,
+                                                            @PathVariable(name = "name") String name) {
+
+        return CompletableFuture.completedFuture(ResponseEntity.ok(productService.update(productDTO, name)));
     }
 
     @Async

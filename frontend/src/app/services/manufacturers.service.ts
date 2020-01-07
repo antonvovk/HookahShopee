@@ -21,6 +21,12 @@ export class ManufacturersService {
       .pipe(map((data: any[]) => data.map(item => this.adapter.adapt(item))));
   }
 
+  findByName(name: string): Observable<Manufacturer> {
+    return this.http
+      .get<Manufacturer>(ApiConfig.apiUrl + '/manufacturer/' + name)
+      .pipe(map((data: any) => data.map(item => this.adapter.adapt(item))));
+  }
+
   insert(manufacturer: Manufacturer): Observable<HttpResponse<string>> {
     return this.http.post<string>(ApiConfig.apiUrl + '/manufacturer', manufacturer, {
       observe: 'response'
@@ -33,6 +39,12 @@ export class ManufacturersService {
       params: params,
       observe: 'response'
     });
+  }
+
+  updateImage(name: string, image: File) {
+    const formData = new FormData();
+    formData.append('file', image);
+    return this.http.put(ApiConfig.apiUrl + '/manufacturer/' + name + '/updateImage', formData);
   }
 
   delete(name: string): Observable<HttpResponse<string>> {

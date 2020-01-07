@@ -26,10 +26,10 @@ public class User {
     @Column(name = "PHONE_NUMBER", columnDefinition = "VARCHAR(50)", nullable = false)
     private String phoneNumber;
 
-    @Column(name = "LASTNAME", columnDefinition = "VARCHAR(50)", nullable = false)
+    @Column(name = "LASTNAME", columnDefinition = "NVARCHAR(50)", nullable = false)
     private String firstName;
 
-    @Column(name = "FIRSTNAME", columnDefinition = "VARCHAR(50)", nullable = false)
+    @Column(name = "FIRSTNAME", columnDefinition = "NVARCHAR(50)", nullable = false)
     private String lastName;
 
     @Column(name = "PASSWORD", columnDefinition = "VARCHAR(200)", nullable = false)

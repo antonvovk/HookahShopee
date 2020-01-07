@@ -1,10 +1,11 @@
 spring:
   datasource:
-    url: jdbc:sqlserver://localhost:1433;database=HookahShopee
+    url: jdbc:sqlserver://localhost:1433;database=HookahShopee;useUnicode=yes&characterEncoding=UTF-8
     username: sa
     password: 12345678qwa
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     initialization-mode: always
+    sql-script-encoding: UTF-8
 
   jpa:
     show-sql: true
@@ -16,6 +17,16 @@ spring:
 
   liquibase:
     enabled: false
+
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 5MB
+      max-request-size: 6MB
+
+file:
+  upload-dir: uploads
 
 server:
   port: 8080

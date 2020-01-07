@@ -5,7 +5,10 @@
 }
 
 .item-container {
-  justify-items: flex-start;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  min-height: 270px;
   @media screen and (max-width: 960px) {
     flex-basis: 40%;
   }
@@ -28,7 +31,6 @@
   }
   @media screen and (min-width: 960px) {
     flex-basis: 20%;
-
   }
   margin-top: 3vh;
   border: 1px solid #000000;
@@ -44,9 +46,20 @@
 .manufacturer-logo {
   display: flex;
   justify-content: center;
+  margin-top: 2vh;
 }
 
 .manufacturer-logo img {
+  max-width: 200px;
+  max-height: 200px;
+}
+
+.plus-logo {
+  display: flex;
+  justify-content: center;
+}
+
+.plus-logo img {
   max-width: 100%;
   max-height: 100%;
 }
@@ -56,4 +69,5 @@
   margin-bottom: 1vh;
   margin-top: 2vh;
   font-weight: 500;
+  font-size: 24px;
 }

@@ -123,10 +123,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void create(ProductLightDTO productDTO) {
-        Manufacturer manufacturer = manufacturerRepository.findById(productDTO.getManufacturerId()).orElse(null);
+        Manufacturer manufacturer = manufacturerRepository.findByName(productDTO.getManufacturer().getName()).orElse(null);
 
         if (manufacturer == null) {
-            throw new EntityNotFoundException(Manufacturer.class, "manufacturerId", productDTO.getManufacturerId().toString());
+            throw new EntityNotFoundException(Manufacturer.class, "manufacturerName", productDTO.getManufacturer().getName());
         }
 
         Product product = Product.builder()
@@ -142,17 +142,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void update(ProductLightDTO productDTO, Long id) {
-        Product product = productRepository.findById(id).orElse(null);
+    public String update(ProductLightDTO productDTO, String name) {
+        Product product = productRepository.findByName(name).orElse(null);
 
         if (product == null) {
-            throw new EntityNotFoundException(Product.class, "id", id.toString());
+            throw new EntityNotFoundException(Product.class, "name", name);
         }
 
-        Manufacturer manufacturer = manufacturerRepository.findById(productDTO.getManufacturerId()).orElse(null);
+        Manufacturer manufacturer = manufacturerRepository.findByName(productDTO.getManufacturer().getName()).orElse(null);
 
         if (manufacturer == null) {
-            throw new EntityNotFoundException(Manufacturer.class, "manufacturerId", productDTO.getManufacturerId().toString());
+            throw new EntityNotFoundException(Manufacturer.class, "manufacturerName", productDTO.getManufacturer().getName());
         }
 
         product.setName(productDTO.getName());
@@ -162,6 +162,18 @@ public class ProductServiceImpl implements ProductService {
         product.setDescription(productDTO.getDescription());
         product.setManufacturer(manufacturer);
 
+        return productRepository.save(product).getName();
+    }
+
+    @Override
+    public void updateImage(String name, String imageName) {
+        Product product = productRepository.findByName(name).orElse(null);
+
+        if (product == null) {
+            throw new EntityNotFoundException(Product.class, "name", name);
+        }
+
+        product.setImageName(imageName);
         productRepository.save(product);
     }
 

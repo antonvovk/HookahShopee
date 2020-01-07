@@ -1,7 +1,12 @@
 <div *ngIf="!edit_addMenuOpened">
   <div class="top-flex-container">
     <div class="logo-container">
-      <img alt="manufacturer-logo" src="../../../../../../assets/img/Rectangle%208.png">
+      <div class="justify-content-center">
+        <img [src]=getImage(manufacturer.imageName) alt="manufacturer-logo">
+      </div>
+      <div class="justify-content-center" style="margin-top: 2vh;">
+        <input (change)="handleFileInput($event)" class="red-btn" type="file">
+      </div>
     </div>
     <div class="info-container">
       <div class="text-container">
@@ -39,9 +44,9 @@
       <div class="manufacturer-name">
         {{product.name}}
       </div>
-      <div *ngFor="let quantity of getByProductName(product.name)" class="manufacturer-name">
+      <div *ngFor="let quantity of getByProductName(product.name).quantity" class="manufacturer-name">
         <div [ngClass]="{'red': quantity.quantity === 0, 'green': quantity.quantity !== 0}">
-          {{quantity.cityName}}: {{quantity.quantity}}
+          {{quantity.city.name}}: {{quantity.quantity}}
         </div>
       </div>
       <div class="manufacturer-name">

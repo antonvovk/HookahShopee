@@ -65,6 +65,18 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     }
 
     @Override
+    public void updateImage(String name, String imageName) {
+        Manufacturer manufacturer = manufacturerRepository.findByName(name).orElse(null);
+
+        if (manufacturer == null) {
+            throw new EntityNotFoundException(Manufacturer.class, "name", name);
+        }
+
+        manufacturer.setImageName(imageName);
+        manufacturerRepository.save(manufacturer);
+    }
+
+    @Override
     public void delete(String name) {
         Manufacturer manufacturer = manufacturerRepository.findByName(name).orElse(null);
 

@@ -1,6 +1,6 @@
 import {User} from "./user.model";
 
-export class ProductQuantity {
+export class ProductQuantityBySellers {
 
   quantity: number;
   user: User;

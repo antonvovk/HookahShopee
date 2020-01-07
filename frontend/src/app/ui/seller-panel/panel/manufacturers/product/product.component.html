@@ -13,19 +13,19 @@
     <div class="text-container">
       <mat-form-field appearance="outline">
         <mat-label>Назва</mat-label>
-        <input matInput placeholder="">
+        <input [formControl]="name" matInput placeholder="">
       </mat-form-field>
     </div>
     <div class="text-container">
       <mat-form-field appearance="outline">
         <mat-label>Ціна</mat-label>
-        <input matInput placeholder="">
+        <input [formControl]="price" matInput placeholder="">
       </mat-form-field>
     </div>
     <div class="text-container">
       <mat-form-field appearance="outline">
         <mat-label>Знижка</mat-label>
-        <input matInput placeholder="">
+        <input [formControl]="discount" matInput placeholder="">
       </mat-form-field>
     </div>
     <div class="buttons-container">
@@ -49,4 +49,19 @@
       <input [value]="productQuantity.quantity.toString()" matInput placeholder="">
     </mat-form-field>
   </div>
+</div>
+
+
+<div class="description-header">
+  Опис
+</div>
+
+<div class="description-editor-container">
+  <quill-editor [formControl]="description" [styles]="editorStyle" theme="snow"></quill-editor>
+</div>
+
+<div class="description-save-btn-container">
+  <button (click)="onUpdateDescription()" class="red-btn" color="primary" fxFlexOffset="30px" mat-stroked-button>
+    Зберегти опис
+  </button>
 </div>
