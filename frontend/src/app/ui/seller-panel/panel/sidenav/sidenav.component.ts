@@ -34,6 +34,8 @@ export class SidenavComponent implements OnInit {
   }
 
   postsClicked() {
+    this.currentMenuItemIndex = -1;
+    this.changeDetector.detectChanges();
     this.currentMenuItemIndex = 4;
   }
 }

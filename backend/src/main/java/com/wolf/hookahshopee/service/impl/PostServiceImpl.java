@@ -37,32 +37,32 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public String create(PostLightDTO postDTO) {
+    public void create(PostLightDTO postDTO) {
         Post post = Post.builder()
                 .name(postDTO.getName())
                 .imageName(null)
                 .htmlContent(postDTO.getHtmlContent())
                 .build();
 
-        return postRepository.save(post).getName();
+        postRepository.save(post);
     }
 
     @Override
-    public String update(String name, PostLightDTO postDTO) {
+    public void update(String name, PostLightDTO postDTO) {
         Post post = postRepository.findByName(name).orElse(null);
 
         if (post == null) {
             throw new EntityNotFoundException(Post.class, "name", name);
         }
 
-        post.setName(post.getName());
-        post.setHtmlContent(post.getHtmlContent());
+        post.setName(postDTO.getName());
+        post.setHtmlContent(postDTO.getHtmlContent());
 
-        return postRepository.save(post).getName();
+        postRepository.save(post);
     }
 
     @Override
-    public String updateImage(String name, String imageName) {
+    public void updateImage(String name, String imageName) {
         Post post = postRepository.findByName(name).orElse(null);
 
         if (post == null) {
@@ -71,11 +71,11 @@ public class PostServiceImpl implements PostService {
 
         post.setImageName(imageName);
 
-        return postRepository.save(post).getName();
+        postRepository.save(post);
     }
 
     @Override
-    public String delete(String name) {
+    public void delete(String name) {
         Post post = postRepository.findByName(name).orElse(null);
 
         if (post == null) {
@@ -83,6 +83,5 @@ public class PostServiceImpl implements PostService {
         }
 
         postRepository.delete(post);
-        return name;
     }
 }

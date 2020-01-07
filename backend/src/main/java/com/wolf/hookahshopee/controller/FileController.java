@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @RestController
+@RequestMapping(value = "/api/img")
 public class FileController {
 
     private static final Logger logger = LoggerFactory.getLogger(FileController.class);
@@ -25,7 +26,7 @@ public class FileController {
         this.fileStorageServiceImpl = fileStorageServiceImpl;
     }
 
-    @PostMapping(value = "/uploadFile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String uploadFile(@RequestPart MultipartFile file) {
         String fileName = fileStorageServiceImpl.storeFile(file);
 
@@ -35,7 +36,7 @@ public class FileController {
                 .toUriString();
     }
 
-    @GetMapping("/downloadFile/{fileName:.+}")
+    @GetMapping("/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
         // Load file as Resource
         Resource resource = fileStorageServiceImpl.loadFileAsResource(fileName);

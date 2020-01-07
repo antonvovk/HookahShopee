@@ -11,11 +11,11 @@ public interface PostService {
 
     List<PostDTO> findAll();
 
-    String create(PostLightDTO postDTO);
+    void create(PostLightDTO postDTO);
 
-    String update(String name, PostLightDTO postDTO);
+    void update(String name, PostLightDTO postDTO);
 
-    String updateImage(String name, String imageName);
+    void updateImage(String name, String imageName);
 
-    String delete(String name);
+    void delete(String name);
 }

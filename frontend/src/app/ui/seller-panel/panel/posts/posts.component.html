@@ -1,1 +1,19 @@
-<p>posts works!</p>
+<div *ngIf="!add_editComponentOpened" class="items-container">
+  <div (click)="add_editComponentOpen(null)" class="box-item centered-item">
+    <div class="plus-img-container">
+      <img alt="plus-image" src="../../../../../assets/img/+.png">
+    </div>
+  </div>
+  <div (click)="add_editComponentOpen(post)" *ngFor="let post of posts" class="box-item">
+    <div class="img-container">
+      <img *ngIf="post.getImageName" [src]="imageService.getImage(post.getImageName)" alt="post-image">
+      <img *ngIf="!post.getImageName" alt="post-default-image" src="../../../../../assets/img/news-photo.png">
+    </div>
+    <div class="text-container">
+      <div class="text-inner-container">
+        {{post.getName}}
+      </div>
+    </div>
+  </div>
+</div>
+<app-posts-add-edit (returned)="onReturn()" *ngIf="add_editComponentOpened" [post]="selectedPost"></app-posts-add-edit>

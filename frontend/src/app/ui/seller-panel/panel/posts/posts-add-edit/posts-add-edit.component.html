@@ -1,0 +1,28 @@
+<div class="image-container">
+  <img *ngIf="post && post.getImageName" [src]="imageService.getImage(post.getImageName)" alt="post-image">
+  <img *ngIf="!post || !post.getImageName" alt="post-default-image" src="../../../../../../assets/img/news-photo.png"
+       style="max-height: 300px;">
+</div>
+<div class="update-image-btn-container">
+  <label [ngClass]="{'grey-btn': !post}" class="file-upload-btn" for="file-upload">
+    <i class="fa fa-cloud-upload"></i> Оновити фото
+  </label>
+  <input (change)="handleFileInput($event)" [disabled]="!post" id="file-upload"
+         type="file"/>
+</div>
+<div class="title-container">
+  <mat-form-field>
+    <label>
+      <textarea [formControl]="title" matInput placeholder="Заговолок"></textarea>
+    </label>
+  </mat-form-field>
+</div>
+<div class="html-editor-container">
+  <quill-editor [formControl]="htmlContent" [styles]="{height: '400px', width: '100%'}" theme="snow"></quill-editor>
+</div>
+<div class="bottom-buttons-container">
+  <button (click)="savePost()" class="red-btn mr-right-30" color="primary" mat-stroked-button>Зберегти</button>
+  <button (click)="deletePost()" [disabled]="!post" [ngClass]="{'grey-btn': !post}" class="red-btn" color="primary"
+          mat-stroked-button>Видалити
+  </button>
+</div>

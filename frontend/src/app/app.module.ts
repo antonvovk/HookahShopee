@@ -35,6 +35,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {ToastrModule} from "ngx-toastr";
 import {ProductComponent} from './ui/seller-panel/panel/manufacturers/product/product.component';
 import {QuillModule} from "ngx-quill";
+import {PostsAddEditComponent} from './ui/seller-panel/panel/posts/posts-add-edit/posts-add-edit.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import {QuillModule} from "ngx-quill";
     PostsComponent,
     AddSellerComponent,
     ManufacturersAddEditComponent,
-    ProductComponent
+    ProductComponent,
+    PostsAddEditComponent
   ],
   imports: [
     BrowserModule,

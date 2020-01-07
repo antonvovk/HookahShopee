@@ -42,28 +42,32 @@ public class PostController {
 
     @Async
     @PostMapping
-    public CompletableFuture<ResponseEntity<String>> create(@RequestBody @Valid PostLightDTO postDTO) {
-        return CompletableFuture.completedFuture(ResponseEntity.status(HttpStatus.CREATED).body(postService.create(postDTO)));
+    public CompletableFuture<ResponseEntity<Object>> create(@RequestBody @Valid PostLightDTO postDTO) {
+        postService.create(postDTO);
+        return CompletableFuture.completedFuture(ResponseEntity.status(HttpStatus.CREATED).build());
     }
 
     @Async
     @PutMapping(value = "/{name}")
-    public CompletableFuture<ResponseEntity<String>> update(@PathVariable(name = "name") String name,
+    public CompletableFuture<ResponseEntity<Object>> update(@PathVariable(name = "name") String name,
                                                             @RequestBody @Valid PostLightDTO postDTO) {
-        return CompletableFuture.completedFuture(ResponseEntity.ok(postService.update(name, postDTO)));
+        postService.update(name, postDTO);
+        return CompletableFuture.completedFuture(ResponseEntity.ok().build());
     }
 
     @Async
     @PutMapping(value = "/{name}/updateImage", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public CompletableFuture<ResponseEntity<String>> updateImage(@PathVariable(name = "name") String name,
+    public CompletableFuture<ResponseEntity<Object>> updateImage(@PathVariable(name = "name") String name,
                                                                  @RequestPart MultipartFile file) {
         String fileName = fileStorageService.storeFile(file);
-        return CompletableFuture.completedFuture(ResponseEntity.ok(postService.updateImage(name, fileName)));
+        postService.updateImage(name, fileName);
+        return CompletableFuture.completedFuture(ResponseEntity.ok().build());
     }
 
     @Async
     @DeleteMapping(value = "/{name}")
-    public CompletableFuture<ResponseEntity<String>> delete(@PathVariable(name = "name") String name) {
-        return CompletableFuture.completedFuture(ResponseEntity.ok(postService.delete(name)));
+    public CompletableFuture<ResponseEntity<Object>> delete(@PathVariable(name = "name") String name) {
+        postService.delete(name);
+        return CompletableFuture.completedFuture(ResponseEntity.ok().build());
     }
 }
