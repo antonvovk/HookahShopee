@@ -6,6 +6,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {Product} from "../../../../../core/model/product.model";
 import {ProductsService} from "../../../../../services/products.service";
 import {CitiesService} from "../../../../../services/cities.service";
+import {ImageService} from "../../../../../services/image.service";
 
 @Component({
   selector: 'app-manufacturers-add-edit',
@@ -24,11 +25,12 @@ export class ManufacturersAddEditComponent implements OnInit {
   name = new FormControl('');
   products: Product[] = [];
   quantities: any[] = [];
-  product: Product = null;
+  product: Product = new Product();
 
   constructor(private manufacturersService: ManufacturersService,
               private productsService: ProductsService,
               private citiesService: CitiesService,
+              private imageService: ImageService,
               private snackBar: MatSnackBar) {
   }
 
@@ -113,10 +115,6 @@ export class ManufacturersAddEditComponent implements OnInit {
       }
     );
     this.edit_addMenuOpened = false;
-  }
-
-  getImage(imageName: string) {
-    return 'http://localhost:8080/downloadFile/' + imageName;
   }
 
   handleFileInput(files: any) {

@@ -9,7 +9,7 @@ export class Product {
   description: string;
   manufacturer: Manufacturer;
 
-  constructor(name: string, price: number, discount: number, finalPrice: number, description: string, manufacturer: Manufacturer) {
+  constructor(name?: string, price?: number, discount?: number, finalPrice?: number, description?: string, manufacturer?: Manufacturer) {
     this.name = name;
     this.price = price;
     this.discount = discount;

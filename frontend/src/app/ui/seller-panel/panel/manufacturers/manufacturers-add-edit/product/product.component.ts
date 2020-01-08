@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Product} from "../../../../../core/model/product.model";
-import {ProductQuantityBySellers} from "../../../../../core/model/product-quantity-by-sellers.model";
-import {ProductsService} from "../../../../../services/products.service";
+import {Product} from "../../../../../../core/model/product.model";
+import {ProductQuantityBySellers} from "../../../../../../core/model/product-quantity-by-sellers.model";
+import {ProductsService} from "../../../../../../services/products.service";
 import {FormControl} from "@angular/forms";
 
 @Component({

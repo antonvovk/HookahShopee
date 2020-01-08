@@ -1,20 +1,25 @@
-<div *ngIf="!edit_addMenuOpened" class="flex-container">
-  <div (click)="menuOpened(null)" class="item-container-first">
-    <div class="plus-logo">
-      <img alt="plus-logo" src="../../../../../assets/img/+.png">
+<div *ngIf="!edit_addComponentOpened" class="flex-container">
+    <div (click)="edit_addComponentOpen(null)" class="item-container-first">
+        <div class="plus-logo">
+            <img alt="plus-logo" src="../../../../../assets/img/+.png">
+        </div>
     </div>
-  </div>
 
 
-  <div (click)="menuOpened(manufacturer)" *ngFor="let manufacturer of manufacturers" class="item-container">
-    <div class="manufacturer-logo">
-      <img [src]="getImage(manufacturer.imageName)" alt="manufacturer-logo">
-    </div>
-    <div class="manufacturer-name">
-      {{manufacturer.name}}
-    </div>
+    <div (click)="edit_addComponentOpen(manufacturer)" *ngFor="let manufacturer of manufacturers"
+         class="item-container">
+        <div class="manufacturer-logo">
+            <img *ngIf="manufacturer && manufacturer.imageName" [src]=imageService.getImage(manufacturer.imageName)
+                 alt="manufacturer-logo">
+            <img *ngIf="!manufacturer || !manufacturer.imageName" alt="post-default-image"
+                 src="../../../../../assets/img/manufacturer-default.png"
+                 style="max-height: 300px;">
+        </div>
+        <div class="manufacturer-name">
+            {{manufacturer.name}}
+        </div>
   </div>
 </div>
 
-<app-manufacturers-add-edit (returned)="onReturn($event)" *ngIf="edit_addMenuOpened"
-                            [manufacturer]="this.manufacturer"></app-manufacturers-add-edit>
+<app-manufacturers-add-edit (returned)="onReturn($event)" *ngIf="edit_addComponentOpened"
+                            [manufacturer]="this.selectedManufacturer"></app-manufacturers-add-edit>

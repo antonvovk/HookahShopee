@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ManufacturersService} from "../../../../services/manufacturers.service";
 import {Manufacturer} from "../../../../core/model/manufacturer.model";
+import {ImageService} from "../../../../services/image.service";
 
 @Component({
   selector: 'app-manufacturers',
@@ -10,31 +11,29 @@ import {Manufacturer} from "../../../../core/model/manufacturer.model";
 export class ManufacturersComponent implements OnInit {
 
   manufacturers: Manufacturer[] = [];
-  manufacturer: Manufacturer = null;
-  edit_addMenuOpened: boolean = false;
+  selectedManufacturer: Manufacturer = null;
+  edit_addComponentOpened: boolean = false;
 
-  constructor(private manufacturersService: ManufacturersService) {
+  constructor(private manufacturersService: ManufacturersService,
+              private imageService: ImageService) {
+
+  }
+
+  ngOnInit() {
     this.manufacturersService.findAll().subscribe(manufacturers => {
       this.manufacturers = manufacturers;
     });
   }
 
-  ngOnInit() {
-  }
-
-  menuOpened(manufacturer: Manufacturer) {
-    this.manufacturer = manufacturer;
-    this.edit_addMenuOpened = true;
+  edit_addComponentOpen(manufacturer: Manufacturer) {
+    this.selectedManufacturer = manufacturer;
+    this.edit_addComponentOpened = true;
   }
 
   onReturn($event: boolean) {
     this.manufacturersService.findAll().subscribe(manufacturers => {
       this.manufacturers = manufacturers;
+      this.edit_addComponentOpened = false;
     });
-    this.edit_addMenuOpened = false;
-  }
-
-  getImage(imageName: string) {
-    return 'http://localhost:8080/downloadFile/' + imageName;
   }
 }

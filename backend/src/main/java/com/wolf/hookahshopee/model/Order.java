@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -22,6 +23,12 @@ public class Order {
     @Column(name = "ID", columnDefinition = "BIGINT", unique = true, nullable = false)
     private Long id;
 
+    @Column(name = "UUID", columnDefinition = "uniqueidentifier", updatable = false, nullable = false, unique = true)
+    private UUID uuid;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "SELLER_ID")
+    private User seller;
+
     @Column(name = "START_DATE", columnDefinition = "DATETIME2", nullable = false)
     private LocalDateTime startDate;
 
@@ -34,9 +41,12 @@ public class Order {
     @Column(name = "PRICE", columnDefinition = "BIGINT", nullable = false)
     private Long price;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "SELLER_ID", nullable = false)
-    private User seller;
+    @PrePersist
+    public void initializeUUID() {
+        if (uuid == null) {
+            uuid = UUID.randomUUID();
+        }
+    }
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "CLIENT_ID", nullable = false)

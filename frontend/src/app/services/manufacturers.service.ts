@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpParams, HttpResponse} from "@angular/common/http";
+import {HttpClient, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {ApiConfig} from "../config/api.config";
 import {map} from "rxjs/operators";
@@ -28,30 +28,24 @@ export class ManufacturersService {
   }
 
   insert(manufacturer: Manufacturer): Observable<HttpResponse<string>> {
-    return this.http.post<string>(ApiConfig.apiUrl + '/manufacturer', manufacturer, {
-      observe: 'response'
-    });
+    return this.http
+      .post<string>(ApiConfig.apiUrl + '/manufacturer', manufacturer, {observe: 'response'});
   }
 
   update(manufacturer: Manufacturer, name: string): Observable<HttpResponse<string>> {
-    const params = new HttpParams().set('name', name);
-    return this.http.put<string>(ApiConfig.apiUrl + '/manufacturer', manufacturer, {
-      params: params,
-      observe: 'response'
-    });
+    return this.http
+      .put<string>(ApiConfig.apiUrl + '/manufacturer/' + name, manufacturer, {observe: 'response'});
   }
 
-  updateImage(name: string, image: File) {
+  updateImage(name: string, image: File): Observable<HttpResponse<string>> {
     const formData = new FormData();
     formData.append('file', image);
-    return this.http.put(ApiConfig.apiUrl + '/manufacturer/' + name + '/updateImage', formData);
+    return this.http
+      .put<string>(ApiConfig.apiUrl + '/manufacturer/' + name + '/updateImage', formData, {observe: 'response'});
   }
 
   delete(name: string): Observable<HttpResponse<string>> {
-    const params = new HttpParams().set('name', name);
-    return this.http.delete<string>(ApiConfig.apiUrl + '/manufacturer', {
-      params: params,
-      observe: 'response'
-    });
+    return this.http
+      .delete<string>(ApiConfig.apiUrl + '/manufacturer/' + name, {observe: 'response'});
   }
 }

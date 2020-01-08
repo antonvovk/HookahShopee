@@ -2,14 +2,19 @@ package com.wolf.hookahshopee.controller;
 
 import com.wolf.hookahshopee.dto.OrderDTO;
 import com.wolf.hookahshopee.dto.OrderItemLightDTO;
+import com.wolf.hookahshopee.dto.PageDTO;
 import com.wolf.hookahshopee.model.OrderStatus;
 import com.wolf.hookahshopee.service.OrderService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
@@ -35,48 +40,72 @@ public class OrderController {
     }
 
     @Async
-    @GetMapping(value = "/bySeller/{sellerId}/byStatus/{status}")
-    public CompletableFuture<List<OrderDTO>> findAllBySellerAndStatus(@PathVariable(name = "sellerId") Long sellerId,
-                                                                      @PathVariable(name = "status") OrderStatus status) {
+    @GetMapping(value = "/status/{status}")
+    public CompletableFuture<PageDTO<OrderDTO>> findAllByStatus(@PathVariable(name = "status") OrderStatus status,
+                                                                @RequestParam(name = "p") Integer page,
+                                                                @RequestParam(name = "s") Integer size) {
 
-        return CompletableFuture.completedFuture(orderService.findAllBySellerAndStatus(sellerId, status));
+        Pageable pageable = PageRequest.of(page, size, Sort.by("startDate").ascending());
+        return CompletableFuture.completedFuture(orderService.findAllByStatus(status, pageable));
     }
 
     @Async
-    @GetMapping(value = "/byClient/{clientId}/byStatus/{status}")
-    public CompletableFuture<List<OrderDTO>> findAllByClientAndStatus(@PathVariable(name = "clientId") Long clientId,
-                                                                      @PathVariable(name = "status") OrderStatus status) {
+    @GetMapping(value = "/seller/{sellerUsername}/status/{status}")
+    public CompletableFuture<PageDTO<OrderDTO>> findAllBySellerAndStatus(@PathVariable(name = "sellerUsername") String sellerUsername,
+                                                                         @PathVariable(name = "status") OrderStatus status,
+                                                                         @RequestParam(name = "p") Integer page,
+                                                                         @RequestParam(name = "s") Integer size) {
 
-        return CompletableFuture.completedFuture(orderService.findAllByClientAndStatus(clientId, status));
+        Pageable pageable = PageRequest.of(page, size, Sort.by("startDate").ascending());
+        return CompletableFuture.completedFuture(orderService.findAllBySellerAndStatus(sellerUsername, status, pageable));
     }
 
     @Async
-    @GetMapping(value = "/bySeller/{sellerId}")
+    @GetMapping(value = "/client/{clientUsername}/status/{status}")
+    public CompletableFuture<List<OrderDTO>> findAllByClientAndStatus(@PathVariable(name = "clientUsername") String clientUsername,
+                                                                      @PathVariable(name = "status") OrderStatus status) {
+        return CompletableFuture.completedFuture(orderService.findAllByClientAndStatus(clientUsername, status));
+    }
+
+    @Async
+    @GetMapping(value = "/seller/{sellerId}")
     public CompletableFuture<List<OrderDTO>> findAllBySeller(@PathVariable(name = "sellerId") Long sellerId) {
         return CompletableFuture.completedFuture(orderService.findAllBySeller(sellerId));
     }
 
     @Async
-    @GetMapping(value = "/byClient/{clientId}")
+    @GetMapping(value = "/client/{clientId}")
     public CompletableFuture<List<OrderDTO>> findAllByClient(@PathVariable(name = "clientId") Long clientId) {
         return CompletableFuture.completedFuture(orderService.findAllByClient(clientId));
     }
 
     @Async
     @PostMapping
-    public CompletableFuture<ResponseEntity<Object>> create(@RequestParam(name = "sellerId") Long sellerId,
-                                                            @RequestParam(name = "clientId") Long clientId,
+    public CompletableFuture<ResponseEntity<Object>> create(@RequestParam(name = "clientId") String client,
                                                             @RequestBody List<@Valid OrderItemLightDTO> orderItemsDTO) {
-        orderService.create(sellerId, clientId, orderItemsDTO);
+        orderService.create(client, orderItemsDTO);
         return CompletableFuture.completedFuture(ResponseEntity.ok().build());
     }
 
     @Async
-    @PutMapping(value = "/{id}/changeStatus/{status}")
-    public CompletableFuture<ResponseEntity<Object>> changeStatus(@PathVariable(name = "id") Long id,
-                                                                  @PathVariable(name = "status") OrderStatus status) {
+    @PutMapping(value = "/{uuid}/complete")
+    public CompletableFuture<ResponseEntity<Object>> completeOrder(@PathVariable(name = "uuid") UUID uuid) {
+        orderService.changeStatus(uuid, OrderStatus.COMPLETED);
+        return CompletableFuture.completedFuture(ResponseEntity.ok().build());
+    }
 
-        orderService.changeStatus(id, status);
+    @Async
+    @PutMapping(value = "/{uuid}/cancel")
+    public CompletableFuture<ResponseEntity<Object>> cancelOrder(@PathVariable(name = "uuid") UUID uuid) {
+        orderService.changeStatus(uuid, OrderStatus.CANCELED);
+        return CompletableFuture.completedFuture(ResponseEntity.ok().build());
+    }
+
+    @Async
+    @PutMapping(value = "/{uuid}/assign")
+    public CompletableFuture<ResponseEntity<Object>> assignToSeller(@PathVariable(name = "uuid") UUID uuid,
+                                                                    @RequestParam(name = "seller") String seller) {
+        orderService.assignToSeller(uuid, seller);
         return CompletableFuture.completedFuture(ResponseEntity.ok().build());
     }
 }

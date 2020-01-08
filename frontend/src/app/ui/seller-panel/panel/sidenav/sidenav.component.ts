@@ -7,7 +7,7 @@ import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 })
 export class SidenavComponent implements OnInit {
 
-  currentMenuItemIndex = 0;
+  currentMenuItemIndex = 3;
 
   constructor(private changeDetector: ChangeDetectorRef) {
   }

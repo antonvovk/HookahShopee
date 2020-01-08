@@ -2,7 +2,11 @@
   <div class="top-flex-container">
     <div class="logo-container">
       <div class="justify-content-center">
-        <img [src]=getImage(manufacturer.imageName) alt="manufacturer-logo">
+          <img *ngIf="manufacturer && manufacturer.imageName" [src]=imageService.getImage(manufacturer.imageName)
+               alt="manufacturer-logo">
+          <img *ngIf="!manufacturer || !manufacturer.imageName" alt="post-default-image"
+               src="../../../../../../assets/img/manufacturer-default.png"
+               style="max-height: 300px;">
       </div>
       <div class="justify-content-center" style="margin-top: 2vh;">
         <input (change)="handleFileInput($event)" class="red-btn" type="file">

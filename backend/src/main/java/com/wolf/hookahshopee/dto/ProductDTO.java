@@ -18,4 +18,6 @@ public class ProductDTO {
     private String imageName;
 
     private ManufacturerDTO manufacturer;
+
+    private ProductQuantityForCitiesDTO productQuantity;
 }

@@ -1,1 +1,154 @@
-<p>orders works!</p>
+<!---------------------------------------------Доступні замовлення----------------------------------------------------->
+
+<div class="available-orders-container">
+    <div class="title-container">
+        Доступні змовлення
+    </div>
+    <div *ngFor="let availableOrder of availableOrders.items" class="product-item-container">
+        <div class="date-container">
+            {{availableOrder.startDate}}
+        </div>
+
+        <div class="item-header">
+            <div class="item-header-inner">
+                <div class="client-info">
+                    Покупець: {{availableOrder.client.firstName}} {{availableOrder.client.lastName}}
+                </div>
+                <div class="total-price">
+                    {{availableOrder.price}} грн
+                </div>
+            </div>
+        </div>
+
+        <div *ngFor="let orderItem of availableOrder.orderItems" class="order-item-container">
+            <div class="order-item">
+                <div class="vertical-align-center">
+                    <img alt="product-image" src="../../../../../assets/img/Rectangle%208.png">
+                    {{orderItem.product.name}}
+                </div>
+                <div class="vertical-align-center">
+                    {{orderItem.quantity}}<br>шт
+                </div>
+                <div class="vertical-align-center">
+                    {{orderItem.price}}<br>грн
+                </div>
+            </div>
+        </div>
+
+        <div class="buttons-container">
+            <button (click)="cancelOrder(availableOrder.uuid)" class="red-btn mr-right-30" color="primary"
+                    mat-stroked-button>
+                Відмінити
+            </button>
+            <button (click)="assignToSeller(availableOrder.uuid)" class="green-btn" color="primary" mat-stroked-button>
+                Прийняти
+            </button>
+        </div>
+    </div>
+</div>
+
+<mat-paginator #availableOrdersPaginator (page)="availableOrdersPaginatorChanged($event)"
+               [length]="this.availableOrders.totalElements"
+               [pageSizeOptions]="[1, 5, 10, 25, 100]"
+               [pageSize]="1">
+</mat-paginator>
+
+<!---------------------------------------------Активні замовлення------------------------------------------------------>
+
+<div class="available-orders-container">
+    <div class="title-container">
+        Активні замовлення
+    </div>
+    <div *ngFor="let activeOrder of activeOrders.items" class="product-item-container">
+        <div class="date-container">
+            {{activeOrder.startDate}}
+        </div>
+
+        <div class="item-header">
+            <div class="item-header-inner">
+                <div class="client-info">
+                    Покупець: {{activeOrder.client.firstName}} {{activeOrder.client.lastName}}
+                </div>
+                <div class="total-price">
+                    {{activeOrder.price}} грн
+                </div>
+            </div>
+        </div>
+
+        <div *ngFor="let orderItem of activeOrder.orderItems" class="order-item-container">
+            <div class="order-item">
+                <div class="vertical-align-center">
+                    <img alt="product-image" src="../../../../../assets/img/Rectangle%208.png">
+                    {{orderItem.product.name}}
+                </div>
+                <div class="vertical-align-center">
+                    {{orderItem.quantity}}<br>шт
+                </div>
+                <div class="vertical-align-center">
+                    {{orderItem.price}}<br>грн
+                </div>
+            </div>
+        </div>
+
+        <div class="buttons-container">
+            <button (click)="cancelOrder(activeOrder.uuid)" class="red-btn mr-right-30" color="primary"
+                    mat-stroked-button>
+                Скасувати
+            </button>
+            <button (click)="completeOrder(activeOrder.uuid)" class="green-btn" color="primary" mat-stroked-button>
+                Завершити
+            </button>
+        </div>
+    </div>
+</div>
+
+<mat-paginator #activeOrdersPaginator (page)="activeOrdersPaginatorChanged($event)"
+               [length]="this.activeOrders.totalElements"
+               [pageSizeOptions]="[1, 5, 10, 25, 100]"
+               [pageSize]="1">
+</mat-paginator>
+
+<!---------------------------------------------Виконані замовлення----------------------------------------------------->
+
+<div class="available-orders-container">
+    <div class="title-container">
+        Виконані замовлення
+    </div>
+    <div *ngFor="let completedOrder of completedOrders.items" class="product-item-container">
+        <div class="date-container">
+            {{completedOrder.startDate}}
+        </div>
+
+        <div class="item-header">
+            <div class="item-header-inner">
+                <div class="client-info">
+                    Покупець: {{completedOrder.client.firstName}} {{completedOrder.client.lastName}}
+                </div>
+                <div class="total-price">
+                    {{completedOrder.price}} грн
+                </div>
+            </div>
+        </div>
+
+        <div *ngFor="let orderItem of completedOrder.orderItems" class="order-item-container">
+            <div class="order-item">
+                <div class="vertical-align-center">
+                    <img alt="product-image" src="../../../../../assets/img/Rectangle%208.png">
+                    {{orderItem.product.name}}
+                </div>
+                <div class="vertical-align-center">
+                    {{orderItem.quantity}}<br>шт
+                </div>
+                <div class="vertical-align-center">
+                    {{orderItem.price}}<br>грн
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<mat-paginator #completedOrdersPaginator (page)="completedOrdersPaginatorChanged($event)"
+               [length]="this.completedOrders.totalElements"
+               [pageSizeOptions]="[1, 5, 10, 25, 100]"
+               [pageSize]="1">
+</mat-paginator>

@@ -136,6 +136,13 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(apiError);
     }
 
+    @ExceptionHandler(LogicalException.class)
+    protected ResponseEntity<Object> handleEntityHasRelationshipsException(LogicalException ex) {
+        ApiError apiError = new ApiError(CONFLICT);
+        apiError.setMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
+
     /**
      * Handle HttpMessageNotReadableException. Happens when request JSON is malformed.
      *

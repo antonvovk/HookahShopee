@@ -16,7 +16,7 @@ import {SellerPanelComponent} from './ui/seller-panel/panel/seller-panel.compone
 import {HeaderComponent} from './ui/seller-panel/panel/header/header.component';
 import {SidenavComponent} from './ui/seller-panel/panel/sidenav/sidenav.component';
 import {MatTableModule} from "@angular/material/table";
-import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatPaginatorIntl, MatPaginatorModule} from "@angular/material/paginator";
 import {FlexLayoutModule, FlexModule} from "@angular/flex-layout";
 import {MatIconModule} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
@@ -33,9 +33,10 @@ import {AddSellerComponent} from './ui/seller-panel/panel/sellers/add-seller/add
 import {ManufacturersAddEditComponent} from './ui/seller-panel/panel/manufacturers/manufacturers-add-edit/manufacturers-add-edit.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {ToastrModule} from "ngx-toastr";
-import {ProductComponent} from './ui/seller-panel/panel/manufacturers/product/product.component';
+import {ProductComponent} from './ui/seller-panel/panel/manufacturers/manufacturers-add-edit/product/product.component';
 import {QuillModule} from "ngx-quill";
 import {PostsAddEditComponent} from './ui/seller-panel/panel/posts/posts-add-edit/posts-add-edit.component';
+import {getDutchPaginatorIntl} from "./core/paginator/ukr-paginator-intl";
 
 @NgModule({
   declarations: [
@@ -78,9 +79,10 @@ import {PostsAddEditComponent} from './ui/seller-panel/panel/posts/posts-add-edi
     QuillModule.forRoot()
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-    AuthGuard
+      {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+      {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+      AuthGuard,
+      {provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl()}
   ],
   bootstrap: [AppComponent]
 })

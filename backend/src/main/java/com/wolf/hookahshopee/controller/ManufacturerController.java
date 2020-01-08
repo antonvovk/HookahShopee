@@ -40,6 +40,21 @@ public class ManufacturerController {
     }
 
     @Async
+    @PostMapping
+    public CompletableFuture<ResponseEntity<Object>> create(@RequestBody @Valid ManufacturerDTO manufacturerDTO) {
+        manufacturerService.create(manufacturerDTO);
+        return CompletableFuture.completedFuture(ResponseEntity.status(HttpStatus.CREATED).build());
+    }
+
+    @Async
+    @PutMapping(value = "/{name}")
+    public CompletableFuture<ResponseEntity<Object>> update(@PathVariable(name = "name") String name,
+                                                            @RequestBody @Valid ManufacturerDTO manufacturerDTO) {
+        manufacturerService.update(name, manufacturerDTO);
+        return CompletableFuture.completedFuture(ResponseEntity.ok().build());
+    }
+
+    @Async
     @PutMapping(value = "/{name}/updateImage", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public CompletableFuture<ResponseEntity<Object>> updateImage(@PathVariable(name = "name") String name,
                                                                  @RequestPart MultipartFile file) {
@@ -50,23 +65,8 @@ public class ManufacturerController {
     }
 
     @Async
-    @PostMapping
-    public CompletableFuture<ResponseEntity<Object>> create(@RequestBody @Valid ManufacturerDTO manufacturerDTO) {
-        manufacturerService.create(manufacturerDTO);
-        return CompletableFuture.completedFuture(ResponseEntity.status(HttpStatus.CREATED).build());
-    }
-
-    @Async
-    @PutMapping
-    public CompletableFuture<ResponseEntity<Object>> update(@RequestParam(name = "name") String name,
-                                                            @RequestBody @Valid ManufacturerDTO manufacturerDTO) {
-        manufacturerService.update(name, manufacturerDTO);
-        return CompletableFuture.completedFuture(ResponseEntity.ok().build());
-    }
-
-    @Async
-    @DeleteMapping
-    public CompletableFuture<ResponseEntity<Object>> delete(@RequestParam(name = "name") String name) {
+    @DeleteMapping(value = "/{name}")
+    public CompletableFuture<ResponseEntity<Object>> delete(@PathVariable(name = "name") String name) {
         manufacturerService.delete(name);
         return CompletableFuture.completedFuture(ResponseEntity.ok().build());
     }
