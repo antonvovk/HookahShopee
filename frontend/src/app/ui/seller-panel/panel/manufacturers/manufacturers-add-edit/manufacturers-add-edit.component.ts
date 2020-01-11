@@ -24,20 +24,13 @@ export class ManufacturersAddEditComponent implements OnInit {
   edit_addMenuOpened: boolean = false;
   name = new FormControl('');
   products: Product[] = [];
-  quantities: any[] = [];
   product: Product = new Product();
 
   constructor(private manufacturersService: ManufacturersService,
               private productsService: ProductsService,
               private citiesService: CitiesService,
-              private imageService: ImageService,
+              public imageService: ImageService,
               private snackBar: MatSnackBar) {
-  }
-
-  openSnackBar(message: string, action: string) {
-    this.snackBar.open(message, action, {
-      duration: 2000,
-    });
   }
 
   ngOnInit() {
@@ -46,17 +39,6 @@ export class ManufacturersAddEditComponent implements OnInit {
       this.productsService.findAllByManufacturer(this.manufacturer.name).subscribe(
         products => {
           this.products = products;
-          this.products.forEach(product => {
-            this.productsService.getQuantitiesByCities(product.name).subscribe(
-              productQuantities => {
-                this.quantities.push(
-                  {
-                    productName: product.name,
-                    quantity: productQuantities
-                  }
-                );
-              });
-          });
         }
       );
     }
@@ -65,30 +47,38 @@ export class ManufacturersAddEditComponent implements OnInit {
   onSave() {
     if (this.manufacturer == null) {
       this.manufacturer = new Manufacturer(this.name.value);
-      this.manufacturersService.insert(this.manufacturer).subscribe(res => {
-        this.openSnackBar("Успішно додано виробника: " + this.manufacturer.name, "Закрити");
-      });
+      this.manufacturersService.insert(this.manufacturer).subscribe(
+        response => {
+          this.snackBar.open(response.statusText, 'Відхилити', {duration: 2000,});
+        },
+        error => {
+          this.snackBar.open(error.apierror.message, 'Відхилити', {duration: 2000,});
+        }
+      );
     } else {
       const oldName = this.manufacturer.name;
       this.manufacturer.name = this.name.value;
-      this.manufacturersService.update(this.manufacturer, oldName).subscribe(res => {
-        this.openSnackBar("Успішно оновлено виробника: " + this.manufacturer.name, "Закрити");
-      });
+      this.manufacturersService.update(this.manufacturer, oldName).subscribe(
+        response => {
+          this.snackBar.open(response.statusText, 'Відхилити', {duration: 2000,});
+        },
+        error => {
+          this.snackBar.open(error.apierror.message, 'Відхилити', {duration: 2000,});
+        }
+      );
     }
   }
 
   onDelete() {
-    this.manufacturersService.delete(this.manufacturer.name).subscribe(res => {
-        this.openSnackBar("Успішно видалено виробника: " + this.manufacturer.name, "Закрити");
+    this.manufacturersService.delete(this.manufacturer.name).subscribe(
+      response => {
+        this.snackBar.open(response.statusText, 'Відхилити', {duration: 2000,});
         this.returned.emit(true);
       },
-      err => {
-        this.openSnackBar(err, "Закрити");
-      });
-  }
-
-  getByProductName(productName: string) {
-    return this.quantities.find(quantity => quantity.productName === productName);
+      error => {
+        this.snackBar.open(error.apierror.message, 'Відхилити', {duration: 2000,});
+      }
+    );
   }
 
   menuOpened(product: Product) {
@@ -97,21 +87,9 @@ export class ManufacturersAddEditComponent implements OnInit {
   }
 
   onReturn($event: boolean) {
-    this.quantities = [];
     this.productsService.findAllByManufacturer(this.manufacturer.name).subscribe(
       products => {
         this.products = products;
-        this.products.forEach(product => {
-          this.productsService.getQuantitiesByCities(product.name).subscribe(
-            productQuantities => {
-              this.quantities.push(
-                {
-                  productName: product.name,
-                  quantity: productQuantities
-                }
-              );
-            });
-        });
       }
     );
     this.edit_addMenuOpened = false;
@@ -120,13 +98,12 @@ export class ManufacturersAddEditComponent implements OnInit {
   handleFileInput(files: any) {
     const uploadedFiles = files.target.files;
     this.manufacturersService.updateImage(this.manufacturer.name, uploadedFiles[0]).subscribe(
-      // data => {
-      //   this.manufacturersService.findByName(this.manufacturer.name).subscribe(
-      //     manufacturer => {
-      //       this.manufacturer = manufacturer;
-      //     }
-      //   );
-      // }
+      response => {
+        this.snackBar.open(response.statusText, 'Відхилити', {duration: 2000,});
+      },
+      error => {
+        this.snackBar.open(error.apierror.message, 'Відхилити', {duration: 2000,});
+      }
     );
   }
 }

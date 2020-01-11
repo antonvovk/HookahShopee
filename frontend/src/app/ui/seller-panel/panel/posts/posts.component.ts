@@ -14,7 +14,7 @@ export class PostsComponent implements OnInit {
   selectedPost: Post = null;
   add_editComponentOpened: boolean = false;
 
-  constructor(private postService: PostService, private imageService: ImageService) {
+  constructor(private postService: PostService, public imageService: ImageService) {
 
   }
 

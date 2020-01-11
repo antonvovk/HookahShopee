@@ -15,7 +15,7 @@ export class ManufacturersComponent implements OnInit {
   edit_addComponentOpened: boolean = false;
 
   constructor(private manufacturersService: ManufacturersService,
-              private imageService: ImageService) {
+              public imageService: ImageService) {
 
   }
 

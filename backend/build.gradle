@@ -3,7 +3,6 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
     id 'org.liquibase.gradle' version '2.0.2'
     id 'net.ltgt.apt' version '0.21'
-    id 'java'
     id 'war'
 }
 
@@ -22,7 +21,11 @@ repositories {
 }
 
 dependencies {
-//    runtimeOnly project(':frontend')
+    runtimeOnly project(':frontend')
+
+    // Twilio
+    compile group: 'com.twilio.sdk', name: 'twilio', version: '7.47.2'
+    compile group: 'com.twilio.sdk', name: 'twilio-java-sdk', version: '6.3.0'
 
     // String utils
     implementation 'org.apache.commons:commons-lang3:3.9'

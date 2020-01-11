@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpResponse} from "@angular/common/http";
+import {HttpClient, HttpParams, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {ApiConfig} from "../config/api.config";
 import {map} from "rxjs/operators";
@@ -7,8 +7,6 @@ import {ProductAdapter} from "../core/adapter/product.adapter";
 import {Product} from "../core/model/product.model";
 import {ProductQuantityBySellers} from "../core/model/product-quantity-by-sellers.model";
 import {ProductQuantityBySellersAdapter} from "../core/adapter/product-quantity-by-sellers.adapter";
-import {ProductQuantityByCities} from "../core/model/product-quantity-by-cities.model";
-import {ProductQuantityByCitiesAdapter} from "../core/adapter/product-quantity-by-cities.adapter";
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +15,7 @@ export class ProductsService {
 
   constructor(private http: HttpClient,
               private adapter: ProductAdapter,
-              private productQuantityBySellersAdapter: ProductQuantityBySellersAdapter,
-              private productQuantityByCitiesAdapter: ProductQuantityByCitiesAdapter) {
+              private productQuantityBySellersAdapter: ProductQuantityBySellersAdapter) {
 
   }
 
@@ -34,20 +31,35 @@ export class ProductsService {
       .pipe(map((data: any[]) => data.map(item => this.productQuantityBySellersAdapter.adapt(item))));
   }
 
-  getQuantitiesByCities(name: string): Observable<ProductQuantityByCities[]> {
+  insert(product: Product): Observable<HttpResponse<any>> {
     return this.http
-      .get<ProductQuantityByCities[]>(ApiConfig.apiUrl + '/product/' + name + '/quantity/byCities')
-      .pipe(map((data: any[]) => data.map(item => this.productQuantityByCitiesAdapter.adapt(item))));
-  }
-
-  getQuantityByCity(name: string, cityName: string): Observable<number> {
-    return this.http
-      .get<number>(ApiConfig.apiUrl + '/product/' + name + '/quantity/byCity/' + cityName);
+      .post<any>(ApiConfig.apiUrl + '/product', product, {observe: 'response'});
   }
 
   update(name: string, product: Product): Observable<HttpResponse<string>> {
     return this.http.put<string>(ApiConfig.apiUrl + '/product/' + name, product, {
       observe: 'response'
     });
+  }
+
+  updateImage(name: string, image: File): Observable<HttpResponse<any>> {
+    const formData = new FormData();
+    formData.append('file', image);
+    return this.http
+      .put<any>(ApiConfig.apiUrl + '/product/' + name + '/updateImage', formData, {observe: 'response'});
+  }
+
+  updateQuantity(name: string, seller: string, quantity: number): Observable<HttpResponse<any>> {
+    let params = new HttpParams();
+    params = params.append('seller', seller);
+    params = params.set('quantity', quantity.toString());
+
+    return this.http
+      .put<any>(ApiConfig.apiUrl + '/product/' + name + '/updateQuantity', null, {params: params, observe: 'response'});
+  }
+
+  delete(name: string): Observable<HttpResponse<any>> {
+    return this.http
+      .delete<any>(ApiConfig.apiUrl + '/product/' + name, {observe: 'response'});
   }
 }

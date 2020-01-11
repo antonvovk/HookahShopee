@@ -1,25 +1,50 @@
-.top-flex-container {
+.header-name-container {
   display: flex;
   flex-flow: row wrap;
-  margin-top: 3vh;
+  font-weight: 500;
+  @media screen and (max-width: 960px) {
+    margin: 10px;
+  }
+  @media screen and (min-width: 960px) {
+    margin: 30px;
+  }
+  @media screen and (max-width: 960px) {
+    font-size: 20px;
+  }
+  @media screen and (min-width: 960px) {
+    font-size: 28px;
+  }
+}
+
+.go-back-area:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.main-container {
+  display: flex;
+  flex-flow: row wrap;
   align-items: flex-start;
+  @media screen and (max-width: 960px) {
+    justify-content: center;
+  }
+  @media screen and (max-width: 960px) {
+    margin: 10px;
+  }
+  @media screen and (min-width: 960px) {
+    margin: 30px;
+  }
 }
 
-.bottom-flex-container {
+.outer-logo-container {
   display: flex;
-  flex-flow: row wrap;
-  margin-top: 5vh;
-  margin-left: 1vw;
-  font-weight: 500;
-  font-size: 36px;
-}
-
-.quantity-flex-container {
-  display: flex;
-  flex-flow: column wrap;
-  margin-top: 5vh;
-  margin-left: 1vw;
-  font-weight: 500;
+  flex-flow: column;
+  @media screen and (max-width: 960px) {
+    margin-right: 10px;
+  }
+  @media screen and (min-width: 960px) {
+    margin-right: 30px;
+  }
 }
 
 .logo-container {
@@ -27,6 +52,17 @@
   width: 100%;
   display: flex;
   justify-content: center;
+}
+
+.update-image-btn-container {
+  display: flex;
+  justify-content: center;
+  @media screen and (max-width: 960px) {
+    margin: 10px 10px 30px;
+  }
+  @media screen and (min-width: 960px) {
+    margin: 10px 30px 30px;
+  }
 }
 
 .info-container {
@@ -41,18 +77,46 @@
 }
 
 .text-container mat-form-field {
-  width: 80%;
-}
-
-.text-container2 {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  max-width: 360px;
+  width: 100%;
 }
 
 .text-container mat-label {
   margin-right: 15px;
+}
+
+.description-header {
+  display: flex;
+  justify-content: flex-start;
+  font-weight: 500;
+  @media screen and (max-width: 960px) {
+    margin: 0 10px 10px;
+  }
+  @media screen and (min-width: 960px) {
+    margin: 0 30px 10px;
+  }
+  @media screen and (max-width: 960px) {
+    font-size: 20px;
+  }
+  @media screen and (min-width: 960px) {
+    font-size: 28px;
+  }
+}
+
+
+.quantity-flex-container {
+  display: flex;
+  flex-flow: column wrap;
+  @media screen and (max-width: 960px) {
+    margin: 0 10px 10px;
+  }
+  @media screen and (min-width: 960px) {
+    margin: 0 30px 30px;
+  }
+  font-weight: 500;
+}
+
+.quantity-flex-container mat-icon {
+  cursor: pointer;
 }
 
 .logo-container img {
@@ -60,39 +124,99 @@
   max-height: 100%;
 }
 
-.red-btn {
-  border: 2px solid #FF0000;
-  border-radius: 15px;
-  color: #FF0000;
-}
-
 .buttons-container {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-start;
+  @media screen and (max-width: 960px) {
+    margin: 0 10px 10px;
+  }
+  @media screen and (min-width: 960px) {
+    margin: 0 30px 30px;
+  }
+}
+
+.mr-right-30 {
+  margin-right: 30px;
 }
 
 .buttons-container button {
   margin-left: 0 !important;
 }
 
-.go-back-area:hover {
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-.description-header {
-  display: flex;
-  flex-flow: row wrap;
-  margin-top: 5vh;
-  margin-left: 1vw;
-  font-weight: 500;
-  font-size: 36px;
-}
-
 .description-editor-container {
   display: flex;
+  justify-content: flex-start;
+  @media screen and (max-width: 960px) {
+    margin: 0 10px 10px;
+  }
+  @media screen and (min-width: 960px) {
+    margin: 0 30px 10px;
+  }
+}
+
+.red-btn {
+  color: #FF0000;
+  border: 2px solid #FF0000;
+  border-radius: 15px;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.file-upload-btn {
+  color: #FF0000;
+  border: 2px solid #FF0000;
+  border-radius: 15px;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.grey-btn {
+  color: rgba(0, 0, 0, 0.26);;
+  border: 2px solid rgba(0, 0, 0, 0.26);;
+  border-radius: 15px;
+  cursor: default;
+}
+
+.text-container2 {
+  display: flex;
   flex-flow: row wrap;
-  margin-top: 3vh;
-  margin-left: 1vw;
-  width: 90%;
+  align-items: baseline;
+}
+
+.quantity-header {
+  display: flex;
+  justify-content: flex-start;
+  font-weight: 500;
+  @media screen and (max-width: 960px) {
+    margin: 10px;
+  }
+  @media screen and (min-width: 960px) {
+    margin: 30px;
+  }
+  @media screen and (max-width: 960px) {
+    font-size: 20px;
+  }
+  @media screen and (min-width: 960px) {
+    font-size: 28px;
+  }
+}
+
+.seller-container {
+  display: flex;
+  min-width: 180px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.quantity-container {
+  display: flex;
+  width: 100%;
+  max-width: 400px;
+}
+
+.quantity-container mat-form-field {
+  width: 100%;
 }

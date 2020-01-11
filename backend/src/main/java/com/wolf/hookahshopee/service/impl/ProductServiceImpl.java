@@ -9,14 +9,20 @@ import com.wolf.hookahshopee.mapper.CityMapper;
 import com.wolf.hookahshopee.mapper.ProductMapper;
 import com.wolf.hookahshopee.mapper.UserMapper;
 import com.wolf.hookahshopee.model.*;
-import com.wolf.hookahshopee.repository.*;
+import com.wolf.hookahshopee.repository.ManufacturerRepository;
+import com.wolf.hookahshopee.repository.ProductItemRepository;
+import com.wolf.hookahshopee.repository.ProductRepository;
+import com.wolf.hookahshopee.repository.UserRepository;
 import com.wolf.hookahshopee.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -26,23 +32,46 @@ public class ProductServiceImpl implements ProductService {
 
     private final ManufacturerRepository manufacturerRepository;
 
-    private final CityRepository cityRepository;
+    private final UserRepository userRepository;
 
     private final ProductItemRepository productItemRepository;
 
-    private final UserRepository userRepository;
-
     public ProductServiceImpl(ProductRepository productRepository,
                               ManufacturerRepository manufacturerRepository,
-                              CityRepository cityRepository,
-                              ProductItemRepository productItemRepository,
-                              UserRepository userRepository) {
+                              UserRepository userRepository,
+                              ProductItemRepository productItemRepository) {
 
         this.productRepository = productRepository;
         this.manufacturerRepository = manufacturerRepository;
-        this.cityRepository = cityRepository;
-        this.productItemRepository = productItemRepository;
         this.userRepository = userRepository;
+        this.productItemRepository = productItemRepository;
+    }
+
+    private List<ProductDTO> afterMapperLogic(List<Product> products) {
+        List<ProductDTO> productDTOS = new ArrayList<>();
+
+        products.forEach(product -> {
+            Map<City, List<ProductItem>> res = product.getProductItems().stream().collect(
+                    Collectors.groupingBy(
+                            productItem -> productItem.getSeller().getCity()
+                    )
+            );
+
+            List<ProductQuantityForCitiesDTO> productQuantities = new ArrayList<>();
+
+            res.forEach((k, v) -> {
+                productQuantities.add(new ProductQuantityForCitiesDTO(
+                        v.stream().mapToLong(ProductItem::getQuantity).sum(),
+                        CityMapper.INSTANCE.toDto(k)
+                ));
+            });
+
+            ProductDTO productDTO = ProductMapper.INSTANCE.toDto(product);
+            productDTO.setProductQuantity(productQuantities);
+            productDTOS.add(productDTO);
+        });
+
+        return productDTOS;
     }
 
     @Override
@@ -58,12 +87,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDTO> findAll() {
-        return ProductMapper.INSTANCE.toDto(productRepository.findAll());
+        return afterMapperLogic(productRepository.findAll());
     }
 
     @Override
     public List<ProductDTO> findAllByFinalPrice(Integer startPrice, Integer endPrice) {
-        return ProductMapper.INSTANCE.toDto(productRepository.findAllByFinalPriceGreaterThanEqualAndFinalPriceLessThanEqual(startPrice, endPrice));
+        return afterMapperLogic(productRepository.findAllByFinalPriceGreaterThanEqualAndFinalPriceLessThanEqual(startPrice, endPrice));
     }
 
     @Override
@@ -74,35 +103,7 @@ public class ProductServiceImpl implements ProductService {
             throw new EntityNotFoundException(Manufacturer.class, "manufacturerName", manufacturerName);
         }
 
-        return ProductMapper.INSTANCE.toDto(productRepository.findAllByManufacturer(manufacturer));
-    }
-
-    @Override
-    public Long getQuantityByCity(String productName, String cityName) {
-        City city = cityRepository.findByName(cityName).orElse(null);
-
-        if (city == null) {
-            throw new EntityNotFoundException(City.class, "cityName", cityName);
-        }
-
-        List<User> users = userRepository.findAllByCityAndRoleIn(city, Arrays.asList(Role.SELLER, Role.ADMIN));
-
-        return users.stream()
-                .flatMap(user -> user.getProductItems().stream())
-                .filter(productItem -> productItem.getProduct().getName().equals(productName))
-                .mapToLong(ProductItem::getQuantity).sum();
-    }
-
-    @Override
-    public List<ProductQuantityForCitiesDTO> getAllQuantitiesByCities(String name) {
-        List<ProductQuantityForCitiesDTO> productQuantities = new ArrayList<>();
-        List<City> cities = cityRepository.findAll();
-
-        cities.forEach(city -> productQuantities.add(
-                new ProductQuantityForCitiesDTO(getQuantityByCity(name, city.getName()), CityMapper.INSTANCE.toDto(city))
-        ));
-
-        return productQuantities;
+        return afterMapperLogic(productRepository.findAllByManufacturer(manufacturer));
     }
 
     @Override
@@ -113,11 +114,16 @@ public class ProductServiceImpl implements ProductService {
             throw new EntityNotFoundException(Product.class, "name", name);
         }
 
+        List<User> users = userRepository.findAllByRoleIn(Arrays.asList(Role.ADMIN, Role.SELLER));
         List<ProductQuantityForSellersDTO> productQuantities = new ArrayList<>();
-        List<ProductItem> productItems = productItemRepository.findByProduct(product);
-        productItems.forEach(productItem -> productQuantities.add(
-                new ProductQuantityForSellersDTO(productItem.getQuantity(), UserMapper.INSTANCE.toDto(productItem.getSeller()))
-        ));
+
+        users.forEach(user -> {
+            Long quantity = product.getProductItems().stream()
+                    .filter(productItem -> productItem.getSeller().getPhoneNumber().equals(user.getPhoneNumber()))
+                    .mapToLong(ProductItem::getQuantity).sum();
+            productQuantities.add(new ProductQuantityForSellersDTO(quantity, UserMapper.INSTANCE.toDto(user)));
+        });
+
         return productQuantities;
     }
 
@@ -178,11 +184,36 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void delete(Long id) {
-        Product product = productRepository.findById(id).orElse(null);
+    public void updateQuantity(String name, String sellerUsername, Long quantity) {
+        Product product = productRepository.findByName(name).orElse(null);
 
         if (product == null) {
-            throw new EntityNotFoundException(Product.class, "id", id.toString());
+            throw new EntityNotFoundException(Product.class, "name", name);
+        }
+
+        User seller = userRepository.findByPhoneNumber(sellerUsername).orElse(null);
+
+        if (seller == null) {
+            throw new EntityNotFoundException(User.class, "sellerUsername", sellerUsername);
+        }
+
+        ProductItem productItem = product.getProductItems().stream().filter(p -> p.getSeller().getPhoneNumber().equals(sellerUsername)).findFirst().orElse(null);
+
+        if (productItem == null) {
+            productItem = ProductItem.builder().quantity(quantity).product(product).seller(seller).build();
+        }
+
+        productItem.setQuantity(quantity);
+        productItemRepository.save(productItem);
+    }
+
+    @Override
+    @Transactional
+    public void delete(String name) {
+        Product product = productRepository.findByName(name).orElse(null);
+
+        if (product == null) {
+            throw new EntityNotFoundException(Product.class, "name", name);
         }
 
         productRepository.delete(product);

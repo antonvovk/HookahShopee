@@ -1,11 +1,17 @@
-.top-flex-container {
+.main-container {
   display: flex;
   flex-flow: row wrap;
   margin-top: 3vh;
   align-items: flex-start;
+  @media screen and (max-width: 960px) {
+    margin: 10px;
+  }
+  @media screen and (min-width: 960px) {
+    margin: 30px;
+  }
 }
 
-.bottom-flex-container {
+.header-name-container {
   display: flex;
   flex-flow: row wrap;
   margin-top: 5vh;
@@ -58,7 +64,23 @@
   margin-left: 0 !important;
 }
 
-///////////////
+.product-header-name {
+  display: flex;
+  justify-content: flex-start;
+  font-weight: 500;
+  @media screen and (max-width: 960px) {
+    margin: 0 10px 10px;
+  }
+  @media screen and (min-width: 960px) {
+    margin: 0 30px 10px;
+  }
+  @media screen and (max-width: 960px) {
+    font-size: 20px;
+  }
+  @media screen and (min-width: 960px) {
+    font-size: 28px;
+  }
+}
 
 .flex-container {
   display: flex;
@@ -80,6 +102,7 @@
   border-radius: 10px;
   background: rgba(196, 196, 196, 0.2);
   min-width: 260px;
+  min-height: 270px;
 }
 
 .item-container-first {
@@ -98,6 +121,7 @@
   border-radius: 10px;
   background: rgba(196, 196, 196, 0.2);
   min-width: 260px;
+  min-height: 270px;
 }
 
 .item-container-first:hover, .item-container:hover {
@@ -108,6 +132,12 @@
 .manufacturer-logo {
   display: flex;
   justify-content: center;
+  @media screen and (max-width: 960px) {
+    margin: 10px;
+  }
+  @media screen and (min-width: 960px) {
+    margin: 30px;
+  }
 }
 
 .manufacturer-logo img {
@@ -133,4 +163,41 @@
 .justify-content-center {
   display: flex;
   justify-content: center;
+}
+
+.red-btn {
+  color: #FF0000;
+  border: 2px solid #FF0000;
+  border-radius: 15px;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.file-upload-btn {
+  color: #FF0000;
+  border: 2px solid #FF0000;
+  border-radius: 15px;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.grey-btn {
+  color: rgba(0, 0, 0, 0.26);;
+  border: 2px solid rgba(0, 0, 0, 0.26);;
+  border-radius: 15px;
+  cursor: default;
+}
+
+.update-image-btn-container {
+  display: flex;
+  justify-content: center;
+  @media screen and (max-width: 960px) {
+    margin: 10px 10px 30px;
+  }
+  @media screen and (min-width: 960px) {
+    margin: 10px 30px 30px;
+  }
 }

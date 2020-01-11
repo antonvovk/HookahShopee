@@ -1,15 +1,19 @@
 <div *ngIf="!edit_addMenuOpened">
-  <div class="top-flex-container">
+  <div class="main-container">
     <div class="logo-container">
       <div class="justify-content-center">
-          <img *ngIf="manufacturer && manufacturer.imageName" [src]=imageService.getImage(manufacturer.imageName)
-               alt="manufacturer-logo">
-          <img *ngIf="!manufacturer || !manufacturer.imageName" alt="post-default-image"
-               src="../../../../../../assets/img/manufacturer-default.png"
-               style="max-height: 300px;">
+        <img *ngIf="manufacturer && manufacturer.imageName" [src]=imageService.getImage(manufacturer.imageName)
+             alt="manufacturer-logo">
+        <img *ngIf="!manufacturer || !manufacturer.imageName" alt="post-default-image"
+             src="../../../../../../assets/img/manufacturer-default.png"
+             style="max-height: 300px;">
       </div>
-      <div class="justify-content-center" style="margin-top: 2vh;">
-        <input (change)="handleFileInput($event)" class="red-btn" type="file">
+      <div class="update-image-btn-container">
+        <label [ngClass]="{'grey-btn': !manufacturer}" class="file-upload-btn" for="file-upload">
+          <i class="fa fa-cloud-upload"></i> Оновити фото
+        </label>
+        <input (change)="handleFileInput($event)" [disabled]="!manufacturer" id="file-upload"
+               type="file"/>
       </div>
     </div>
     <div class="info-container">
@@ -28,7 +32,7 @@
     </div>
   </div>
 
-  <div *ngIf="manufacturer != null" class="bottom-flex-container">
+  <div *ngIf="manufacturer != null" class="product-header-name">
     Продукти
   </div>
 
@@ -43,14 +47,17 @@
     <div (click)="menuOpened(product)" *ngFor="let product of products"
          class="item-container">
       <div class="manufacturer-logo">
-        <img alt="manufacturer-logo" src="../../../../../../assets/img/Rectangle%208.png">
+        <img *ngIf="product && product.imageName" [src]="imageService.getImage(product.imageName)" alt="post-image">
+        <img *ngIf="!product || !product.imageName" alt="post-default-image"
+             src="../../../../../../assets/img/tabaco-default.png"
+             style="max-height: 250px;">
       </div>
       <div class="manufacturer-name">
         {{product.name}}
       </div>
-      <div *ngFor="let quantity of getByProductName(product.name).quantity" class="manufacturer-name">
-        <div [ngClass]="{'red': quantity.quantity === 0, 'green': quantity.quantity !== 0}">
-          {{quantity.city.name}}: {{quantity.quantity}}
+      <div *ngFor="let productQuantity of product.productQuantity" class="manufacturer-name">
+        <div [ngClass]="{'red': productQuantity.quantity === 0, 'green': productQuantity.quantity !== 0}">
+          {{productQuantity.city.name}}: {{productQuantity.quantity}}
         </div>
       </div>
       <div class="manufacturer-name">
@@ -60,4 +67,5 @@
   </div>
 </div>
 
-<app-product (returned)="onReturn($event)" *ngIf="edit_addMenuOpened" [product]="product"></app-product>
+<app-product (returned)="onReturn($event)" *ngIf="edit_addMenuOpened" [manufacturer]="manufacturer"
+             [product]="product"></app-product>

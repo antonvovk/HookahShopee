@@ -2,7 +2,6 @@ package com.wolf.hookahshopee.service;
 
 import com.wolf.hookahshopee.dto.ProductDTO;
 import com.wolf.hookahshopee.dto.ProductLightDTO;
-import com.wolf.hookahshopee.dto.ProductQuantityForCitiesDTO;
 import com.wolf.hookahshopee.dto.ProductQuantityForSellersDTO;
 
 import java.util.List;
@@ -17,10 +16,6 @@ public interface ProductService {
 
     List<ProductDTO> findAllByManufacturer(String manufacturerName);
 
-    Long getQuantityByCity(String productName, String cityName);
-
-    List<ProductQuantityForCitiesDTO> getAllQuantitiesByCities(String name);
-
     List<ProductQuantityForSellersDTO> getAllQuantitiesBySellers(String name);
 
     void create(ProductLightDTO productDTO);
@@ -29,5 +24,7 @@ public interface ProductService {
 
     void updateImage(String name, String imageName);
 
-    void delete(Long id);
+    void updateQuantity(String name, String sellerUsername, Long quantity);
+
+    void delete(String name);
 }

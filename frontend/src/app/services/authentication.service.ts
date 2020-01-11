@@ -30,8 +30,9 @@ export class AuthenticationService {
       .subscribe(jwtUser => {
         localStorage.setItem('currentUser', JSON.stringify(jwtUser));
         this.currentUserSubject.next(jwtUser);
+        console.log(jwtUser);
 
-        if (jwtUser.user.role == Role.ADMIN || jwtUser.user.role == Role.SELLER) {
+        if (jwtUser.user.role === Role.ADMIN || Role.SELLER) {
           this.router.navigate(['/control-panel']);
         }
       });
@@ -41,5 +42,6 @@ export class AuthenticationService {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
+    this.router.navigate(['/login-panel']);
   }
 }

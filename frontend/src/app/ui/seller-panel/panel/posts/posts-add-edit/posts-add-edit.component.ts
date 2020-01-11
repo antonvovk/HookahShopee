@@ -21,7 +21,7 @@ export class PostsAddEditComponent implements OnInit {
 
   constructor(private postService: PostService,
               private snackBar: MatSnackBar,
-              private imageService: ImageService) {
+              public imageService: ImageService) {
 
   }
 

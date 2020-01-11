@@ -2,6 +2,8 @@ package com.wolf.hookahshopee.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class ProductDTO {
 
@@ -19,5 +21,5 @@ public class ProductDTO {
 
     private ManufacturerDTO manufacturer;
 
-    private ProductQuantityForCitiesDTO productQuantity;
+    private List<ProductQuantityForCitiesDTO> productQuantity;
 }

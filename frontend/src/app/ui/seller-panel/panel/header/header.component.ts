@@ -11,10 +11,14 @@ export class HeaderComponent implements OnInit {
 
   currentSeller: User;
 
-  constructor(authService: AuthenticationService) {
+  constructor(private authService: AuthenticationService) {
     this.currentSeller = authService.currentUserValue.user;
   }
 
   ngOnInit(): void {
+  }
+
+  logOut() {
+    this.authService.logout();
   }
 }

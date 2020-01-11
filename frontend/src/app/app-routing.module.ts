@@ -3,14 +3,12 @@ import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from "./ui/seller-panel/login/login.component";
 import {SellerPanelComponent} from "./ui/seller-panel/panel/seller-panel.component";
 import {AuthGuard} from "./authentication/auth.guard";
-import {ManufacturersComponent} from "./ui/seller-panel/panel/manufacturers/manufacturers.component";
 
 
 const routes: Routes = [
   {path: 'login-panel', component: LoginComponent},
-  {path: 'categories', component: ManufacturersComponent},
   {path: 'control-panel', component: SellerPanelComponent, canActivate: [AuthGuard]},
-  {path: '**', redirectTo: ''}
+  {path: '**', redirectTo: 'login-panel'}
 ];
 
 @NgModule({

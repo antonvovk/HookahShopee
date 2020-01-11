@@ -1,13 +1,27 @@
-<div class="bottom-flex-container">
-  <div (click)="goBack()" class="go-back-area">
-    {{product.manufacturer.name}}
+<div *ngIf="product" class="header-name-container">
+  <div (click)="this.returned.emit(true)">
+    <span class="go-back-area">{{product.manufacturer.name}}</span>&nbsp;>&nbsp;
   </div>
-  &nbsp;> {{product.name}}
+  <div>
+    {{product.name}}
+  </div>
 </div>
 
-<div class="top-flex-container">
-  <div class="logo-container">
-    <img alt="manufacturer-logo" src="../../../../../../../assets/img/Rectangle%208.png">
+<div class="main-container">
+  <div class="outer-logo-container">
+    <div class="logo-container">
+      <img *ngIf="product && product.imageName" [src]="imageService.getImage(product.imageName)" alt="post-image">
+      <img *ngIf="!product || !product.imageName" alt="post-default-image"
+           src="../../../../../../../assets/img/tabaco-default.png"
+           style="max-height: 250px;">
+    </div>
+    <div class="update-image-btn-container">
+      <label [ngClass]="{'grey-btn': !product}" class="file-upload-btn" for="file-upload">
+        <i class="fa fa-cloud-upload"></i> Оновити фото
+      </label>
+      <input (change)="updateImage($event)" [disabled]="!product" id="file-upload"
+             type="file"/>
+    </div>
   </div>
   <div class="info-container">
     <div class="text-container">
@@ -28,40 +42,42 @@
         <input [formControl]="discount" matInput placeholder="">
       </mat-form-field>
     </div>
-    <div class="buttons-container">
-      <button (click)="onSave()" class="red-btn" color="primary" fxFlexOffset="30px" mat-stroked-button>Зберегти
-      </button>
-      <button (click)="onDelete()" class="red-btn" color="primary" fxFlexOffset="30px" mat-stroked-button>Видалити
-      </button>
-    </div>
   </div>
 </div>
-
-<div class="bottom-flex-container">
-  Кількість
-</div>
-
-<div class="quantity-flex-container">
-  <div *ngFor="let productQuantity of productQuantities" class="text-container2">
-    {{productQuantity.user.firstName}} {{productQuantity.user.lastName}}
-    <mat-form-field appearance="outline">
-      <mat-label>Кількість</mat-label>
-      <input [value]="productQuantity.quantity.toString()" matInput placeholder="">
-    </mat-form-field>
-  </div>
-</div>
-
 
 <div class="description-header">
   Опис
 </div>
 
 <div class="description-editor-container">
-  <quill-editor [formControl]="description" [styles]="editorStyle" theme="snow"></quill-editor>
+  <quill-editor [formControl]="description" [styles]="{height: '400px', width: '100%'}" theme="snow"></quill-editor>
 </div>
 
 <div class="description-save-btn-container">
-  <button (click)="onUpdateDescription()" class="red-btn" color="primary" fxFlexOffset="30px" mat-stroked-button>
-    Зберегти опис
-  </button>
+  <div class="buttons-container">
+    <button (click)="saveProduct()" class="red-btn mr-right-30" color="primary" fxFlexOffset="30px" mat-stroked-button>
+      Зберегти
+    </button>
+    <button (click)="deleteProduct()" class="red-btn" color="primary" fxFlexOffset="30px" mat-stroked-button>Видалити
+    </button>
+  </div>
+</div>
+
+<div *ngIf="product" class="quantity-header">
+  Кількість
+</div>
+
+<div *ngIf="product" class="quantity-flex-container">
+  <div *ngFor="let productQuantity of productQuantities; let i = index;" class="text-container2">
+    <div class="seller-container">
+      {{productQuantity.user.firstName}} {{productQuantity.user.lastName}}
+    </div>
+    <div class="quantity-container">
+      <mat-form-field appearance="outline">
+        <mat-label>Кількість</mat-label>
+        <input #quantities [value]="productQuantity.quantity.toString()" matInput placeholder="">
+        <mat-icon (click)="updateQuantity(productQuantity.user, i)" color="warn" matSuffix>save</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
 </div>

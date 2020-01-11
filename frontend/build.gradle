@@ -20,7 +20,7 @@ task packageNpmApp(type: Zip) {
   dependsOn npm_run_build
   baseName 'frontend'
   extension 'jar'
-  destinationDir file("${projectDir}/build")
+  destinationDir file("${projectDir}/build_packageNpmApp")
   from('dist/HookahShopee') {
     into 'static'
   }
@@ -41,6 +41,28 @@ artifacts {
 
 assemble.dependsOn packageNpmApp
 
+String testsExecutedMarkerName = "${projectDir}/.tests.executed"
+
+task test(type: NpmTask) {
+  dependsOn assemble
+
+  environment CI: 'true'
+
+  args = ['run', 'test']
+
+  inputs.files fileTree('src')
+  inputs.file 'package.json'
+  inputs.file 'package-lock.json'
+
+  doLast {
+    new File(testsExecutedMarkerName).text = 'delete this file to force re-execution JavaScript tests'
+  }
+  outputs.file testsExecutedMarkerName
+}
+
+check.dependsOn test
+
 clean {
   delete packageNpmApp.archivePath
+  delete testsExecutedMarkerName
 }

@@ -14,7 +14,9 @@ export class ProductAdapter implements Adapter<Product> {
       item.discount,
       item.finalPrice,
       item.description,
-      item.manufacturer
+      item.imageName,
+      item.manufacturer,
+      item.productQuantity
     );
   }
 }
