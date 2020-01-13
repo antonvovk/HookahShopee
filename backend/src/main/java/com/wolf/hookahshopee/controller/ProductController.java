@@ -1,10 +1,9 @@
 package com.wolf.hookahshopee.controller;
 
-import com.wolf.hookahshopee.dto.ProductDTO;
-import com.wolf.hookahshopee.dto.ProductLightDTO;
-import com.wolf.hookahshopee.dto.ProductQuantityForSellersDTO;
+import com.wolf.hookahshopee.dto.*;
 import com.wolf.hookahshopee.service.FileStorageService;
 import com.wolf.hookahshopee.service.ProductService;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -35,10 +34,18 @@ public class ProductController {
         return CompletableFuture.completedFuture(ResponseEntity.ok(productService.findById(id)));
     }
 
-    @Async
+//    @Async
+//    @GetMapping
+//    public CompletableFuture<ResponseEntity<List<ProductDTO>>> findAll() {
+//        return CompletableFuture.completedFuture(ResponseEntity.ok(productService.findAll()));
+//    }
+
     @GetMapping
-    public CompletableFuture<ResponseEntity<List<ProductDTO>>> findAll() {
-        return CompletableFuture.completedFuture(ResponseEntity.ok(productService.findAll()));
+    public PageDTO<ProductDTO> getAllUser(ProductListRequest request,
+                                          @RequestParam(name = "page") Integer page,
+                                          @RequestParam(name = "size") Integer size) {
+
+        return productService.findAll(request, PageRequest.of(page, size));
     }
 
     @Async

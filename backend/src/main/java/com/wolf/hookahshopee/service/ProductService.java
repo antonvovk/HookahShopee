@@ -1,8 +1,7 @@
 package com.wolf.hookahshopee.service;
 
-import com.wolf.hookahshopee.dto.ProductDTO;
-import com.wolf.hookahshopee.dto.ProductLightDTO;
-import com.wolf.hookahshopee.dto.ProductQuantityForSellersDTO;
+import com.wolf.hookahshopee.dto.*;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -10,7 +9,7 @@ public interface ProductService {
 
     ProductDTO findById(Long id);
 
-    List<ProductDTO> findAll();
+    PageDTO<ProductDTO> findAll(ProductListRequest request, Pageable pageable);
 
     List<ProductDTO> findAllByFinalPrice(Integer startPrice, Integer endPrice);
 

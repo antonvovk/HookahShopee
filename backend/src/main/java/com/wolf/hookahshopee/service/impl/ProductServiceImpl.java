@@ -1,9 +1,7 @@
 package com.wolf.hookahshopee.service.impl;
 
-import com.wolf.hookahshopee.dto.ProductDTO;
-import com.wolf.hookahshopee.dto.ProductLightDTO;
-import com.wolf.hookahshopee.dto.ProductQuantityForCitiesDTO;
-import com.wolf.hookahshopee.dto.ProductQuantityForSellersDTO;
+import com.wolf.hookahshopee.controller.specification.ProductListSpecification;
+import com.wolf.hookahshopee.dto.*;
 import com.wolf.hookahshopee.exception.EntityNotFoundException;
 import com.wolf.hookahshopee.mapper.CityMapper;
 import com.wolf.hookahshopee.mapper.ProductMapper;
@@ -15,6 +13,8 @@ import com.wolf.hookahshopee.repository.ProductRepository;
 import com.wolf.hookahshopee.repository.UserRepository;
 import com.wolf.hookahshopee.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -36,15 +36,19 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductItemRepository productItemRepository;
 
+    private final ProductListSpecification productListSpecification;
+
     public ProductServiceImpl(ProductRepository productRepository,
                               ManufacturerRepository manufacturerRepository,
                               UserRepository userRepository,
-                              ProductItemRepository productItemRepository) {
+                              ProductItemRepository productItemRepository,
+                              ProductListSpecification productListSpecification) {
 
         this.productRepository = productRepository;
         this.manufacturerRepository = manufacturerRepository;
         this.userRepository = userRepository;
         this.productItemRepository = productItemRepository;
+        this.productListSpecification = productListSpecification;
     }
 
     private List<ProductDTO> afterMapperLogic(List<Product> products) {
@@ -86,8 +90,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDTO> findAll() {
-        return afterMapperLogic(productRepository.findAll());
+    public PageDTO<ProductDTO> findAll(ProductListRequest request, Pageable pageable) {
+        Page<Product> userPage = productRepository.findAll(productListSpecification.getFilter(request), pageable);
+        return new PageDTO<>(ProductMapper.INSTANCE.toDto(userPage.getContent()), userPage.getTotalElements());
     }
 
     @Override
