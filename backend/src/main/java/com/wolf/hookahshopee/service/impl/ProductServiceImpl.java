@@ -92,7 +92,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public PageDTO<ProductDTO> findAll(ProductListRequest request, Pageable pageable) {
         Page<Product> userPage = productRepository.findAll(productListSpecification.getFilter(request), pageable);
-        return new PageDTO<>(ProductMapper.INSTANCE.toDto(userPage.getContent()), userPage.getTotalElements());
+        return new PageDTO<>(afterMapperLogic(userPage.getContent()), userPage.getTotalElements());
     }
 
     @Override

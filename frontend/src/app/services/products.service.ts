@@ -3,10 +3,11 @@ import {HttpClient, HttpParams, HttpResponse} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {ApiConfig} from "../config/api.config";
 import {map} from "rxjs/operators";
-import {ProductAdapter} from "../core/adapter/product.adapter";
 import {Product} from "../core/model/product.model";
 import {ProductQuantityBySellers} from "../core/model/product-quantity-by-sellers.model";
 import {ProductQuantityBySellersAdapter} from "../core/adapter/product-quantity-by-sellers.adapter";
+import {Page} from "../core/model/page.model";
+import {ProductPageAdapter} from "../core/adapter/product-page.adapter";
 
 @Injectable({
   providedIn: 'root'
@@ -14,15 +15,23 @@ import {ProductQuantityBySellersAdapter} from "../core/adapter/product-quantity-
 export class ProductsService {
 
   constructor(private http: HttpClient,
-              private adapter: ProductAdapter,
+              private adapter: ProductPageAdapter,
               private productQuantityBySellersAdapter: ProductQuantityBySellersAdapter) {
 
   }
 
-  findAllByManufacturer(manufacturerName: string): Observable<Product[]> {
+  findAll(page: number, size: number, manufacturers: string[]): Observable<Page<Product>> {
+    let params = new HttpParams();
+    params = params.append('page', page.toString());
+    params = params.append('size', size.toString());
+
+    if (manufacturers != null) {
+      params = params.append('manufacturers', manufacturers.join(', '));
+    }
+
     return this.http
-      .get<Product[]>(ApiConfig.apiUrl + '/product/byManufacturer/' + manufacturerName)
-      .pipe(map((data: any[]) => data.map(item => this.adapter.adapt(item))));
+      .get<Page<Product>>(ApiConfig.apiUrl + '/product', {params: params})
+      .pipe(map((data: any) => this.adapter.adapt(data)));
   }
 
   getQuantitiesBySellers(name: string): Observable<ProductQuantityBySellers[]> {

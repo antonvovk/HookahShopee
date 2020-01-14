@@ -37,6 +37,13 @@ import {ProductComponent} from './ui/seller-panel/panel/manufacturers/manufactur
 import {QuillModule} from "ngx-quill";
 import {PostsAddEditComponent} from './ui/seller-panel/panel/posts/posts-add-edit/posts-add-edit.component';
 import {getDutchPaginatorIntl} from "./core/paginator/ukr-paginator-intl";
+import {General} from './ui/general/general.component';
+import {FooterComponent} from './ui/general/footer/footer.component';
+import {MainComponent} from './ui/general/main/main.component';
+import {AboutUsComponent} from './ui/general/about-us/about-us.component';
+import {ProfileComponent} from './ui/general/profile/profile.component';
+import {ShopComponent} from './ui/general/shop/shop.component';
+import {BasketComponent} from './ui/general/basket/basket.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +60,14 @@ import {getDutchPaginatorIntl} from "./core/paginator/ukr-paginator-intl";
     AddSellerComponent,
     ManufacturersAddEditComponent,
     ProductComponent,
-    PostsAddEditComponent
+    PostsAddEditComponent,
+    General,
+    FooterComponent,
+    MainComponent,
+    AboutUsComponent,
+    ProfileComponent,
+    ShopComponent,
+    BasketComponent
   ],
   imports: [
     BrowserModule,
@@ -79,10 +93,10 @@ import {getDutchPaginatorIntl} from "./core/paginator/ukr-paginator-intl";
     QuillModule.forRoot()
   ],
   providers: [
-      {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-      {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-      AuthGuard,
-      {provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl()}
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    AuthGuard,
+    {provide: MatPaginatorIntl, useValue: getDutchPaginatorIntl()}
   ],
   bootstrap: [AppComponent]
 })

@@ -7,6 +7,7 @@ import {Product} from "../../../../../core/model/product.model";
 import {ProductsService} from "../../../../../services/products.service";
 import {CitiesService} from "../../../../../services/cities.service";
 import {ImageService} from "../../../../../services/image.service";
+import {Page} from "../../../../../core/model/page.model";
 
 @Component({
   selector: 'app-manufacturers-add-edit',
@@ -23,7 +24,7 @@ export class ManufacturersAddEditComponent implements OnInit {
 
   edit_addMenuOpened: boolean = false;
   name = new FormControl('');
-  products: Product[] = [];
+  products: Page<Product> = new Page<Product>();
   product: Product = new Product();
 
   constructor(private manufacturersService: ManufacturersService,
@@ -36,7 +37,7 @@ export class ManufacturersAddEditComponent implements OnInit {
   ngOnInit() {
     if (this.manufacturer != null) {
       this.name.setValue(this.manufacturer.name);
-      this.productsService.findAllByManufacturer(this.manufacturer.name).subscribe(
+      this.productsService.findAll(0, 5, [this.manufacturer.name]).subscribe(
         products => {
           this.products = products;
         }
@@ -87,7 +88,7 @@ export class ManufacturersAddEditComponent implements OnInit {
   }
 
   onReturn($event: boolean) {
-    this.productsService.findAllByManufacturer(this.manufacturer.name).subscribe(
+    this.productsService.findAll(0, 5, [this.manufacturer.name]).subscribe(
       products => {
         this.products = products;
       }

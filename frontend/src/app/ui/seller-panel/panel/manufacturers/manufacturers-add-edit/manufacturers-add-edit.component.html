@@ -44,7 +44,7 @@
     </div>
 
 
-    <div (click)="menuOpened(product)" *ngFor="let product of products"
+    <div (click)="menuOpened(product)" *ngFor="let product of products.items"
          class="item-container">
       <div class="manufacturer-logo">
         <img *ngIf="product && product.imageName" [src]="imageService.getImage(product.imageName)" alt="post-image">

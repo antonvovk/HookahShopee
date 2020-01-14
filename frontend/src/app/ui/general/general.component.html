@@ -1,0 +1,37 @@
+<div class="general-container">
+  <div class="width-limiter">
+    <div class="header-container">
+      <header class="header">
+        <div (click)="changeIndex(0)" class="logo-container">
+          <img alt="logo-image" src="../../../assets/img/hookah-img-2.png">
+        </div>
+        <div class="navigation-container">
+          <div (click)="changeIndex(0)" [ngClass]="{'underline': currentMenuIndex === 0}"
+               class="text-vertical-center mr-30">
+            Головна
+          </div>
+          <div (click)="changeIndex(1)" [ngClass]="{'underline': currentMenuIndex === 1}"
+               class="text-vertical-center mr-30">
+            Магазин
+          </div>
+          <div (click)="changeIndex(2)" [ngClass]="{'underline': currentMenuIndex === 2}"
+               class="text-vertical-center mr-30">
+            Про нас
+          </div>
+          <div (click)="changeIndex(3)" [ngClass]="{'underline': currentMenuIndex === 3}" class="text-vertical-center">
+            Профіль
+          </div>
+        </div>
+        <div (click)="changeIndex(4)" class="basket-container">
+          <img alt="logo-image" src="../../../assets/img/basket.png">
+        </div>
+      </header>
+    </div>
+
+    <app-main *ngIf="currentMenuIndex === 0"></app-main>
+    <app-shop *ngIf="currentMenuIndex === 1"></app-shop>
+    <app-about-us *ngIf="currentMenuIndex === 2"></app-about-us>
+    <app-profile *ngIf="currentMenuIndex === 3"></app-profile>
+    <app-basket *ngIf="currentMenuIndex === 4"></app-basket>
+  </div>
+</div>
