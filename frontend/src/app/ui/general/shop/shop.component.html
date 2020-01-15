@@ -28,7 +28,7 @@
       </div>
       <div class="manufacturers-checkboxes">
         <label *ngFor="let manufacturer of manufacturers" class="container">{{manufacturer.manufacturer.name}}
-          <input [checked]="manufacturer.checked" type="checkbox">
+          <input [formControl]="manufacturer.checked" type="checkbox">
           <span class="checkmark"></span>
         </label>
       </div>
@@ -61,7 +61,7 @@
         <button class="reset-btn" color="warn" mat-button>
           Скинути
         </button>
-        <button class="apply-btn" color="warn" mat-button>
+        <button (click)="updateFilters()" class="apply-btn" color="warn" mat-button>
           Примінити
         </button>
       </div>
@@ -94,7 +94,7 @@
           {{product.finalPrice}} грн
         </div>
         <div class="basket-btn-container">
-          <button class="basket-btn" color="warn" mat-button>
+          <button class="basket-btn" color="warn" mat-button (click)="addToBasket(product)">
             В корзину
           </button>
         </div>

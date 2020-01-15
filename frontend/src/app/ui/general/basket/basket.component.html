@@ -1,1 +1,3 @@
-<p>basket works!</p>
+<div *ngFor="let item of basketService.getItems()">
+  {{item.price}} {{item.quantity}} {{item.product.name}}
+</div>

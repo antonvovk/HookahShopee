@@ -88,5 +88,11 @@ public class DataSeeder {
             productService.create(new ProductLightDTO("Adalya Blue Peach Mint" + i, 75, 0, "<p><strong style=\"color: rgb(61, 20, 102);\">Кращий табак в світі особливо якщо брати партії по двійній ціні</strong></p><p><strong style=\"color: rgb(61, 20, 102);\"> ● Milano</strong></p><p><strong style=\"color: rgb(61, 20, 102);\"> ● Adalya </strong></p><p><strong style=\"color: rgb(61, 20, 102);\">● Dark Side </strong></p><p><br></p>", new ManufacturerDTO("Adalya", null)));
             productItemService.create(new ProductItemLightDTO(10L, i + 1L, 1L));
         }
+
+        for (int i = 0; i < 10; ++i) {
+            productService.create(new ProductLightDTO("Hip Lem (Айс Апельсин Лайм) 100 Гр" + i, 150, 15, "<p><strong style=\"color: rgb(61, 20, 102);\">Кращий табак в світі особливо якщо брати партії по двійній ціні</strong></p><p><strong style=\"color: rgb(61, 20, 102);\"> ● Milano</strong></p><p><strong style=\"color: rgb(61, 20, 102);\"> ● Adalya </strong></p><p><strong style=\"color: rgb(61, 20, 102);\">● Dark Side </strong></p><p><br></p>", new ManufacturerDTO("Jibiar", null)));
+            productService.create(new ProductLightDTO("Jibiar - Fresh Blue (Айс Черника) 100 гр" + i, 150, 15, "<p><strong style=\"color: rgb(61, 20, 102);\">Кращий табак в світі особливо якщо брати партії по двійній ціні</strong></p><p><strong style=\"color: rgb(61, 20, 102);\"> ● Milano</strong></p><p><strong style=\"color: rgb(61, 20, 102);\"> ● Adalya </strong></p><p><strong style=\"color: rgb(61, 20, 102);\">● Dark Side </strong></p><p><br></p>", new ManufacturerDTO("Jibiar", null)));
+            productItemService.create(new ProductItemLightDTO(32L, i + 51L, 2L));
+        }
     }
 }

@@ -7,6 +7,8 @@ import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {ProductsService} from "../../../services/products.service";
 import {FormControl} from "@angular/forms";
 import {ManufacturersService} from "../../../services/manufacturers.service";
+import {BasketService} from "../../../services/basket.service";
+import {OrderItem} from "../../../core/model/order-item.model";
 
 @Component({
   selector: 'app-shop',
@@ -18,7 +20,7 @@ export class ShopComponent implements OnInit {
   cities: City[] = [];
   products: Page<Product> = new Page<Product>();
   manufacturers: any[] = [];
-  city = new FormControl('');
+  city = new FormControl('Львів');
   priceFrom = new FormControl(0);
   priceTo = new FormControl(10000);
   @ViewChild("productsPaginator", {static: true}) productsPaginator: MatPaginator;
@@ -27,7 +29,8 @@ export class ShopComponent implements OnInit {
 
   constructor(private citiesService: CitiesService,
               private productsService: ProductsService,
-              private manufacturersService: ManufacturersService) {
+              private manufacturersService: ManufacturersService,
+              private basketService: BasketService) {
 
   }
 
@@ -35,7 +38,6 @@ export class ShopComponent implements OnInit {
     this.citiesService.findAll().subscribe(
       cities => {
         this.cities = cities;
-        this.city.setValue(this.cities[0].name);
       }
     );
 
@@ -49,7 +51,7 @@ export class ShopComponent implements OnInit {
       manufacturers => {
         manufacturers.forEach(
           manufacturer => {
-            this.manufacturers.push({manufacturer: manufacturer, checked: false});
+            this.manufacturers.push({manufacturer: manufacturer, checked: new FormControl(false)});
           }
         );
       }
@@ -65,6 +67,38 @@ export class ShopComponent implements OnInit {
   }
 
   isInStock(product: Product): boolean {
-    return product.productQuantity.find(x => x.city.name == this.city.value) != null;
+    return product.productQuantity.find(x => x.city.name === this.city.value) != null;
+  }
+
+  updateFilters() {
+    let cityName = null;
+    let onPromotion = null;
+
+    if (this.inStockChecked.value === true) {
+      cityName = this.city.value;
+    }
+
+    if (this.onPromotionChecked.value == true) {
+      onPromotion = true;
+    }
+
+    this.productsService.findAll(
+      this.productsPaginator.pageIndex,
+      this.productsPaginator.pageSize,
+      this.manufacturers.filter(x => x.checked.value === true).map(x => x.manufacturer.name),
+      this.priceFrom.value,
+      this.priceTo.value,
+      cityName,
+      onPromotion
+    ).subscribe(
+      products => {
+        this.products = products;
+      }
+    );
+  }
+
+  addToBasket(product: Product) {
+    this.basketService.addItem(new OrderItem(product.price, 1, product));
   }
 }
+
