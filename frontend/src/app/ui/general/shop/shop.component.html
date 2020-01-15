@@ -1,6 +1,6 @@
 <div *ngIf="cities[0]" class="city-select-container">
   <mat-form-field class="full-width">
-    <mat-select value="{{cities[0].name}}">
+    <mat-select [formControl]="city" value="{{cities[0].name}}">
       <mat-option *ngFor="let city of cities" value="{{city.name}}">
         {{city.name}}
       </mat-option>
@@ -8,12 +8,98 @@
   </mat-form-field>
 </div>
 
-<div>
+<div class="products-container">
   <div class="filters-container">
 
-  </div>
-  <div>
+    <div class="price-container">
+      <div class="text-container">
+        Ціна:
+      </div>
+      <div class="price-inputs">
+        <input [formControl]="priceFrom" class="red-input" placeholder="">
+        <hr class="red-line">
+        <input [formControl]="priceTo" class="red-input" placeholder="">
+      </div>
+    </div>
 
+    <div class="manufacturers-filter-container">
+      <div class="text-container">
+        Виробник:
+      </div>
+      <div class="manufacturers-checkboxes">
+        <label *ngFor="let manufacturer of manufacturers" class="container">{{manufacturer.manufacturer.name}}
+          <input [checked]="manufacturer.checked" type="checkbox">
+          <span class="checkmark"></span>
+        </label>
+      </div>
+
+      <div class="manufacturers-filter-container">
+        <div class="text-container">
+          Наявність:
+        </div>
+        <div class="manufacturers-checkboxes">
+          <label class="container">В наявності
+            <input [formControl]="inStockChecked" type="checkbox">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="manufacturers-filter-container">
+        <div class="text-container">
+          Акційний:
+        </div>
+        <div class="manufacturers-checkboxes">
+          <label class="container">Акційний товар
+            <input [formControl]="onPromotionChecked" type="checkbox">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="buttons-container">
+        <button class="reset-btn" color="warn" mat-button>
+          Скинути
+        </button>
+        <button class="apply-btn" color="warn" mat-button>
+          Примінити
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="product-items-container">
+    <div *ngFor="let product of products.items" class="product-item">
+      <div class="top">
+        <div class="product-image">
+          <img alt="product-image" src="../../../../assets/img/Rectangle%208.png"/>
+        </div>
+      </div>
+      <div class="bottom">
+        <div class="product-name">
+          {{product.name}}
+        </div>
+        <div class="product-availability">
+          <div *ngIf="isInStock(product)" class="green-text">
+            в наявності
+          </div>
+          <div *ngIf="!isInStock(product)" class="red-text">
+            не в наявності
+          </div>
+        </div>
+        <div [ngClass]="{'crossed-text-red': product.discount > 0}" class="product-price">
+          {{product.price}} грн
+        </div>
+        <div *ngIf="product.discount > 0" class="product-discount">
+          {{product.finalPrice}} грн
+        </div>
+        <div class="basket-btn-container">
+          <button class="basket-btn" color="warn" mat-button>
+            В корзину
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 

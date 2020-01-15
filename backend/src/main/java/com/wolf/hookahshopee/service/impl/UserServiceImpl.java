@@ -85,10 +85,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void create(UserLightDTO sellerDTO) {
-        City city = cityRepository.findById(sellerDTO.getCityId()).orElse(null);
+        City city = cityRepository.findByName(sellerDTO.getCityName()).orElse(null);
 
         if (city == null) {
-            throw new EntityNotFoundException(City.class, "cityId", sellerDTO.getCityId().toString());
+            throw new EntityNotFoundException(City.class, "cityName", sellerDTO.getCityName());
         }
 
         User user = User.builder()
@@ -111,10 +111,10 @@ public class UserServiceImpl implements UserService {
             throw new EntityNotFoundException(User.class, "id", id.toString());
         }
 
-        City city = cityRepository.findById(sellerDTO.getCityId()).orElse(null);
+        City city = cityRepository.findByName(sellerDTO.getCityName()).orElse(null);
 
         if (city == null) {
-            throw new EntityNotFoundException(City.class, "cityId", sellerDTO.getCityId().toString());
+            throw new EntityNotFoundException(City.class, "cityName", sellerDTO.getCityName());
         }
 
         user.setPhoneNumber(sellerDTO.getPhoneNumber());

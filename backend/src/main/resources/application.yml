@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:sqlserver://localhost:1433;database=HookahShopee;useUnicode=yes&characterEncoding=UTF-8
     username: sa
-    password: 12345678qwa
+    password: qw&UZ**485$xX9
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     initialization-mode: always
     sql-script-encoding: UTF-8
