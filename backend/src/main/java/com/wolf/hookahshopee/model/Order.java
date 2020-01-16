@@ -25,6 +25,7 @@ public class Order {
 
     @Column(name = "UUID", columnDefinition = "uniqueidentifier", updatable = false, nullable = false, unique = true)
     private UUID uuid;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "SELLER_ID")
     private User seller;

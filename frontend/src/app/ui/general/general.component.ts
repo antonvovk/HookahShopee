@@ -7,7 +7,7 @@ import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 })
 export class General implements OnInit {
 
-  currentMenuIndex: number = 1;
+  currentMenuIndex: number = 4;
 
   constructor(private changeDetector: ChangeDetectorRef) {
 

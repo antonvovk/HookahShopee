@@ -26,4 +26,7 @@ public class City {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "city")
     private List<User> users;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "city")
+    private List<ProductReservation> productReservations;
 }

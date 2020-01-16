@@ -67,7 +67,11 @@ export class ShopComponent implements OnInit {
   }
 
   isInStock(product: Product): boolean {
-    return product.productQuantity.find(x => x.city.name === this.city.value) != null;
+    if (product.productQuantity.find(x => x.city.name === this.city.value) == null) {
+      return false;
+    } else {
+      return product.productQuantity.find(x => x.city.name === this.city.value).quantity > 0;
+    }
   }
 
   updateFilters() {
@@ -98,7 +102,7 @@ export class ShopComponent implements OnInit {
   }
 
   addToBasket(product: Product) {
-    this.basketService.addItem(new OrderItem(product.price, 1, product));
+    this.basketService.addItem(new OrderItem(product.price, 1, product), this.city.value);
   }
 }
 

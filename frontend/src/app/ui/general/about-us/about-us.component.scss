@@ -1,0 +1,86 @@
+.main-container {
+  margin-left: 2vw;
+  margin-top: 100px;
+}
+
+.shop-name {
+  font-weight: 500;
+  font-size: 50px;
+  color: #0C0B0B;
+}
+
+.lviv-shop-container {
+  margin-top: 50px;
+}
+
+.city-name {
+  font-weight: 500;
+  font-size: 40px;
+}
+
+.shop-info-container {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.shop-info-outer {
+  margin-top: 35px;
+  margin-right: 90px;
+}
+
+.working-hours {
+  margin-top: 18px;
+  font-weight: 500;
+  font-size: 25px;
+  margin-left: 20px;
+}
+
+.working-hours-inner {
+  display: flex;
+  align-items: center;
+}
+
+.working-hours-inner img {
+  margin-right: 8px;
+}
+
+.container-title {
+  font-weight: 500;
+  font-size: 32px;
+}
+
+.contacts {
+  margin-top: 35px;
+}
+
+.contacts-info {
+  margin-top: 18px;
+  font-weight: 500;
+  font-size: 25px;
+  margin-left: 20px;
+}
+
+.contact {
+  display: flex;
+  align-items: center;
+}
+
+.contact img {
+  margin-right: 8px;
+}
+
+.mr-top {
+  margin-top: 15px;
+}
+
+.addresses-map-name {
+  margin-top: 60px;
+  margin-bottom: 60px;
+  font-weight: 500;
+  font-size: 50px;
+}
+
+#map {
+  height: 500px;
+  width: 100%;
+}

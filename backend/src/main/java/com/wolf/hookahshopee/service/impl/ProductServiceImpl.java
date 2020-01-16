@@ -7,10 +7,7 @@ import com.wolf.hookahshopee.mapper.CityMapper;
 import com.wolf.hookahshopee.mapper.ProductMapper;
 import com.wolf.hookahshopee.mapper.UserMapper;
 import com.wolf.hookahshopee.model.*;
-import com.wolf.hookahshopee.repository.ManufacturerRepository;
-import com.wolf.hookahshopee.repository.ProductItemRepository;
-import com.wolf.hookahshopee.repository.ProductRepository;
-import com.wolf.hookahshopee.repository.UserRepository;
+import com.wolf.hookahshopee.repository.*;
 import com.wolf.hookahshopee.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -38,17 +35,25 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductListSpecification productListSpecification;
 
+    private final ProductReservationRepository productReservationRepository;
+
+    private final CityRepository cityRepository;
+
     public ProductServiceImpl(ProductRepository productRepository,
                               ManufacturerRepository manufacturerRepository,
                               UserRepository userRepository,
                               ProductItemRepository productItemRepository,
-                              ProductListSpecification productListSpecification) {
+                              ProductListSpecification productListSpecification,
+                              ProductReservationRepository productReservationRepository,
+                              CityRepository cityRepository) {
 
         this.productRepository = productRepository;
         this.manufacturerRepository = manufacturerRepository;
         this.userRepository = userRepository;
         this.productItemRepository = productItemRepository;
         this.productListSpecification = productListSpecification;
+        this.productReservationRepository = productReservationRepository;
+        this.cityRepository = cityRepository;
     }
 
     private List<ProductDTO> afterMapperLogic(List<Product> products) {
@@ -63,11 +68,16 @@ public class ProductServiceImpl implements ProductService {
 
             List<ProductQuantityForCitiesDTO> productQuantities = new ArrayList<>();
 
-            res.forEach((k, v) -> {
-                productQuantities.add(new ProductQuantityForCitiesDTO(
-                        v.stream().mapToLong(ProductItem::getQuantity).sum(),
-                        CityMapper.INSTANCE.toDto(k)
-                ));
+            res.forEach((city, productItems) -> {
+                Long quantity = productItems.stream().mapToLong(ProductItem::getQuantity).sum();
+
+                ProductReservation productReservation = productReservationRepository.findByProductAndCity(product, city).orElse(null);
+
+                if (productReservation != null) {
+                    quantity -= productReservation.getQuantity();
+                }
+
+                productQuantities.add(new ProductQuantityForCitiesDTO(quantity, CityMapper.INSTANCE.toDto(city)));
             });
 
             ProductDTO productDTO = ProductMapper.INSTANCE.toDto(product);

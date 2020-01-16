@@ -22,8 +22,9 @@
     "@angular/platform-browser": "~8.2.14",
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
+    "google-maps": "^4.2.3",
     "hammerjs": "^2.0.8",
-    "ngx-quill": "^7.3.11",
+    "ngx-quill": "^7.3.12",
     "ngx-toastr": "^11.3.0",
     "quill": "^1.3.7",
     "quilljs": "^0.18.1",
@@ -32,8 +33,8 @@
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.803.22",
-    "@angular/cli": "^8.3.22",
+    "@angular-devkit/build-angular": "^0.803.23",
+    "@angular/cli": "^8.3.23",
     "@angular/compiler-cli": "~8.2.14",
     "@angular/language-service": "~8.2.14",
     "@types/jasmine": "~3.3.8",
