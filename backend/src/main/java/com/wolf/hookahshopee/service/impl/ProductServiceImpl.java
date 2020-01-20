@@ -106,22 +106,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDTO> findAllByFinalPrice(Integer startPrice, Integer endPrice) {
-        return afterMapperLogic(productRepository.findAllByFinalPriceGreaterThanEqualAndFinalPriceLessThanEqual(startPrice, endPrice));
-    }
-
-    @Override
-    public List<ProductDTO> findAllByManufacturer(String manufacturerName) {
-        Manufacturer manufacturer = manufacturerRepository.findByName(manufacturerName).orElse(null);
-
-        if (manufacturer == null) {
-            throw new EntityNotFoundException(Manufacturer.class, "manufacturerName", manufacturerName);
-        }
-
-        return afterMapperLogic(productRepository.findAllByManufacturer(manufacturer));
-    }
-
-    @Override
     public List<ProductQuantityForSellersDTO> getAllQuantitiesBySellers(String name) {
         Product product = productRepository.findByName(name).orElse(null);
 
@@ -155,6 +139,7 @@ public class ProductServiceImpl implements ProductService {
                 .price(productDTO.getPrice())
                 .discount(productDTO.getDiscount())
                 .finalPrice(productDTO.getPrice() - productDTO.getDiscount())
+                .numberOfSales(0L)
                 .description(productDTO.getDescription())
                 .manufacturer(manufacturer)
                 .build();

@@ -1,6 +1,6 @@
 export class City {
 
-  constructor(name: string) {
+  constructor(name?: string) {
     this._name = name;
   }
 

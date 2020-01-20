@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void create(UserLightDTO sellerDTO) {
+    public void register(UserLightDTO sellerDTO, Role role) {
         City city = cityRepository.findByName(sellerDTO.getCityName()).orElse(null);
 
         if (city == null) {
@@ -96,7 +96,7 @@ public class UserServiceImpl implements UserService {
                 .firstName(sellerDTO.getFirstName())
                 .lastName(sellerDTO.getLastName())
                 .password(passwordEncoder.encode(sellerDTO.getPassword()))
-                .role(sellerDTO.getRole())
+                .role(role)
                 .city(city)
                 .build();
 
@@ -121,7 +121,6 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(sellerDTO.getFirstName());
         user.setLastName(sellerDTO.getLastName());
         user.setPassword(passwordEncoder.encode(sellerDTO.getPassword()));
-        user.setRole(sellerDTO.getRole());
         user.setCity(city);
 
         userRepository.save(user);

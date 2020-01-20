@@ -1,0 +1,31 @@
+<div class="logo-container">
+  <img alt="Logo image" src="../../../assets/img/hookah-img-1.png">
+</div>
+
+<div class="inputs-container">
+  <div class="full-width">
+    <mat-form-field appearance="outline">
+      <mat-label>Логін</mat-label>
+      <input [formControl]="username" matInput placeholder="">
+    </mat-form-field>
+  </div>
+
+  <div class="full-width" style="margin-top: 20px;">
+    <mat-form-field appearance="outline">
+      <mat-label>Пароль</mat-label>
+      <input [formControl]="password" matInput placeholder="">
+    </mat-form-field>
+  </div>
+
+  <div class="full-width" style="margin-top: 30px;">
+    <button (click)="onSubmit()" class="login-btn">Увійти</button>
+  </div>
+
+  <div class="full-width red" style="margin-top: 20px;">
+    Забули пароль?
+  </div>
+
+  <div (click)="returned.emit(true)" class="full-width red" style="margin-top: 10px;">
+    Зареєструватись
+  </div>
+</div>

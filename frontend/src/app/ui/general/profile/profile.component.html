@@ -1,1 +1,2 @@
-<p>profile works!</p>
+<app-login-panel *ngIf="!authenticationService.isAuthenticated() && currentMenuIndex === 0" (returned)="onReturned2()"></app-login-panel>
+<app-registration *ngIf="currentMenuIndex === 1" (returned)="onReturned()"></app-registration>

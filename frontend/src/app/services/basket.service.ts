@@ -21,6 +21,14 @@ export class BasketService {
     return this.currentBasketSubject.value.items;
   }
 
+  public getTotalPrice(): number {
+    let sum: number = 0;
+    this.currentBasketSubject.value.items.forEach(value => {
+      sum += value.price;
+    });
+    return sum;
+  }
+
   public addItem(item: OrderItem, cityName: string) {
     this.productReservationService.addProductReservation(item.product.name, cityName, item.quantity).subscribe(
       res => {

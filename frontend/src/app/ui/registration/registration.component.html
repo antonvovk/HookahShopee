@@ -1,0 +1,66 @@
+<div class="logo-container">
+  <img src="../../../assets/img/hookah-img-1.png">
+</div>
+
+<div class="form-container">
+  <div class="centered-container big-text">
+    Реєстрація
+  </div>
+
+  <div class="centered-container">
+    <input (keypress)="autocompleteNumber($event)" [formControl]="phoneNumberFormControl" class="styled-input"
+           maxlength="16"
+           placeholder="Номер телефону">
+  </div>
+
+  <div class="centered-container">
+    <input [formControl]="smsCodeFormControl" [value]="getValueSmsCode()" class="styled-input" placeholder="Код з смс "
+           readonly>
+  </div>
+
+  <div class="centered-container">
+    <input [attr.disabled]="!validateNumber() ? '' : null" [formControl]="passwordFormControl" class="styled-input"
+           maxlength="20"
+           placeholder="Пароль"
+           type="password">
+  </div>
+
+  <div class="centered-container">
+    <input [attr.disabled]="!validateNumber() ? '' : null" [formControl]="reenteredPasswordFormControl"
+           class="styled-input"
+           maxlength="20"
+           placeholder="Повторіть пароль"
+           type="password">
+  </div>
+
+  <div class="centered-container">
+    <input [attr.disabled]="!validateNumber() || !validatePassword() ? '' : null"
+           [formControl]="firstAndLastNamesFormControl"
+           class="styled-input" placeholder="Прізвище та ім’я">
+  </div>
+
+  <div class="centered-container">
+    <select [attr.disabled]="!validateNumber() || !validatePassword() || !validateFirstAndLastName() ? '' : null"
+            [formControl]="cityFormControl"
+            [ngClass]="{'bg-dis': !validateNumber() || !validatePassword() || !validateFirstAndLastName()}"
+            class="styled-input2">
+      <option *ngFor="let city of cities" value="{{city.name}}">
+        {{city.name}}
+      </option>
+    </select>
+  </div>
+
+  <div class="centered-container top-gap">
+    <button (click)="register()"
+            [attr.disabled]="!validateNumber() || !validatePassword() || !validateFirstAndLastName() ? '' : null"
+            [ngClass]="{'dis-btn': !validateNumber() || !validatePassword() || !validateFirstAndLastName()}"
+            class="red-btn"
+            type="button">
+      Зареєструватись
+    </button>
+  </div>
+
+  <div (click)="returned.emit(true)" class="centered-container text">
+    Уже маєте аккаунт? Увійдіть
+  </div>
+</div>

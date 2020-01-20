@@ -1,1 +1,36 @@
-<p>main works!</p>
+<div *ngIf="cities[0]" class="city-select-container">
+  <mat-form-field class="full-width">
+    <mat-select (selectionChange)="updateCity()" [formControl]="city" value="{{cities[0].name}}">
+      <mat-option *ngFor="let city of cities" value="{{city.name}}">
+        {{city.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div class="slider-container">
+  <owl-carousel-o [options]="customOptions">
+    <ng-template carouselSlide>
+      <div class="item">
+        <img alt="lorem-image" src="https://picsum.photos/seed/1/980/400">
+      </div>
+    </ng-template>
+    <ng-template carouselSlide>
+      <div class="item">
+        <img alt="lorem-image" src="https://picsum.photos/seed/2/980/400">
+      </div>
+    </ng-template>
+    <ng-template carouselSlide>
+      <div class="item">
+        <img alt="lorem-image" src="https://picsum.photos/seed/3/980/400">
+      </div>
+    </ng-template>
+    <ng-template carouselSlide>
+      <div class="item">
+        <img alt="lorem-image" src="https://picsum.photos/seed/4/980/400">
+      </div>
+    </ng-template>
+  </owl-carousel-o>
+</div>
+<app-products-slider [products]="bestValueProducts" [city]="city.value" header="Найвигідніші пропозиції"></app-products-slider>
+<app-products-slider [products]="hitSaleProducts" [city]="city.value" header="Хіт продаж"></app-products-slider>

@@ -20,7 +20,7 @@ public interface UserService {
 
     List<UserDTO> findAllByCity(Long cityId);
 
-    void create(UserLightDTO sellerDTO);
+    void register(UserLightDTO sellerDTO, Role role);
 
     void update(UserLightDTO sellerDTO, Long id);
 

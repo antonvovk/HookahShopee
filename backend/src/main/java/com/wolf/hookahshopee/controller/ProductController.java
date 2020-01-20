@@ -4,6 +4,7 @@ import com.wolf.hookahshopee.dto.*;
 import com.wolf.hookahshopee.service.FileStorageService;
 import com.wolf.hookahshopee.service.ProductService;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -34,31 +35,17 @@ public class ProductController {
         return CompletableFuture.completedFuture(ResponseEntity.ok(productService.findById(id)));
     }
 
-//    @Async
-//    @GetMapping
-//    public CompletableFuture<ResponseEntity<List<ProductDTO>>> findAll() {
-//        return CompletableFuture.completedFuture(ResponseEntity.ok(productService.findAll()));
-//    }
-
+    @Async
     @GetMapping
-    public PageDTO<ProductDTO> getAllUser(ProductListRequest request,
-                                          @RequestParam(name = "page") Integer page,
-                                          @RequestParam(name = "size") Integer size) {
-
-        return productService.findAll(request, PageRequest.of(page, size));
-    }
-
-    @Async
-    @GetMapping(value = "/byFinalPrice/{startPrice}/{endPrice}")
-    public CompletableFuture<ResponseEntity<List<ProductDTO>>> findAllByFinalPrice(@PathVariable(name = "startPrice") Integer startPrice,
-                                                                                   @PathVariable(name = "endPrice") Integer endPrice) {
-        return CompletableFuture.completedFuture(ResponseEntity.ok(productService.findAllByFinalPrice(startPrice, endPrice)));
-    }
-
-    @Async
-    @GetMapping(value = "/byManufacturer/{manufacturerName}")
-    public CompletableFuture<ResponseEntity<List<ProductDTO>>> findAllByManufacturer(@PathVariable(name = "manufacturerName") String manufacturerName) {
-        return CompletableFuture.completedFuture(ResponseEntity.ok(productService.findAllByManufacturer(manufacturerName)));
+    public CompletableFuture<PageDTO<ProductDTO>> findAll(ProductListRequest request,
+                                                          @RequestParam(name = "page") Integer page,
+                                                          @RequestParam(name = "size") Integer size,
+                                                          @RequestParam(name = "sortColumn", required = false) String sortColumn) {
+        if (sortColumn == null) {
+            return CompletableFuture.completedFuture(productService.findAll(request, PageRequest.of(page, size)));
+        } else {
+            return CompletableFuture.completedFuture(productService.findAll(request, PageRequest.of(page, size, Sort.by(sortColumn).descending())));
+        }
     }
 
     @Async

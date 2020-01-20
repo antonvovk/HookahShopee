@@ -77,10 +77,10 @@ public class DataSeeder {
     }
 
     private void seedUsers() {
-        userService.create(new UserLightDTO("380963587506", "Богдан", "Данкович", "password", Role.ADMIN, "Львів"));
-        userService.create(new UserLightDTO("380970362116", "Віталій", "Боянівський", "password", Role.SELLER, "Івано-франківськ"));
-        userService.create(new UserLightDTO("380958674875", "Ярослав", "Мудрий", "password", Role.CLIENT, "Львів"));
-        userService.create(new UserLightDTO("380965876896", "Антон", "Вовк", "password", Role.CLIENT, "Івано-франківськ"));
+        userService.register(new UserLightDTO("380963587506", "Богдан", "Данкович", "password", "Львів"), Role.ADMIN);
+        userService.register(new UserLightDTO("380970362116", "Віталій", "Боянівський", "password", "Івано-франківськ"), Role.SELLER);
+        userService.register(new UserLightDTO("380958674875", "Ярослав", "Мудрий", "password", "Львів"), Role.SELLER);
+        userService.register(new UserLightDTO("380965876896", "Антон", "Вовк", "password", "Івано-франківськ"), Role.CLIENT);
     }
 
     private void seedProducts() {

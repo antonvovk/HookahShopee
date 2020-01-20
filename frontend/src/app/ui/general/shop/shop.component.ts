@@ -9,6 +9,7 @@ import {FormControl} from "@angular/forms";
 import {ManufacturersService} from "../../../services/manufacturers.service";
 import {BasketService} from "../../../services/basket.service";
 import {OrderItem} from "../../../core/model/order-item.model";
+import {CitySaverService} from "../../../services/city-saver.service";
 
 @Component({
   selector: 'app-shop',
@@ -30,7 +31,8 @@ export class ShopComponent implements OnInit {
   constructor(private citiesService: CitiesService,
               private productsService: ProductsService,
               private manufacturersService: ManufacturersService,
-              private basketService: BasketService) {
+              private basketService: BasketService,
+              private citySaverService: CitySaverService) {
 
   }
 
@@ -104,5 +106,8 @@ export class ShopComponent implements OnInit {
   addToBasket(product: Product) {
     this.basketService.addItem(new OrderItem(product.price, 1, product), this.city.value);
   }
-}
 
+  updateCity() {
+    this.citySaverService.setCity(this.city.value);
+  }
+}

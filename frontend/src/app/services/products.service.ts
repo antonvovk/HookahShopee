@@ -20,7 +20,8 @@ export class ProductsService {
 
   }
 
-  findAll(page: number, size: number, manufacturers?: string[], startPrice?: number, endPrice?: number, cityName?: string, isOnDiscount?: boolean): Observable<Page<Product>> {
+  findAll(page: number, size: number, manufacturers?: string[], startPrice?: number, endPrice?: number,
+          cityName?: string, isOnDiscount?: boolean, sortColumn?: string): Observable<Page<Product>> {
     let params = new HttpParams();
     params = params.append('page', page.toString());
     params = params.append('size', size.toString());
@@ -45,7 +46,9 @@ export class ProductsService {
       params = params.append('isOnDiscount', isOnDiscount ? 'true' : 'false');
     }
 
-    console.log(params);
+    if (sortColumn != null) {
+      params = params.append('sortColumn', sortColumn);
+    }
 
     return this.http
       .get<Page<Product>>(ApiConfig.apiUrl + '/product', {params: params})

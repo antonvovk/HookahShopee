@@ -1,0 +1,134 @@
+.main-container {
+  @media screen and (max-width: 960px) {
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  @media screen and (min-width: 960px) {
+    margin-top: 30px;
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-name {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  @media screen and (max-width: 960px) {
+    font-size: 35px;
+  }
+  @media screen and (min-width: 960px) {
+    font-size: 50px;
+  }
+}
+
+.clear-btn {
+  border: 2px solid #FF0000;
+  border-radius: 15px;
+  font-weight: 500;
+  font-size: 25px;
+  color: #FF0000;
+  height: 60px;
+  width: 100%;
+  background-color: #FFFFFF;
+  @media screen and (max-width: 960px) {
+    font-size: 16px;
+    height: 30px;
+  }
+}
+
+.order-items-container {
+  margin-top: 80px;
+}
+
+.order-item {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.product-image img {
+  max-width: 100%;
+  max-height: 120px;
+}
+
+.product-name {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.round-btn {
+  font-weight: 500;
+  font-size: 40px;
+  background: #C4C4C4;
+  color: #000000;
+}
+
+.quantity {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.price-container {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: 20px;
+  margin-right: 20px;
+}
+
+.delete-btn {
+  font-weight: 500;
+  font-size: 25px;
+  color: #FF0000;
+  border: 2px solid #FF0000;
+  border-radius: 15px;
+  height: 60px;
+  background-color: #FFFFFF;
+  @media screen and (max-width: 960px) {
+    font-size: 16px;
+    height: 30px;
+  }
+}
+
+.row-container {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.total-price-container {
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  background: #C4C4C4;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.align-center-vertically {
+  display: flex;
+  align-items: center;
+  @media screen and (max-width: 960px) {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  @media screen and (min-width: 960px) {
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+}

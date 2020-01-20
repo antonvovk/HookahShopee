@@ -35,6 +35,9 @@ public class Product {
     @Column(name = "FINAL_PRICE", columnDefinition = "INT", nullable = false)
     private Integer finalPrice;
 
+    @Column(name = "NUMBER_OF_SALES", columnDefinition = "INT", nullable = false)
+    private Long numberOfSales;
+
     @Column(name = "DESCRIPTION", columnDefinition = "NVARCHAR(MAX)", nullable = false)
     private String description;
 

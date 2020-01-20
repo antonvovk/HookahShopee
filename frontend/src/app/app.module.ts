@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {LoginComponent} from './ui/seller-panel/login/login.component';
+import {LoginComponent} from './ui/login/login.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -44,6 +44,9 @@ import {AboutUsComponent} from './ui/general/about-us/about-us.component';
 import {ProfileComponent} from './ui/general/profile/profile.component';
 import {ShopComponent} from './ui/general/shop/shop.component';
 import {BasketComponent} from './ui/general/basket/basket.component';
+import {CarouselModule} from "ngx-owl-carousel-o";
+import {ProductsSliderComponent} from './ui/general/main/products-slider/products-slider.component';
+import { RegistrationComponent } from './ui/registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +70,9 @@ import {BasketComponent} from './ui/general/basket/basket.component';
     AboutUsComponent,
     ProfileComponent,
     ShopComponent,
-    BasketComponent
+    BasketComponent,
+    ProductsSliderComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
@@ -90,7 +95,8 @@ import {BasketComponent} from './ui/general/basket/basket.component';
     MatSelectModule,
     MatSnackBarModule,
     ToastrModule.forRoot(),
-    QuillModule.forRoot()
+    QuillModule.forRoot(),
+    CarouselModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

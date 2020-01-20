@@ -1,0 +1,51 @@
+<div class="header">
+  {{header}}
+</div>
+
+<div class="carousel-container">
+  <div class="arrow-container">
+    <img (click)="owl.prev()" alt="arrow" src="../../../../../assets/img/red-arrow-115-angle.png">
+  </div>
+
+  <div class="center-items-container">
+    <div class="slider-container">
+      <owl-carousel-o #owl [options]="customOptions">
+        <ng-template *ngFor="let product of products.items" carouselSlide>
+          <div class="product-item-container">
+            <div class="product-item">
+              <div class="top">
+                <div class="product-image">
+                  <img alt="product-image" src="../../../../assets/img/Rectangle%208.png"/>
+                </div>
+              </div>
+              <div class="bottom">
+                <div class="product-name">
+                  {{product.name}}
+                </div>
+                <div class="product-availability">
+                  <div *ngIf="isInStock(product)" class="green-text">
+                    в наявності
+                  </div>
+                  <div *ngIf="!isInStock(product)" class="red-text">
+                    не в наявності
+                  </div>
+                </div>
+                <div [ngClass]="{'crossed-text-red': product.discount > 0}" class="product-price">
+                  {{product.price}} грн
+                </div>
+                <div *ngIf="product.discount > 0" class="product-discount">
+                  {{product.finalPrice}} грн
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </owl-carousel-o>
+    </div>
+  </div>
+
+  <div class="arrow-container">
+    <img (click)="owl.next()" alt="arrow" src="../../../../../assets/img/red-arrow-115-angle.png"
+         style="transform: rotate(180deg);">
+  </div>
+</div>

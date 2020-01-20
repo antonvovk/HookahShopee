@@ -71,9 +71,16 @@ public class UserController {
     }
 
     @Async
-    @PostMapping
-    public CompletableFuture<ResponseEntity<Object>> create(@RequestBody @Valid UserLightDTO sellerDTO) {
-        userService.create(sellerDTO);
+    @PostMapping(value = "/register/seller")
+    public CompletableFuture<ResponseEntity<Object>> registerSeller(@RequestBody @Valid UserLightDTO sellerDTO) {
+        userService.register(sellerDTO, Role.SELLER);
+        return CompletableFuture.completedFuture(ResponseEntity.status(HttpStatus.CREATED).build());
+    }
+
+    @Async
+    @PostMapping(value = "/register/client")
+    public CompletableFuture<ResponseEntity<Object>> registerClient(@RequestBody @Valid UserLightDTO sellerDTO) {
+        userService.register(sellerDTO, Role.CLIENT);
         return CompletableFuture.completedFuture(ResponseEntity.status(HttpStatus.CREATED).build());
     }
 

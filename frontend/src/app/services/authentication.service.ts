@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpResponse} from '@angular/common/http';
 import {BehaviorSubject, Observable} from "rxjs";
 import {JwtUser} from "../core/model/jwt-user.model";
 import {ApiConfig} from "../config/api.config";
@@ -32,10 +32,29 @@ export class AuthenticationService {
         this.currentUserSubject.next(jwtUser);
         console.log(jwtUser);
 
-        if (jwtUser.user.role === Role.ADMIN || Role.SELLER) {
+        if (jwtUser.user.role === Role.ADMIN || jwtUser.user.role === Role.SELLER) {
           this.router.navigate(['/control-panel']);
         }
+        if (jwtUser.user.role === Role.CLIENT) {
+          this.router.navigate(['']);
+        }
       });
+  }
+
+  register(phoneNumber: string, password: string, firstName: string, lastName: string, city: string): Observable<HttpResponse<any>> {
+    let user = {
+      phoneNumber: phoneNumber,
+      firstName: firstName,
+      lastName: lastName,
+      password: password,
+      cityName: city
+    };
+
+    return this.http.post<any>(
+      ApiConfig.apiUrl + '/user/register/client',
+      user,
+      {observe: 'response'}
+    );
   }
 
   logout() {

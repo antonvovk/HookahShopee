@@ -1,8 +1,8 @@
 package com.wolf.hookahshopee.dto;
 
-import com.wolf.hookahshopee.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class UserLightDTO {
 
     @NotBlank
@@ -29,10 +30,6 @@ public class UserLightDTO {
     @Size(min = 6, max = 15)
     private String password;
 
-    @NotNull
-    private Role role;
-
-    @NotNull
-    @Min(0)
+    @NotBlank
     private String cityName;
 }

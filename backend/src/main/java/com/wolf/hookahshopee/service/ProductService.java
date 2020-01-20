@@ -11,10 +11,6 @@ public interface ProductService {
 
     PageDTO<ProductDTO> findAll(ProductListRequest request, Pageable pageable);
 
-    List<ProductDTO> findAllByFinalPrice(Integer startPrice, Integer endPrice);
-
-    List<ProductDTO> findAllByManufacturer(String manufacturerName);
-
     List<ProductQuantityForSellersDTO> getAllQuantitiesBySellers(String name);
 
     void create(ProductLightDTO productDTO);

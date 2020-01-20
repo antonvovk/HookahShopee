@@ -15,6 +15,8 @@ public class ProductDTO {
 
     private Integer finalPrice;
 
+    private Long numberOfSales;
+
     private String description;
 
     private String imageName;

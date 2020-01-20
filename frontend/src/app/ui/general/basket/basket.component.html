@@ -1,3 +1,61 @@
-<div *ngFor="let item of basketService.getItems()">
-  {{item.price}} {{item.quantity}} {{item.product.name}}
+<div class="main-container">
+  <div class="header">
+    <div class="header-name">
+      Корзина
+    </div>
+    <div>
+      <button (click)="clearItems()" class="clear-btn" type="button">
+        Очистити
+      </button>
+    </div>
+  </div>
+
+  <div class="order-items-container">
+    <div *ngFor="let item of basketService.getItems()" class="order-item">
+      <div class="row-container">
+        <div class="product-image">
+          <img alt="product-image" src="../../../../assets/img/Rectangle%208.png">
+        </div>
+        <div class="product-name">
+          {{item.product.name}}
+        </div>
+      </div>
+
+      <div class="row-container">
+        <div>
+          <button class="round-btn" mat-mini-fab type="button">-</button>
+        </div>
+        <div class="quantity">
+          {{item.quantity}} шт
+        </div>
+        <div>
+          <button class="round-btn" mat-mini-fab type="button">+</button>
+        </div>
+      </div>
+
+      <div class="row-container">
+        <div class="price-container">
+          {{item.price}} грн
+        </div>
+        <div>
+          <button class="delete-btn" type="button">Видалити</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="total-price-container">
+    <div class="align-center-vertically">
+      Загалом
+    </div>
+    <div class="align-center-vertically">
+      {{basketService.getTotalPrice()}}
+    </div>
+  </div>
+
+  <div class="flex justify-content-center mt-40-20px" style="height: 50px;">
+    <button class="red-button" style="min-width: 350px;">
+      Оформити
+    </button>
+  </div>
 </div>

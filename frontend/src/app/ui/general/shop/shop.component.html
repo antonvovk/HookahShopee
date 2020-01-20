@@ -1,6 +1,6 @@
 <div *ngIf="cities[0]" class="city-select-container">
   <mat-form-field class="full-width">
-    <mat-select [formControl]="city" value="{{cities[0].name}}">
+    <mat-select (selectionChange)="updateCity()" [formControl]="city" value="{{cities[0].name}}">
       <mat-option *ngFor="let city of cities" value="{{city.name}}">
         {{city.name}}
       </mat-option>
@@ -16,9 +16,15 @@
         Ціна:
       </div>
       <div class="price-inputs">
-        <input [formControl]="priceFrom" class="red-input" placeholder="">
-        <hr class="red-line">
-        <input [formControl]="priceTo" class="red-input" placeholder="">
+        <div>
+          <input [formControl]="priceFrom" class="red-input" placeholder="">
+        </div>
+        <div>
+          <hr class="red-line">
+        </div>
+        <div>
+          <input [formControl]="priceTo" class="red-input" placeholder="">
+        </div>
       </div>
     </div>
 
@@ -94,7 +100,7 @@
           {{product.finalPrice}} грн
         </div>
         <div class="basket-btn-container">
-          <button class="basket-btn" color="warn" mat-button (click)="addToBasket(product)">
+          <button (click)="addToBasket(product)" class="basket-btn" color="warn" mat-button>
             В корзину
           </button>
         </div>
