@@ -1,19 +1,19 @@
-package com.wolf.hookahshopee.dto;
+package com.wolf.hookahshopee.post.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 @Data
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
-public class PostLightDTO {
+@AllArgsConstructor
+public class PostCreateDTO {
 
     @NotBlank
-    @Size(min = 5, max = 200)
     private String name;
 
     @NotBlank
