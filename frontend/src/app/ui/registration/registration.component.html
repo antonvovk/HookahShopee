@@ -44,7 +44,7 @@
             [formControl]="cityFormControl"
             [ngClass]="{'bg-dis': !validateNumber() || !validatePassword() || !validateFirstAndLastName()}"
             class="styled-input2">
-      <option *ngFor="let city of cities" value="{{city.name}}">
+      <option *ngFor="let city of cities" value="{{city.uuid}}">
         {{city.name}}
       </option>
     </select>

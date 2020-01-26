@@ -1,6 +1,6 @@
 package com.wolf.hookahshopee.product.service;
 
-import com.wolf.hookahshopee.legacy.dto.PageDTO;
+import com.wolf.hookahshopee.generic.PageDTO;
 import com.wolf.hookahshopee.product.dto.ProductCreateDTO;
 import com.wolf.hookahshopee.product.dto.ProductDTO;
 import com.wolf.hookahshopee.product.dto.ProductListRequestDTO;

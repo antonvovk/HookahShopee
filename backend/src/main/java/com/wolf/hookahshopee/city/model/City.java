@@ -1,7 +1,7 @@
 package com.wolf.hookahshopee.city.model;
 
-import com.wolf.hookahshopee.legacy.model.User;
 import com.wolf.hookahshopee.productreservation.model.ProductReservation;
+import com.wolf.hookahshopee.user.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

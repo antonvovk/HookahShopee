@@ -1,6 +1,6 @@
 package com.wolf.hookahshopee.post.controller;
 
-import com.wolf.hookahshopee.legacy.service.FileStorageService;
+import com.wolf.hookahshopee.file.service.FileStorageService;
 import com.wolf.hookahshopee.post.dto.PostCreateDTO;
 import com.wolf.hookahshopee.post.dto.PostDTO;
 import com.wolf.hookahshopee.post.dto.PostLightDTO;

@@ -1,8 +1,7 @@
 package com.wolf.hookahshopee.product.model;
 
-import com.wolf.hookahshopee.legacy.model.OrderItem;
-import com.wolf.hookahshopee.legacy.model.ProductItem;
 import com.wolf.hookahshopee.manufacturer.model.Manufacturer;
+import com.wolf.hookahshopee.order.model.OrderItem;
 import com.wolf.hookahshopee.productreservation.model.ProductReservation;
 import lombok.AllArgsConstructor;
 import lombok.Data;

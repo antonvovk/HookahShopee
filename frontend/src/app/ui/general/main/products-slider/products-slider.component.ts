@@ -41,7 +41,7 @@ export class ProductsSliderComponent implements OnInit {
     }
   };
 
-  constructor(private imageService: ImageService) {
+  constructor(public imageService: ImageService) {
 
   }
 

@@ -16,7 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ProductUpdateDTO {
 
-    @NotBlank
+    @NotNull
     private UUID uuid;
 
     @NotBlank

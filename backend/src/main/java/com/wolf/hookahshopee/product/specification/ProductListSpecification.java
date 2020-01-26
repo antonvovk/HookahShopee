@@ -1,8 +1,8 @@
 package com.wolf.hookahshopee.product.specification;
 
-import com.wolf.hookahshopee.legacy.model.ProductItem;
 import com.wolf.hookahshopee.product.dto.ProductListRequestDTO;
 import com.wolf.hookahshopee.product.model.Product;
+import com.wolf.hookahshopee.product.model.ProductItem;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 

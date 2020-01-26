@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthenticationService} from "../../../services/authentication.service";
+import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../../../services/authentication.service';
 
 @Component({
   selector: 'app-profile',
@@ -10,9 +10,10 @@ export class ProfileComponent implements OnInit {
 
   currentMenuIndex: number = 0;
 
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(public authenticationService: AuthenticationService) {
 
   }
+
 
   ngOnInit() {
   }

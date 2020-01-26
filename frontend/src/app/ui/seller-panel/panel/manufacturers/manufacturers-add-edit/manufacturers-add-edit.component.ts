@@ -47,12 +47,13 @@ export class ManufacturersAddEditComponent implements OnInit {
 
   onSave() {
     if (this.manufacturer == null) {
-      this.manufacturer = new Manufacturer(this.name.value);
-      this.manufacturersService.create(this.manufacturer).subscribe(
+      this.manufacturersService.create(new Manufacturer({name: this.name.value})).subscribe(
         response => {
+          this.manufacturer = new Manufacturer(this.name.value);
           this.snackBar.open(response.statusText, 'Відхилити', {duration: 2000,});
         },
         error => {
+          this.manufacturer = null;
           this.snackBar.open(error.apierror.message, 'Відхилити', {duration: 2000,});
         }
       );
@@ -70,7 +71,7 @@ export class ManufacturersAddEditComponent implements OnInit {
   }
 
   onDelete() {
-    this.manufacturersService.delete(this.manufacturer.name).subscribe(
+    this.manufacturersService.delete(this.manufacturer.uuid).subscribe(
       response => {
         this.snackBar.open(response.statusText, 'Відхилити', {duration: 2000,});
         this.returned.emit(true);
@@ -97,7 +98,7 @@ export class ManufacturersAddEditComponent implements OnInit {
 
   handleFileInput(files: any) {
     const uploadedFiles = files.target.files;
-    this.manufacturersService.updateImage(this.manufacturer.name, uploadedFiles[0]).subscribe(
+    this.manufacturersService.updateImage(this.manufacturer.uuid, uploadedFiles[0]).subscribe(
       response => {
         this.snackBar.open(response.statusText, 'Відхилити', {duration: 2000,});
       },

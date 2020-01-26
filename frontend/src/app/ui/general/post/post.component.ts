@@ -16,7 +16,7 @@ export class PostComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
               private postService: PostService,
-              private imageService: ImageService,
+              public imageService: ImageService,
               private toastrService: ToastrService,
               private router: Router) {
   }

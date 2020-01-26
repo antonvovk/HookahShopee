@@ -1,4 +1,4 @@
-<div class="general-container">
+<div *ngIf="!check()" class="general-container">
   <div class="width-limiter">
     <div class="header-container">
       <header class="header">
@@ -58,3 +58,5 @@
     </footer>
   </div>
 </div>
+
+<router-outlet *ngIf="check()"></router-outlet>

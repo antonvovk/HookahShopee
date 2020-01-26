@@ -52,7 +52,7 @@ export class MainComponent implements OnInit {
               private citySaverService: CitySaverService,
               private productsService: ProductsService,
               private postService: PostService,
-              private imageService: ImageService,
+              public imageService: ImageService,
               private router: Router) {
 
   }

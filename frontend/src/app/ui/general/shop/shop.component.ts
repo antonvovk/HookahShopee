@@ -34,7 +34,7 @@ export class ShopComponent implements OnInit {
               private manufacturersService: ManufacturersService,
               private basketService: BasketService,
               private toastrService: ToastrService,
-              private imageService: ImageService,
+              public imageService: ImageService,
               private citySaverService: CitySaverService) {
 
   }

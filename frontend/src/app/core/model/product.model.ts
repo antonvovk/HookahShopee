@@ -12,6 +12,7 @@ export class Product {
   htmlContent?: string;
   imageName?: string;
   manufacturer?: Manufacturer;
+  manufacturerUUID?: string;
   productQuantityForCities?: ProductQuantityByCities[];
   productQuantityForSellers?: ProductQuantityBySellers[];
 
@@ -25,6 +26,7 @@ export class Product {
       htmlContent,
       imageName,
       manufacturer,
+      manufacturerUUID,
       productQuantityForCities,
       productQuantityForSellers
     } = params;
@@ -37,6 +39,7 @@ export class Product {
     this.htmlContent = htmlContent;
     this.imageName = imageName;
     this.manufacturer = manufacturer;
+    this.manufacturerUUID = manufacturerUUID;
     this.productQuantityForCities = productQuantityForCities;
     this.productQuantityForSellers = productQuantityForSellers;
   }

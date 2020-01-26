@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './ui/login/login.component';
 import { SellerPanelComponent } from './ui/seller-panel/panel/seller-panel.component';
 import { AuthGuard } from './authentication/auth.guard';
 import { ShopComponent } from './ui/general/shop/shop.component';
@@ -12,7 +11,6 @@ import { PostComponent } from './ui/general/post/post.component';
 import { ProductComponent } from './ui/general/product/product.component';
 
 const routes: Routes = [
-  {path: 'login-panel', component: LoginComponent},
   {path: '', component: MainComponent},
   {path: 'post/:uuid', component: PostComponent},
   {path: 'product/:uuid', component: ProductComponent},

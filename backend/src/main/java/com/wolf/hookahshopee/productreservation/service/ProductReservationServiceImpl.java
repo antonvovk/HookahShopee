@@ -2,10 +2,10 @@ package com.wolf.hookahshopee.productreservation.service;
 
 import com.wolf.hookahshopee.city.model.City;
 import com.wolf.hookahshopee.city.repository.CityRepository;
-import com.wolf.hookahshopee.legacy.exception.EntityNotFoundException;
-import com.wolf.hookahshopee.legacy.exception.ReservationException;
-import com.wolf.hookahshopee.legacy.model.ProductItem;
+import com.wolf.hookahshopee.exception.EntityNotFoundException;
+import com.wolf.hookahshopee.exception.ReservationException;
 import com.wolf.hookahshopee.product.model.Product;
+import com.wolf.hookahshopee.product.model.ProductItem;
 import com.wolf.hookahshopee.product.repository.ProductRepository;
 import com.wolf.hookahshopee.productreservation.model.ProductReservation;
 import com.wolf.hookahshopee.productreservation.repository.ProductReservationRepository;

@@ -19,7 +19,7 @@ export class ProductComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
               private productService: ProductsService,
-              private imageService: ImageService,
+              public imageService: ImageService,
               private toastrService: ToastrService,
               private basketService: BasketService,
               private citySaverService: CitySaverService,

@@ -25,7 +25,7 @@ export class BasketComponent implements OnInit {
   }
 
   clearItems() {
-    this.basketService.clearItems(this.citySaverService.city.name);
+    this.basketService.clearItems();
   }
 
   openConfirmation() {

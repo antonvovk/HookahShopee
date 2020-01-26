@@ -47,6 +47,7 @@ export class ProductsComponent implements OnInit {
       this.product.price = this.price.value;
       this.product.discount = this.discount.value;
       this.product.htmlContent = this.description.value;
+      this.product.manufacturerUUID = this.manufacturer.uuid;
       this.productsService.update(this.product).subscribe(
         response => {
           this.snackBar.open(response.statusText, 'Відхилити', {duration: 2000,});
@@ -61,7 +62,7 @@ export class ProductsComponent implements OnInit {
       this.product.price = this.price.value;
       this.product.discount = this.discount.value;
       this.product.htmlContent = this.description.value;
-      this.product.manufacturer = this.manufacturer;
+      this.product.manufacturerUUID = this.manufacturer.uuid;
       this.productsService.create(this.product).subscribe(
         response => {
           this.snackBar.open(response.statusText, 'Відхилити', {duration: 2000,});
@@ -76,7 +77,7 @@ export class ProductsComponent implements OnInit {
 
   updateImage(files: any) {
     const uploadedFiles = files.target.files;
-    this.productsService.updateImage(this.product.name, uploadedFiles[0]).subscribe(
+    this.productsService.updateImage(this.product.uuid, uploadedFiles[0]).subscribe(
       response => {
         this.snackBar.open(response.statusText, 'Відхилити', {duration: 2000,});
       },
@@ -87,7 +88,7 @@ export class ProductsComponent implements OnInit {
   }
 
   updateQuantity(seller: User, i: number) {
-    this.productsService.updateQuantity(this.product.name, seller.phoneNumber, (this.quantities.toArray())[i].nativeElement.value).subscribe(
+    this.productsService.updateQuantity(this.product.uuid, seller.uuid, (this.quantities.toArray())[i].nativeElement.value).subscribe(
       response => {
         this.snackBar.open(response.statusText, 'Відхилити', {duration: 2000,});
       },
@@ -98,7 +99,7 @@ export class ProductsComponent implements OnInit {
   }
 
   deleteProduct() {
-    this.productsService.delete(this.product.name).subscribe(
+    this.productsService.delete(this.product.uuid).subscribe(
       response => {
         this.snackBar.open(response.statusText, 'Відхилити', {duration: 2000,});
         this.returned.emit(true);

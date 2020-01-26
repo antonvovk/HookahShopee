@@ -1,6 +1,6 @@
 package com.wolf.hookahshopee.post.service;
 
-import com.wolf.hookahshopee.legacy.exception.EntityNotFoundException;
+import com.wolf.hookahshopee.exception.EntityNotFoundException;
 import com.wolf.hookahshopee.post.dto.PostCreateDTO;
 import com.wolf.hookahshopee.post.dto.PostDTO;
 import com.wolf.hookahshopee.post.dto.PostLightDTO;

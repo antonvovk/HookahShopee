@@ -33,7 +33,7 @@ export class AuthenticationService {
         console.log(jwtUser);
 
         if (jwtUser.user.role === Role.ADMIN || jwtUser.user.role === Role.SELLER) {
-          this.router.navigate(['/control-panel']);
+          this.router.navigate(['control-panel']);
         }
         if (jwtUser.user.role === Role.CLIENT) {
           this.router.navigate(['']);
@@ -41,13 +41,13 @@ export class AuthenticationService {
       });
   }
 
-  register(phoneNumber: string, password: string, firstName: string, lastName: string, city: string): Observable<HttpResponse<any>> {
-    let user = {
+  register(phoneNumber: string, password: string, firstName: string, lastName: string, cityUUID: string): Observable<HttpResponse<any>> {
+    const user = {
       phoneNumber: phoneNumber,
       firstName: firstName,
       lastName: lastName,
       password: password,
-      cityName: city
+      cityUUID: cityUUID
     };
 
     return this.http.post<any>(
@@ -55,6 +55,15 @@ export class AuthenticationService {
       user,
       {observe: 'response'}
     );
+  }
+
+  isSellerOrAdmin(): boolean {
+    if (!this.isAuthenticated()) {
+      return false;
+    }
+
+    return this.currentUserValue.user.role === Role.SELLER ||
+      this.currentUserValue.user.role === Role.ADMIN;
   }
 
   logout() {

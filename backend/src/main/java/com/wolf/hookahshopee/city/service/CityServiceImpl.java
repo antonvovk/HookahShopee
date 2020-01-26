@@ -6,7 +6,7 @@ import com.wolf.hookahshopee.city.dto.CityUpdateDTO;
 import com.wolf.hookahshopee.city.mapper.CityMapper;
 import com.wolf.hookahshopee.city.model.City;
 import com.wolf.hookahshopee.city.repository.CityRepository;
-import com.wolf.hookahshopee.legacy.exception.EntityNotFoundException;
+import com.wolf.hookahshopee.exception.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

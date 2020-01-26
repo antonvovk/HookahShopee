@@ -55,7 +55,7 @@
       <div class="manufacturer-name">
         {{product.name}}
       </div>
-      <div *ngFor="let productQuantity of product.productQuantity" class="manufacturer-name">
+      <div *ngFor="let productQuantity of product.productQuantityForCities" class="manufacturer-name">
         <div [ngClass]="{'red': productQuantity.quantity === 0, 'green': productQuantity.quantity !== 0}">
           {{productQuantity.city.name}}: {{productQuantity.quantity}}
         </div>

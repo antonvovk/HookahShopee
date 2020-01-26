@@ -1,6 +1,6 @@
 package com.wolf.hookahshopee.manufacturer.controller;
 
-import com.wolf.hookahshopee.legacy.service.FileStorageService;
+import com.wolf.hookahshopee.file.service.FileStorageService;
 import com.wolf.hookahshopee.manufacturer.dto.ManufacturerCreateDTO;
 import com.wolf.hookahshopee.manufacturer.dto.ManufacturerDTO;
 import com.wolf.hookahshopee.manufacturer.dto.ManufacturerUpdateDTO;

@@ -1,7 +1,7 @@
 package com.wolf.hookahshopee.manufacturer.service;
 
-import com.wolf.hookahshopee.legacy.exception.EntityHasRelationshipsException;
-import com.wolf.hookahshopee.legacy.exception.EntityNotFoundException;
+import com.wolf.hookahshopee.exception.EntityHasRelationshipsException;
+import com.wolf.hookahshopee.exception.EntityNotFoundException;
 import com.wolf.hookahshopee.manufacturer.dto.ManufacturerCreateDTO;
 import com.wolf.hookahshopee.manufacturer.dto.ManufacturerDTO;
 import com.wolf.hookahshopee.manufacturer.dto.ManufacturerUpdateDTO;

@@ -51,6 +51,7 @@ export class PostsAddEditComponent implements OnInit {
           this.snackBar.open(response.statusText, 'Відхилити', {duration: 2000,});
         },
         error => {
+          this.post = null;
           this.snackBar.open(error.apierror.message, 'Відхилити', {duration: 2000,});
         }
       );

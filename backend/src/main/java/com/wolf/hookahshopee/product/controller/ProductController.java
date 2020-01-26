@@ -1,7 +1,7 @@
 package com.wolf.hookahshopee.product.controller;
 
-import com.wolf.hookahshopee.legacy.dto.PageDTO;
-import com.wolf.hookahshopee.legacy.service.FileStorageService;
+import com.wolf.hookahshopee.file.service.FileStorageService;
+import com.wolf.hookahshopee.generic.PageDTO;
 import com.wolf.hookahshopee.product.dto.ProductCreateDTO;
 import com.wolf.hookahshopee.product.dto.ProductDTO;
 import com.wolf.hookahshopee.product.dto.ProductListRequestDTO;
