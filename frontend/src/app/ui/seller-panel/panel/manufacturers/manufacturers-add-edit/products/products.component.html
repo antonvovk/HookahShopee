@@ -68,7 +68,7 @@
 </div>
 
 <div *ngIf="product" class="quantity-flex-container">
-  <div *ngFor="let productQuantity of productQuantities; let i = index;" class="text-container2">
+  <div *ngFor="let productQuantity of product.productQuantityForSellers; let i = index;" class="text-container2">
     <div class="seller-container">
       {{productQuantity.user.firstName}} {{productQuantity.user.lastName}}
     </div>

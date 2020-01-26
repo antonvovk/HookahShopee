@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpResponse} from '@angular/common/http';
-import {BehaviorSubject, Observable} from "rxjs";
-import {JwtUser} from "../core/model/jwt-user.model";
-import {ApiConfig} from "../config/api.config";
-import {Router} from "@angular/router";
-import {Role} from "../core/model/role.model.enum";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { JwtUser } from '../core/model/jwt-user.model';
+import { ApiConfig } from '../config/api.config';
+import { Router } from '@angular/router';
+import { Role } from '../core/model/role.model.enum';
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
@@ -26,7 +26,7 @@ export class AuthenticationService {
   }
 
   login(username: string, password: string) {
-    return this.http.post<JwtUser>(ApiConfig.apiUrl + `/user/login`, {username, password})
+    return this.http.post<JwtUser>(ApiConfig.API_URL + `/user/login`, {username, password})
       .subscribe(jwtUser => {
         localStorage.setItem('currentUser', JSON.stringify(jwtUser));
         this.currentUserSubject.next(jwtUser);
@@ -51,7 +51,7 @@ export class AuthenticationService {
     };
 
     return this.http.post<any>(
-      ApiConfig.apiUrl + '/user/register/client',
+      ApiConfig.API_URL + '/user/register/client',
       user,
       {observe: 'response'}
     );

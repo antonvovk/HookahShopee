@@ -1,5 +1,5 @@
-import {Injectable} from "@angular/core";
-import {ApiConfig} from "../config/api.config";
+import { Injectable } from '@angular/core';
+import { ApiConfig } from '../config/api.config';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,6 @@ export class ImageService {
   }
 
   getImage(name: string): string {
-    return ApiConfig.apiUrl + '/img/' + name;
+    return ApiConfig.API_URL + '/img/' + name;
   }
 }

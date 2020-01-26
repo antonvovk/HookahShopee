@@ -9,6 +9,8 @@ import { FormControl } from '@angular/forms';
 import { ManufacturersService } from '../../../services/manufacturers.service';
 import { BasketService } from '../../../services/basket.service';
 import { CitySaverService } from '../../../services/city-saver.service';
+import { ToastrService } from 'ngx-toastr';
+import { ImageService } from '../../../services/image.service';
 
 @Component({
   selector: 'app-shop',
@@ -31,6 +33,8 @@ export class ShopComponent implements OnInit {
               private productsService: ProductsService,
               private manufacturersService: ManufacturersService,
               private basketService: BasketService,
+              private toastrService: ToastrService,
+              private imageService: ImageService,
               private citySaverService: CitySaverService) {
 
   }
@@ -49,13 +53,13 @@ export class ShopComponent implements OnInit {
       }
     );
 
-    this.productsService.findAll(0, 9, null).subscribe(
+    this.productsService.getAll(0, 9, null).subscribe(
       products => {
         this.products = products;
       }
     );
 
-    this.manufacturersService.findAll().subscribe(
+    this.manufacturersService.getAll().subscribe(
       manufacturers => {
         manufacturers.forEach(
           manufacturer => {
@@ -67,44 +71,45 @@ export class ShopComponent implements OnInit {
   }
 
   productsPaginatorChanged($event: PageEvent) {
-    this.productsService.findAll($event.pageIndex, $event.pageSize, null).subscribe(
-      products => {
-        this.products = products;
-      }
-    );
+    this.updateFilters();
   }
 
   isInStock(product: Product): boolean {
-    if (product.productQuantity.find(x => x.city.name === this.city) == null) {
+    if (product.productQuantityForCities.find(x => x.city.uuid === this.city.uuid) == null) {
       return false;
     } else {
-      return product.productQuantity.find(x => x.city.name === this.city).quantity > 0;
+      return product.productQuantityForCities.find(x => x.city.uuid === this.city.uuid).quantity > 0;
     }
   }
 
   updateFilters() {
-    let cityName = null;
+    let cityUUID = null;
     let onPromotion = null;
 
     if (this.inStockChecked.value === true) {
-      cityName = this.city.name;
+      cityUUID = this.city.uuid;
     }
 
-    if (this.onPromotionChecked.value == true) {
+    if (this.onPromotionChecked.value === true) {
       onPromotion = true;
     }
 
-    this.productsService.findAll(
+    this.productsService.getAll(
       this.productsPaginator.pageIndex,
       this.productsPaginator.pageSize,
-      this.manufacturers.filter(x => x.checked.value === true).map(x => x.manufacturer.name),
-      this.priceFrom.value,
-      this.priceTo.value,
-      cityName,
-      onPromotion
+      {
+        manufacturers: this.manufacturers.filter(x => x.checked.value === true).map(x => x.manufacturer.uuid),
+        startPrice: this.priceFrom.value,
+        endPrice: this.priceTo.value,
+        cityUUID: cityUUID,
+        isOnDiscount: onPromotion
+      }
     ).subscribe(
       products => {
         this.products = products;
+        if (products.totalElements === 0) {
+          this.toastrService.info('Нічого не знайшли', 'Інформейшин');
+        }
       }
     );
   }

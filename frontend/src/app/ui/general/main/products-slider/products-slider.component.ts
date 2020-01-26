@@ -1,7 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {OwlOptions} from "ngx-owl-carousel-o";
-import {Page} from "../../../../core/model/page.model";
-import {Product} from "../../../../core/model/product.model";
+import { Component, Input, OnInit } from '@angular/core';
+import { OwlOptions } from 'ngx-owl-carousel-o';
+import { Page } from '../../../../core/model/page.model';
+import { Product } from '../../../../core/model/product.model';
+import { ImageService } from '../../../../services/image.service';
 
 @Component({
   selector: 'app-products-slider',
@@ -17,7 +18,7 @@ export class ProductsSliderComponent implements OnInit {
   header: string = '';
 
   @Input()
-  city: string = '';
+  cityUUID: string = '';
 
   customOptions: OwlOptions = {
     loop: true,
@@ -40,7 +41,7 @@ export class ProductsSliderComponent implements OnInit {
     }
   };
 
-  constructor() {
+  constructor(private imageService: ImageService) {
 
   }
 
@@ -49,10 +50,10 @@ export class ProductsSliderComponent implements OnInit {
   }
 
   isInStock(product: Product): boolean {
-    if (product.productQuantity.find(x => x.city.name === this.city) == null) {
+    if (product.productQuantityForCities.find(x => x.city.uuid === this.cityUUID) == null) {
       return false;
     } else {
-      return product.productQuantity.find(x => x.city.name === this.city).quantity > 0;
+      return product.productQuantityForCities.find(x => x.city.uuid === this.cityUUID).quantity > 0;
     }
   }
 }

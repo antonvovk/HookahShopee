@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
 import { Product } from '../../../../../../core/model/product.model';
-import { ProductQuantityBySellers } from '../../../../../../core/model/product-quantity-by-sellers.model';
 import { ProductsService } from '../../../../../../services/products.service';
 import { FormControl } from '@angular/forms';
 import { User } from '../../../../../../core/model/user.model';
@@ -21,7 +20,6 @@ export class ProductsComponent implements OnInit {
   manufacturer: Manufacturer = null;
   @Output()
   returned = new EventEmitter<boolean>();
-  productQuantities: ProductQuantityBySellers[] = [];
   name = new FormControl('');
   price = new FormControl('');
   discount = new FormControl('');
@@ -39,24 +37,17 @@ export class ProductsComponent implements OnInit {
       this.name.setValue(this.product.name);
       this.price.setValue(this.product.price);
       this.discount.setValue(this.product.discount);
-      this.description.setValue(this.product.description);
-
-      this.productsService.getQuantitiesBySellers(this.product.name).subscribe(
-        productQuantities => {
-          this.productQuantities = productQuantities;
-        }
-      );
+      this.description.setValue(this.product.htmlContent);
     }
   }
 
   saveProduct() {
     if (this.product != null) {
-      const oldName = this.product.name;
       this.product.name = this.name.value;
       this.product.price = this.price.value;
       this.product.discount = this.discount.value;
-      this.product.description = this.description.value;
-      this.productsService.update(oldName, this.product).subscribe(
+      this.product.htmlContent = this.description.value;
+      this.productsService.update(this.product).subscribe(
         response => {
           this.snackBar.open(response.statusText, 'Відхилити', {duration: 2000,});
         },
@@ -69,9 +60,9 @@ export class ProductsComponent implements OnInit {
       this.product.name = this.name.value;
       this.product.price = this.price.value;
       this.product.discount = this.discount.value;
-      this.product.description = this.description.value;
+      this.product.htmlContent = this.description.value;
       this.product.manufacturer = this.manufacturer;
-      this.productsService.insert(this.product).subscribe(
+      this.productsService.create(this.product).subscribe(
         response => {
           this.snackBar.open(response.statusText, 'Відхилити', {duration: 2000,});
         },

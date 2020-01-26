@@ -3,6 +3,7 @@
   justify-content: center;
   margin-left: 30px;
   margin-right: 30px;
+  font-size: 25px;
 }
 
 .full-width {
@@ -108,9 +109,10 @@ mat-select {
   margin-right: 30px;
   margin-bottom: 30px;
   width: 300px;
-  min-height: 450px;
+  min-height: 420px;
   border: 3px solid #FF0404;
   border-radius: 15px;
+  cursor: pointer;
 }
 
 .product-image {
@@ -178,10 +180,14 @@ mat-select {
   border: 2px solid #FF0000;
   border-radius: 10px;
   font-size: 20px;
-  @media screen and (min-width: 960px) {
-    min-height: 50px;
-    min-width: 260px;
-  }
+  min-height: 50px;
+  min-width: 260px;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.basket-btn:hover {
+  background-color: rgba(255, 0, 0, 0.11);;
 }
 
 .buttons-container {
@@ -287,3 +293,14 @@ mat-select {
 }
 
 //* Checkbox *//
+
+.disable {
+  cursor: default;
+  color: #C4C4C4;
+  border-color: #C4C4C4;
+  background-color: #ffffff;
+}
+
+.disable:hover {
+  background-color: #ffffff;
+}

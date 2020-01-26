@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { BasketService } from '../../../services/basket.service';
 import { CitySaverService } from '../../../services/city-saver.service';
 import { OrderItem } from '../../../core/model/order-item.model';
+import { AuthenticationService } from '../../../services/authentication.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-basket',
@@ -13,11 +15,13 @@ export class BasketComponent implements OnInit {
   showConfirmation: boolean = false;
 
   constructor(public basketService: BasketService,
+              private authenticationService: AuthenticationService,
+              private toastrService: ToastrService,
               private citySaverService: CitySaverService) {
   }
 
   ngOnInit() {
-    console.log(this.basketService.getTotalPrice());
+
   }
 
   clearItems() {
@@ -25,6 +29,11 @@ export class BasketComponent implements OnInit {
   }
 
   openConfirmation() {
+    if (!this.authenticationService.isAuthenticated()) {
+      this.toastrService.info('Увійдіть для того щоб оформити замовлення', 'Інформейшин');
+      return;
+    }
+
     this.showConfirmation = true;
   }
 

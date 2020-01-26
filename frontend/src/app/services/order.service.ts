@@ -24,7 +24,7 @@ export class OrderService {
     params = params.set('s', size.toString());
 
     return this.http
-      .get<Page<Order>>(ApiConfig.apiUrl + '/order/status/' + status, {params: params})
+      .get<Page<Order>>(ApiConfig.API_URL + '/order/status/' + status, {params: params})
       .pipe(map((data: any) => this.adapter.adapt(data)));
   }
 
@@ -34,7 +34,7 @@ export class OrderService {
     params = params.set('s', size.toString());
 
     return this.http
-      .get<Page<Order>>(ApiConfig.apiUrl + '/order/seller/' + sellerUsername + '/status/' + status, {params: params})
+      .get<Page<Order>>(ApiConfig.API_URL + '/order/seller/' + sellerUsername + '/status/' + status, {params: params})
       .pipe(map((data: any) => this.adapter.adapt(data)));
   }
 
@@ -43,7 +43,7 @@ export class OrderService {
     params = params.append('seller', sellerUsername);
 
     return this.http.put<any>(
-      ApiConfig.apiUrl + '/order/' + uuid + '/assign',
+      ApiConfig.API_URL + '/order/' + uuid + '/assign',
       null,
       {params: params, observe: 'response'}
     );
@@ -51,7 +51,7 @@ export class OrderService {
 
   createOrder(order: Order): Observable<HttpResponse<any>> {
     return this.http.post<HttpResponse<any>>(
-      ApiConfig.apiUrl + '/order',
+      ApiConfig.API_URL + '/order',
       order,
       {observe: 'response'}
     );
@@ -59,7 +59,7 @@ export class OrderService {
 
   cancelOrder(uuid: string): Observable<HttpResponse<any>> {
     return this.http.put<any>(
-      ApiConfig.apiUrl + '/order/' + uuid + '/cancel',
+      ApiConfig.API_URL + '/order/' + uuid + '/cancel',
       null,
       {observe: 'response'}
     );
@@ -67,7 +67,7 @@ export class OrderService {
 
   completeOrder(uuid: string): Observable<HttpResponse<any>> {
     return this.http.put<any>(
-      ApiConfig.apiUrl + '/order/' + uuid + '/complete',
+      ApiConfig.API_URL + '/order/' + uuid + '/complete',
       null,
       {observe: 'response'}
     );

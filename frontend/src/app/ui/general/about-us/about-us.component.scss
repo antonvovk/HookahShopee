@@ -1,21 +1,22 @@
 .main-container {
-  margin-left: 2vw;
-  margin-top: 100px;
+  margin-left: 4vw;
+  margin-right: 4vw;
+  margin-top: 50px;
 }
 
 .shop-name {
   font-weight: 500;
-  font-size: 50px;
+  font-size: 30px;
   color: #0C0B0B;
 }
 
 .lviv-shop-container {
-  margin-top: 50px;
+  margin-top: 25px;
 }
 
 .city-name {
   font-weight: 500;
-  font-size: 40px;
+  font-size: 22px;
 }
 
 .shop-info-container {
@@ -24,15 +25,15 @@
 }
 
 .shop-info-outer {
-  margin-top: 35px;
-  margin-right: 90px;
+  margin-top: 18px;
+  margin-right: 45px;
 }
 
 .working-hours {
-  margin-top: 18px;
+  margin-top: 9px;
   font-weight: 500;
-  font-size: 25px;
-  margin-left: 20px;
+  font-size: 16px;
+  margin-left: 10px;
 }
 
 .working-hours-inner {
@@ -41,43 +42,47 @@
 }
 
 .working-hours-inner img {
-  margin-right: 8px;
+  margin-right: 4px;
+  height: 25px;
 }
 
 .container-title {
   font-weight: 500;
-  font-size: 32px;
+  font-size: 18px;
 }
 
 .contacts {
-  margin-top: 35px;
+  margin-top: 18px;
 }
 
 .contacts-info {
-  margin-top: 18px;
+  margin-top: 9px;
   font-weight: 500;
-  font-size: 25px;
-  margin-left: 20px;
+  font-size: 16px;
+  margin-left: 10px;
 }
 
 .contact {
   display: flex;
   align-items: center;
+  text-decoration: none;
+  color: #000000;
 }
 
 .contact img {
-  margin-right: 8px;
+  margin-right: 4px;
+  height: 25px;
 }
 
 .mr-top {
-  margin-top: 15px;
+  margin-top: 8px;
 }
 
 .addresses-map-name {
-  margin-top: 60px;
-  margin-bottom: 60px;
+  margin-top: 30px;
+  margin-bottom: 30px;
   font-weight: 500;
-  font-size: 50px;
+  font-size: 25px;
 }
 
 #map {

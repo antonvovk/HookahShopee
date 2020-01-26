@@ -24,6 +24,16 @@ export class BasketService {
     return this.currentBasketSubject.value.items;
   }
 
+  public getCount(): number {
+    let sum = 0;
+    this.currentBasketSubject.value.items.forEach(
+      item => {
+        sum += item.quantity;
+      }
+    );
+    return sum;
+  }
+
   public isEmpty(): boolean {
     return this.currentBasketSubject.value.items.length == 0;
   }

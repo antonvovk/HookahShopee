@@ -19,7 +19,7 @@ export class ProductReservationService {
     params = params.append('quantity', quantity.toString());
 
     return this.http.put<any>(
-      ApiConfig.apiUrl + '/reservation/add',
+      ApiConfig.API_URL + '/reservation/add',
       null,
       {params: params, observe: 'response'}
     );
@@ -32,7 +32,7 @@ export class ProductReservationService {
     params = params.append('quantity', quantity.toString());
 
     return this.http.put<any>(
-      ApiConfig.apiUrl + '/reservation/remove',
+      ApiConfig.API_URL + '/reservation/remove',
       null,
       {params: params, observe: 'response'}
     );
@@ -44,7 +44,7 @@ export class ProductReservationService {
     params = params.append('cityUUID', cityUUID);
 
     return this.http.put<any>(
-      ApiConfig.apiUrl + '/reservation/clear',
+      ApiConfig.API_URL + '/reservation/clear',
       null,
       {params: params, observe: 'response'}
     );

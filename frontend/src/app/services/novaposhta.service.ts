@@ -16,7 +16,7 @@ export class NovaposhtaService {
       params = params.append('name', name);
     }
 
-    return this.http.get<any[]>(ApiConfig.apiUrl + '/novaposhta/cities', {params: params})
+    return this.http.get<any[]>(ApiConfig.API_URL + '/novaposhta/cities', {params: params})
       .pipe(map((res: any) => res.data));
   }
 
@@ -26,7 +26,7 @@ export class NovaposhtaService {
       params = params.append('name', name);
     }
 
-    return this.http.get<any[]>(ApiConfig.apiUrl + '/novaposhta/warehouses', {params: params})
+    return this.http.get<any[]>(ApiConfig.API_URL + '/novaposhta/warehouses', {params: params})
       .pipe(map((res: any) => res.data));
   }
 }

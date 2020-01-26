@@ -69,13 +69,13 @@ export class MainComponent implements OnInit {
           this.citySaverService.setCity(this.cities[0]);
         }
 
-        this.productsService.findAll(0, 9, null, null, null, this.city.name, null, 'discount').subscribe(
+        this.productsService.getAll(0, 9, {cityName: this.city.name}, 'discount').subscribe(
           products => {
             this.bestValueProducts = products;
           }
         );
 
-        this.productsService.findAll(0, 9, null, null, null, this.city.name, null, 'numberOfSales').subscribe(
+        this.productsService.getAll(0, 9, {cityName: this.city.name}, 'numberOfSales').subscribe(
           products => {
             this.hitSaleProducts = products;
           }
@@ -93,13 +93,13 @@ export class MainComponent implements OnInit {
   updateCity() {
     this.citySaverService.setCity(this.city);
 
-    this.productsService.findAll(0, 9, null, null, null, this.city.name, null, 'discount').subscribe(
+    this.productsService.getAll(0, 9, {cityName: this.city.name}, 'discount').subscribe(
       products => {
         this.bestValueProducts = products;
       }
     );
 
-    this.productsService.findAll(0, 9, null, null, null, this.city.name, null, 'numberOfSales').subscribe(
+    this.productsService.getAll(0, 9, {cityName: this.city.name}, 'numberOfSales').subscribe(
       products => {
         this.hitSaleProducts = products;
       }
@@ -110,3 +110,4 @@ export class MainComponent implements OnInit {
     return o1.uuid === o2.uuid;
   }
 }
+

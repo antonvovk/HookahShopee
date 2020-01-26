@@ -13,7 +13,6 @@ import com.wolf.hookahshopee.manufacturer.model.Manufacturer;
 import com.wolf.hookahshopee.manufacturer.repository.ManufacturerRepository;
 import com.wolf.hookahshopee.product.dto.*;
 import com.wolf.hookahshopee.product.mapper.ProductCreateMapper;
-import com.wolf.hookahshopee.product.mapper.ProductLightMapper;
 import com.wolf.hookahshopee.product.mapper.ProductMapper;
 import com.wolf.hookahshopee.product.model.Product;
 import com.wolf.hookahshopee.product.repository.ProductRepository;
@@ -104,38 +103,6 @@ public class ProductServiceImpl implements ProductService {
         return productDTOS;
     }
 
-    private List<ProductLightDTO> afterMapperLogicLight(List<Product> products) {
-        List<ProductLightDTO> productDTOS = new ArrayList<>();
-
-        products.forEach(product -> {
-            Map<City, List<ProductItem>> res = product.getProductItems().stream().collect(
-                    Collectors.groupingBy(
-                            productItem -> productItem.getSeller().getCity()
-                    )
-            );
-
-            List<ProductQuantityForCitiesDTO> productQuantities = new ArrayList<>();
-
-            res.forEach((city, productItems) -> {
-                Long quantity = productItems.stream().mapToLong(ProductItem::getQuantity).sum();
-
-                ProductReservation productReservation = productReservationRepository.findByProductAndCity(product, city).orElse(null);
-
-                if (productReservation != null) {
-                    quantity -= productReservation.getQuantity();
-                }
-
-                productQuantities.add(new ProductQuantityForCitiesDTO(quantity, CityMapper.INSTANCE.toDto(city)));
-            });
-
-            ProductLightDTO productDTO = ProductLightMapper.INSTANCE.toDto(product);
-            productDTO.setProductQuantity(productQuantities);
-            productDTOS.add(productDTO);
-        });
-
-        return productDTOS;
-    }
-
     @Override
     public PageDTO<ProductDTO> getAll(ProductListRequestDTO request, Pageable pageable) {
         Page<Product> userPage = productRepository.findAll(productListSpecification.getFilter(request), pageable);
@@ -143,9 +110,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public PageDTO<ProductLightDTO> getAllLight(ProductListRequestDTO request, Pageable pageable) {
-        Page<Product> userPage = productRepository.findAll(productListSpecification.getFilter(request), pageable);
-        return new PageDTO<>(afterMapperLogicLight(userPage.getContent()), userPage.getTotalElements());
+    public ProductDTO findByUUID(UUID uuid) {
+        Product product = productRepository.findByUuid(uuid).orElse(null);
+
+        if (product == null) {
+            throw new EntityNotFoundException(Product.class, "uuid", uuid.toString());
+        }
+
+        return afterMapperLogic(Collections.singletonList(product)).get(0);
     }
 
     @Override

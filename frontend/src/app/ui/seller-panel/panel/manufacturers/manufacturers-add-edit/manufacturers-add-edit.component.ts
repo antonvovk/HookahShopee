@@ -1,13 +1,13 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Manufacturer} from "../../../../../core/model/manufacturer.model";
-import {ManufacturersService} from "../../../../../services/manufacturers.service";
-import {FormControl} from "@angular/forms";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {Product} from "../../../../../core/model/product.model";
-import {ProductsService} from "../../../../../services/products.service";
-import {CitiesService} from "../../../../../services/cities.service";
-import {ImageService} from "../../../../../services/image.service";
-import {Page} from "../../../../../core/model/page.model";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Manufacturer } from '../../../../../core/model/manufacturer.model';
+import { ManufacturersService } from '../../../../../services/manufacturers.service';
+import { FormControl } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Product } from '../../../../../core/model/product.model';
+import { ProductsService } from '../../../../../services/products.service';
+import { CitiesService } from '../../../../../services/cities.service';
+import { ImageService } from '../../../../../services/image.service';
+import { Page } from '../../../../../core/model/page.model';
 
 @Component({
   selector: 'app-manufacturers-add-edit',
@@ -37,7 +37,7 @@ export class ManufacturersAddEditComponent implements OnInit {
   ngOnInit() {
     if (this.manufacturer != null) {
       this.name.setValue(this.manufacturer.name);
-      this.productsService.findAll(0, 5, [this.manufacturer.name]).subscribe(
+      this.productsService.getAll(0, 5, {manufacturers: [this.manufacturer.uuid]}).subscribe(
         products => {
           this.products = products;
         }
@@ -48,7 +48,7 @@ export class ManufacturersAddEditComponent implements OnInit {
   onSave() {
     if (this.manufacturer == null) {
       this.manufacturer = new Manufacturer(this.name.value);
-      this.manufacturersService.insert(this.manufacturer).subscribe(
+      this.manufacturersService.create(this.manufacturer).subscribe(
         response => {
           this.snackBar.open(response.statusText, 'Відхилити', {duration: 2000,});
         },
@@ -57,9 +57,8 @@ export class ManufacturersAddEditComponent implements OnInit {
         }
       );
     } else {
-      const oldName = this.manufacturer.name;
       this.manufacturer.name = this.name.value;
-      this.manufacturersService.update(this.manufacturer, oldName).subscribe(
+      this.manufacturersService.update(this.manufacturer).subscribe(
         response => {
           this.snackBar.open(response.statusText, 'Відхилити', {duration: 2000,});
         },
@@ -88,7 +87,7 @@ export class ManufacturersAddEditComponent implements OnInit {
   }
 
   onReturn($event: boolean) {
-    this.productsService.findAll(0, 5, [this.manufacturer.name]).subscribe(
+    this.productsService.getAll(0, 5, {manufacturers: [this.manufacturer.uuid]}).subscribe(
       products => {
         this.products = products;
       }

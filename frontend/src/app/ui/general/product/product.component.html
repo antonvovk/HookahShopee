@@ -1,1 +1,49 @@
-<p>product works!</p>
+<div *ngIf="product" class="main-container">
+  <div class="image-container">
+    <img [src]="imageService.getImage(product.imageName)" alt="Зображення продукту">
+  </div>
+  <div class="info-container">
+    <div>
+      <div class="name-container">
+        {{product.name}}
+      </div>
+      <div *ngIf="isInStock(product)" class="product-availability green">
+        в наявності
+      </div>
+      <div *ngIf="!isInStock(product)" class="product-availability red">
+        немає в наявності
+      </div>
+      <div class="price">
+        {{product.finalPrice}} грн
+      </div>
+      <div class="btns-container">
+        <div (click)="decreaseQuantity()" class="round-btn">
+          -
+        </div>
+        <div class="quantity-container">
+          {{quantity}} шт
+        </div>
+        <div (click)="increaseQuantity()" class="round-btn">
+          +
+        </div>
+      </div>
+      <div class="add-to-basket-btn-container">
+        <button (click)="addToBasket()" [disabled]="!isInStock(product)" [ngClass]="{'disable': !isInStock(product)}"
+                class="add-to-basket-btn" type="button">В корзину
+        </button>
+      </div>
+    </div>
+
+    <div class="line">
+      <hr>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="title">
+    Опис
+  </div>
+  <div *ngIf="product" [innerHTML]="product.htmlContent" class="htmContent">
+  </div>
+</div>

@@ -2,7 +2,10 @@ package com.wolf.hookahshopee.product.controller;
 
 import com.wolf.hookahshopee.legacy.dto.PageDTO;
 import com.wolf.hookahshopee.legacy.service.FileStorageService;
-import com.wolf.hookahshopee.product.dto.*;
+import com.wolf.hookahshopee.product.dto.ProductCreateDTO;
+import com.wolf.hookahshopee.product.dto.ProductDTO;
+import com.wolf.hookahshopee.product.dto.ProductListRequestDTO;
+import com.wolf.hookahshopee.product.dto.ProductUpdateDTO;
 import com.wolf.hookahshopee.product.service.ProductService;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -57,22 +60,15 @@ public class ProductController {
     }
 
     @Async
-    @GetMapping(value = "/all/light", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/uuid", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = ProductLightDTO.class)))
+                    content = @Content(schema = @Schema(implementation = ProductDTO.class))
             )
     })
-    public CompletableFuture<PageDTO<ProductLightDTO>> getAllLight(ProductListRequestDTO request,
-                                                                   @RequestParam(name = "page") Integer page,
-                                                                   @RequestParam(name = "size") Integer size,
-                                                                   @RequestParam(name = "sortColumn", required = false) String sortColumn) {
-        if (sortColumn == null) {
-            return CompletableFuture.completedFuture(productService.getAllLight(request, PageRequest.of(page, size)));
-        } else {
-            return CompletableFuture.completedFuture(productService.getAllLight(request, PageRequest.of(page, size, Sort.by(sortColumn).descending())));
-        }
+    public CompletableFuture<ResponseEntity<ProductDTO>> findByUUID(@RequestParam(name = "uuid") UUID uuid) {
+        return CompletableFuture.completedFuture(ResponseEntity.ok(productService.findByUUID(uuid)));
     }
 
     @Async

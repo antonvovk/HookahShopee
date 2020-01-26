@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.criteria.Join;
 import java.util.List;
+import java.util.UUID;
 
 import static org.springframework.data.jpa.domain.Specification.where;
 
@@ -28,13 +29,13 @@ public class ProductListSpecification {
         };
     }
 
-    private Specification<Product> manufacturerIn(List<String> manufacturers) {
+    private Specification<Product> manufacturerIn(List<UUID> manufacturers) {
         return (root, query, cb) -> {
             if (manufacturers == null || manufacturers.isEmpty()) {
                 return null;
             }
 
-            return root.get("manufacturer").get("name").in(manufacturers);
+            return root.get("manufacturer").get("uuid").in(manufacturers);
         };
     }
 
@@ -52,14 +53,14 @@ public class ProductListSpecification {
         };
     }
 
-    private Specification<Product> isInStock(String cityName) {
+    private Specification<Product> isInStock(UUID cityUUID) {
         return (root, query, cb) -> {
-            if (cityName == null) {
+            if (cityUUID == null) {
                 return null;
             }
 
             Join<Product, ProductItem> productItemJoin = root.join("productItems");
-            return cb.and(cb.equal(productItemJoin.get("seller").get("city").get("name"), cityName), cb.greaterThan(productItemJoin.get("quantity"), 0));
+            return cb.and(cb.equal(productItemJoin.get("seller").get("city").get("uuid"), cityUUID), cb.greaterThan(productItemJoin.get("quantity"), 0));
         };
     }
 
@@ -69,7 +70,7 @@ public class ProductListSpecification {
             return where(priceInRange(request.getStartPrice(), request.getEndPrice()))
                     .and(isOnDiscount(request.getIsOnDiscount()))
                     .and(manufacturerIn(request.getManufacturers()))
-                    .and(isInStock(request.getCityName()))
+                    .and(isInStock(request.getCityUUID()))
                     .toPredicate(root, query, cb);
         };
     }

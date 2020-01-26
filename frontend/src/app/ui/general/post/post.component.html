@@ -1,13 +1,13 @@
 <div *ngIf="post" class="main-container">
-    <div class="image-container">
-        <img [src]="imageService.getImage(post.imageName)" alt="Зображення новини">
-    </div>
+  <div class="image-container">
+    <img [src]="imageService.getImage(post.imageName)" alt="Зображення новини">
+  </div>
 
-    <div class="title">
-        {{post.name}}
-    </div>
+  <div class="title">
+    {{post.name}}
+  </div>
 
-    <div class="htm-container">
-        {{post.htmlContent}}
-    </div>
+  <div [innerHTML]="post.htmlContent" class="htm-container">
+
+  </div>
 </div>

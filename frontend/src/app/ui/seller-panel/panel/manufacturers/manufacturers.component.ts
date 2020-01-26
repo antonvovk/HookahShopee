@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {ManufacturersService} from "../../../../services/manufacturers.service";
-import {Manufacturer} from "../../../../core/model/manufacturer.model";
-import {ImageService} from "../../../../services/image.service";
+import { Component, OnInit } from '@angular/core';
+import { ManufacturersService } from '../../../../services/manufacturers.service';
+import { Manufacturer } from '../../../../core/model/manufacturer.model';
+import { ImageService } from '../../../../services/image.service';
 
 @Component({
   selector: 'app-manufacturers',
@@ -20,7 +20,7 @@ export class ManufacturersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.manufacturersService.findAll().subscribe(manufacturers => {
+    this.manufacturersService.getAll().subscribe(manufacturers => {
       this.manufacturers = manufacturers;
     });
   }
@@ -31,7 +31,7 @@ export class ManufacturersComponent implements OnInit {
   }
 
   onReturn($event: boolean) {
-    this.manufacturersService.findAll().subscribe(manufacturers => {
+    this.manufacturersService.getAll().subscribe(manufacturers => {
       this.manufacturers = manufacturers;
       this.edit_addComponentOpened = false;
     });

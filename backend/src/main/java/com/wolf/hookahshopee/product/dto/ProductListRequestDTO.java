@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -17,9 +18,9 @@ public class ProductListRequestDTO {
 
     private Long endPrice;
 
-    private List<String> manufacturers;
+    private List<UUID> manufacturers;
 
-    private String cityName;
+    private UUID cityUUID;
 
     private Boolean isOnDiscount;
 }

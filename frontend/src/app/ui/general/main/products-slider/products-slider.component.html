@@ -1,5 +1,5 @@
 <div class="title-center">
-    {{header}}
+  {{header}}
 </div>
 
 <div class="carousel-container">
@@ -12,10 +12,10 @@
       <owl-carousel-o #owl [options]="customOptions">
         <ng-template *ngFor="let product of products.items" carouselSlide>
           <div class="product-item-container">
-            <div class="product-item">
+            <div [routerLink]="['/product', product.uuid]" class="product-item block-item">
               <div class="top">
                 <div class="product-image">
-                  <img alt="product-image" src="../../../../assets/img/Rectangle%208.png"/>
+                  <img [src]="imageService.getImage(product.imageName)" alt="product-image"/>
                 </div>
               </div>
               <div class="bottom">

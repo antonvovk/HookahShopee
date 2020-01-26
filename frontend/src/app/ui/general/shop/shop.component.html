@@ -1,11 +1,12 @@
 <div class="city-select-container">
-    <mat-form-field class="full-width">
-        <mat-select (selectionChange)="updateCity()" [(ngModel)]="city" [compareWith]="compareObjects">
-            <mat-option *ngFor="let city of cities" [value]="city">
-                {{city.name}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-select (selectionChange)="updateCity()" [(ngModel)]="city" [compareWith]="compareObjects"
+                style="font-size: 25px">
+      <mat-option *ngFor="let city of cities" [value]="city">
+        {{city.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
 
 <div class="products-container">
@@ -76,31 +77,34 @@
 
   <div class="product-items-container">
     <div *ngFor="let product of products.items" class="product-item">
-      <div class="top">
+      <div [routerLink]="['/product', product.uuid]" class="top">
         <div class="product-image">
-          <img alt="product-image" src="../../../../assets/img/Rectangle%208.png"/>
+          <img [src]="imageService.getImage(product.imageName)" alt="product-image">
         </div>
       </div>
       <div class="bottom">
-        <div class="product-name">
-          {{product.name}}
-        </div>
-        <div class="product-availability">
-          <div *ngIf="isInStock(product)" class="green-text">
-            в наявності
+        <div [routerLink]="['/product', product.uuid]">
+          <div class="product-name">
+            {{product.name}}
           </div>
-          <div *ngIf="!isInStock(product)" class="red-text">
-            не в наявності
+          <div class="product-availability">
+            <div *ngIf="isInStock(product)" class="green-text">
+              в наявності
+            </div>
+            <div *ngIf="!isInStock(product)" class="red-text">
+              не в наявності
+            </div>
           </div>
-        </div>
-        <div [ngClass]="{'crossed-text-red': product.discount > 0}" class="product-price">
-          {{product.price}} грн
-        </div>
-        <div *ngIf="product.discount > 0" class="product-discount">
-          {{product.finalPrice}} грн
+          <div [ngClass]="{'crossed-text-red': product.discount > 0}" class="product-price">
+            {{product.price}} грн
+          </div>
+          <div *ngIf="product.discount > 0" class="product-discount">
+            {{product.finalPrice}} грн
+          </div>
         </div>
         <div class="basket-btn-container">
-          <button (click)="addToBasket(product)" class="basket-btn" color="warn" mat-button>
+          <button (click)="addToBasket(product)" [disabled]="!isInStock(product)"
+                  [ngClass]="{'disable': !isInStock(product)}" class="basket-btn">
             В корзину
           </button>
         </div>
