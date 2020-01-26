@@ -11,13 +11,13 @@ import { City } from '../core/model/city.model';
 })
 export class CitiesService {
 
-  constructor(private http: HttpClient, private adapter: CityAdapter) {
-
+  constructor(private http: HttpClient,
+              private adapter: CityAdapter) {
   }
 
   findAll(): Observable<City[]> {
     return this.http
-      .get<City[]>(ApiConfig.API_URL + '/city')
+      .get<City[]>(ApiConfig.CITY_API_URL + '/all')
       .pipe(map((data: any[]) => data.map(item => this.adapter.adapt(item))));
   }
 }

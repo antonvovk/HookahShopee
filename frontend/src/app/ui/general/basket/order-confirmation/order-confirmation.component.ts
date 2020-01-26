@@ -10,6 +10,9 @@ import { OrderItem } from '../../../../core/model/order-item.model';
 import { OrderService } from '../../../../services/order.service';
 import { DeliveryType } from '../../../../core/model/delivery-type.enum';
 import { PaymentType } from '../../../../core/model/payment-type.enum';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+import { BasketService } from '../../../../services/basket.service';
 
 @Component({
   selector: 'app-order-confirmation',
@@ -36,6 +39,9 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit, OnDest
   constructor(private novaposhtaService: NovaposhtaService,
               private authenticationService: AuthenticationService,
               private _formBuilder: FormBuilder,
+              private toastrService: ToastrService,
+              private router: Router,
+              private basketService: BasketService,
               private orderService: OrderService) {
 
   }
@@ -95,11 +101,8 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit, OnDest
     this.novaposhtaService.findWarehouseByName(this.deliveryDataFormGroup.controls.cityFormControl.value.Description).subscribe(
       next => {
         this.warehouses.next(next);
-        console.log(this.deliveryDataFormGroup.controls.cityFormControl.value.Description);
-        console.log(this.warehouses);
       },
       error => {
-        console.log(error);
       }
     );
   }
@@ -123,13 +126,15 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit, OnDest
       }
     );
 
-    console.log(order);
     this.orderService.createOrder(order).subscribe(
       res => {
-        console.log(res);
+        this.toastrService.info('Конградюлейшинс', 'Інфо');
+        this.basketService.clearItems();
+        this.router.navigate(['']);
       },
       err => {
-        console.log(err);
+        this.toastrService.info('Попробуйте ще раз оформити', 'Трабли');
+        this.router.navigate(['shopping-cart']);
       }
     );
   }
@@ -143,14 +148,13 @@ export class OrderConfirmationComponent implements OnInit, AfterViewInit, OnDest
   // }
 
   protected filterBanks() {
-    let search = this.deliveryDataFormGroup.controls.cityFilterFormControl.value;
+    const search = this.deliveryDataFormGroup.controls.cityFilterFormControl.value;
 
     this.novaposhtaService.findCityByName(search).subscribe(
       next => {
         this.filteredBanks.next(next);
       },
       error => {
-        console.log(error);
       }
     );
   }

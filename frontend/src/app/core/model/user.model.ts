@@ -9,15 +9,17 @@ export class User {
   lastName?: string;
   role?: Role;
   city?: City;
+  cityUUID?: string;
 
   constructor(params: User = {} as User) {
-    let {
+    const {
       uuid,
       phoneNumber,
       firstName,
       lastName,
       role,
-      city
+      city,
+      cityUUID
     } = params;
 
     this.uuid = uuid;
@@ -26,5 +28,6 @@ export class User {
     this.lastName = lastName;
     this.role = role;
     this.city = city;
+    this.cityUUID = cityUUID;
   }
 }

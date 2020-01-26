@@ -23,19 +23,19 @@
 
       <div class="row-container">
           <div (click)="decreaseQuantity(item)" class="round-btn-container">
-              <button class="round-btn" mat-mini-fab type="button">-</button>
+              <div class="round-btn">-</div>
           </div>
         <div class="quantity">
           {{item.quantity}} шт
         </div>
           <div (click)="increaseQuantity(item)" class="round-btn-container">
-              <button class="round-btn" mat-mini-fab type="button">+</button>
+            <div class="round-btn">+</div>
           </div>
       </div>
 
       <div class="row-container">
         <div class="price-container">
-          {{item.price}} грн
+          {{item.price * item.quantity}} грн
         </div>
         <div>
           <button class="delete-btn" type="button">Видалити</button>
@@ -54,9 +54,9 @@
   </div>
 
     <div class="flex justify-content-center mt-40-20px" style="height: 50px;">
-        <button (click)="openConfirmation()" class="red-button" style="min-width: 350px;">
-            Оформити
-        </button>
+      <button (click)="openConfirmation()" class="red-button" style="min-width: 280px;">
+        Оформити
+      </button>
     </div>
 </div>
 

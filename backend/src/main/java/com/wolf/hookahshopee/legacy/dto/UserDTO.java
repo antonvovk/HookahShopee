@@ -1,5 +1,6 @@
 package com.wolf.hookahshopee.legacy.dto;
 
+import com.wolf.hookahshopee.city.dto.CityDTO;
 import com.wolf.hookahshopee.legacy.model.Role;
 import lombok.Data;
 

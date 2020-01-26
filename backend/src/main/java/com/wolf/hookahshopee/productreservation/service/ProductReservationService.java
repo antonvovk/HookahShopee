@@ -1,4 +1,4 @@
-package com.wolf.hookahshopee.legacy.service;
+package com.wolf.hookahshopee.productreservation.service;
 
 import java.util.UUID;
 

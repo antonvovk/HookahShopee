@@ -64,17 +64,17 @@
             </form>
         </mat-step>
 
-        <mat-step *ngIf="deliveryTypeFormGroup.controls.deliveryTypeFormControl.value === 'novaposhta'"
+        <mat-step *ngIf="deliveryTypeFormGroup.controls.deliveryTypeFormControl.value === DeliveryType.NOVA_POSHTA"
                   [stepControl]="deliveryDataFormGroup">
-            <form [formGroup]="deliveryDataFormGroup">
-                <ng-template matStepLabel>Відділення нової пошти</ng-template>
-                <mat-form-field appearance="outline" class="input-container">
-                    <mat-label>Місто</mat-label>
-                    <mat-select #singleSelect (selectionChange)="onCitySelected()" formControlName="cityFormControl"
-                                placeholder="Виберіть ваше місто">
-                        <mat-option>
-                            <ngx-mat-select-search formControlName="cityFilterFormControl"
-                                                   noEntriesFoundLabel="Не знайдено такого міста"
+          <form [formGroup]="deliveryDataFormGroup">
+            <ng-template matStepLabel>Відділення нової пошти</ng-template>
+            <mat-form-field appearance="outline" class="input-container">
+              <mat-label>Місто</mat-label>
+              <mat-select #singleSelect (selectionChange)="onCitySelected()" formControlName="cityFormControl"
+                          placeholder="Виберіть ваше місто">
+                <mat-option>
+                  <ngx-mat-select-search formControlName="cityFilterFormControl"
+                                         noEntriesFoundLabel="Не знайдено такого міста"
                                                    placeholderLabel="Почніть вводити назву вашого міста"></ngx-mat-select-search>
                         </mat-option>
                         <mat-option *ngFor="let bank of filteredBanks | async" [value]="bank">

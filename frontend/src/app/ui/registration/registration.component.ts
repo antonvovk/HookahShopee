@@ -1,8 +1,8 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {City} from "../../core/model/city.model";
-import {FormControl, Validators} from "@angular/forms";
-import {CitiesService} from "../../services/cities.service";
-import {AuthenticationService} from "../../services/authentication.service";
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { City } from '../../core/model/city.model';
+import { FormControl, Validators } from '@angular/forms';
+import { CitiesService } from '../../services/cities.service';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-registration',
@@ -84,7 +84,7 @@ export class RegistrationComponent implements OnInit {
       String(this.firstAndLastNamesFormControl.value).split(' ')[1],
       this.cityFormControl.value).subscribe(
       res => {
-        this.returned.emit(true)
+        this.returned.emit(true);
       },
       err => {
 

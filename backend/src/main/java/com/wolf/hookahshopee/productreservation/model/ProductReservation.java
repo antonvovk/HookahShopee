@@ -1,5 +1,6 @@
-package com.wolf.hookahshopee.legacy.model;
+package com.wolf.hookahshopee.productreservation.model;
 
+import com.wolf.hookahshopee.city.model.City;
 import com.wolf.hookahshopee.product.model.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.UUID;
 
 @Data
 @Builder
@@ -22,9 +22,6 @@ public class ProductReservation {
     @Column(name = "ID", columnDefinition = "BIGINT", unique = true, nullable = false)
     private Long id;
 
-    @Column(name = "UUID", columnDefinition = "uniqueidentifier", updatable = false, nullable = false, unique = true)
-    private UUID uuid;
-
     @Column(name = "QUANTITY", columnDefinition = "BIGINT", nullable = false)
     private Long quantity;
 
@@ -36,18 +33,13 @@ public class ProductReservation {
     @JoinColumn(name = "CITY_ID", nullable = false)
     private City city;
 
-    @PrePersist
-    public void initializeUUID() {
-        if (uuid == null) {
-            uuid = UUID.randomUUID();
-        }
-    }
-
     public void addReservation(Long quantity) {
         this.quantity += quantity;
     }
 
     public void removeReservation(Long quantity) {
-        this.quantity -= quantity;
+        if (this.quantity - quantity >= 0) {
+            this.quantity -= quantity;
+        }
     }
 }

@@ -1,6 +1,11 @@
-package com.wolf.hookahshopee.legacy.controller;
+package com.wolf.hookahshopee.productreservation.controller;
 
-import com.wolf.hookahshopee.legacy.service.ProductReservationService;
+import com.wolf.hookahshopee.productreservation.service.ProductReservationService;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +15,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping(value = "/api/reservation")
+@Tag(name = "ProductReservation", description = "ProductReservation API")
 public class ProductReservationController {
 
     private final ProductReservationService productReservationService;
@@ -20,6 +26,12 @@ public class ProductReservationController {
 
     @Async
     @GetMapping
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "201",
+                    content = @Content(schema = @Schema(implementation = Long.class))
+            )
+    })
     public CompletableFuture<Long> getReservationQuantity(@RequestParam(name = "productUUID") UUID productUUID,
                                                           @RequestParam(name = "cityUUID") UUID cityUUID) {
         return CompletableFuture.completedFuture(this.productReservationService.getReservationQuantity(productUUID, cityUUID));

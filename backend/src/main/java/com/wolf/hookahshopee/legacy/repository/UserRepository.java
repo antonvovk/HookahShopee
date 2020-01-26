@@ -1,6 +1,6 @@
 package com.wolf.hookahshopee.legacy.repository;
 
-import com.wolf.hookahshopee.legacy.model.City;
+import com.wolf.hookahshopee.city.model.City;
 import com.wolf.hookahshopee.legacy.model.Role;
 import com.wolf.hookahshopee.legacy.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;

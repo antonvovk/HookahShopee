@@ -42,6 +42,11 @@ export class BasketComponent implements OnInit {
   }
 
   decreaseQuantity(item: OrderItem) {
+    if (item.quantity - 1 < 0) {
+      this.toastrService.info('Менше не ножна лол', 'Інформейшин');
+      return;
+    }
+
     this.basketService.removeItem(item.product, 1);
   }
 }

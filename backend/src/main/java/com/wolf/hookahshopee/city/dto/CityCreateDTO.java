@@ -1,4 +1,4 @@
-package com.wolf.hookahshopee.legacy.dto;
+package com.wolf.hookahshopee.city.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,18 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-import java.util.UUID;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CityDTO {
-
-    private UUID uuid;
+public class CityCreateDTO {
 
     @NotBlank
-    @Size(min = 4, max = 30)
     private String name;
 }

@@ -5,6 +5,7 @@ import { OrderItem } from '../core/model/order-item.model';
 import { ProductReservationService } from './product-reservation.service';
 import { CitySaverService } from './city-saver.service';
 import { Product } from '../core/model/product.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({providedIn: 'root'})
 export class BasketService {
@@ -12,6 +13,7 @@ export class BasketService {
   private currentBasketSubject: BehaviorSubject<Basket>;
 
   constructor(private productReservationService: ProductReservationService,
+              private toastrService: ToastrService,
               private citySaverService: CitySaverService) {
     this.currentBasketSubject = new BehaviorSubject<Basket>(JSON.parse(localStorage.getItem('currentBasket')));
 
@@ -35,45 +37,48 @@ export class BasketService {
   }
 
   public isEmpty(): boolean {
-    return this.currentBasketSubject.value.items.length == 0;
+    return this.currentBasketSubject.value.items.length === 0;
   }
 
   public getTotalPrice(): number {
     let sum: number = 0;
     this.currentBasketSubject.value.items.forEach(value => {
-      sum += value.price;
+      sum += value.price * value.quantity;
     });
     return sum;
   }
 
-  public addItem(product: Product, quantity: number) {
-    console.log(this.citySaverService.city);
-    this.productReservationService.addProductReservation(product.uuid, this.citySaverService.city.uuid, quantity).subscribe(
-      res => {
-        let searchedItem = this.currentBasketSubject.value.items.find(i => i.productUUID === product.uuid);
-        if (searchedItem == null) {
-          this.currentBasketSubject.value.items.push(new OrderItem({
-            price: product.price,
-            quantity: quantity,
-            product: product,
-            productUUID: product.uuid
-          }));
-        } else {
-          searchedItem.quantity += quantity;
-        }
+  public addItem(product: Product, quantity: number): Promise<boolean> {
+    return new Promise(resolve => {
+      this.productReservationService.addProductReservation(product.uuid, this.citySaverService.city.uuid, quantity).subscribe(
+        res => {
+          const searchedItem = this.currentBasketSubject.value.items.find(i => i.productUUID === product.uuid);
+          if (searchedItem == null) {
+            this.currentBasketSubject.value.items.push(new OrderItem({
+              price: product.price,
+              quantity: quantity,
+              product: product,
+              productUUID: product.uuid
+            }));
+          } else {
+            searchedItem.quantity += quantity;
+          }
 
-        localStorage.setItem('currentBasket', JSON.stringify(this.currentBasketSubject.value));
-      },
-      error => {
-        console.log(error);
-      }
-    );
+          localStorage.setItem('currentBasket', JSON.stringify(this.currentBasketSubject.value));
+          resolve(true);
+        },
+        error => {
+          this.toastrService.warning('Продукт закінчився', 'Альорт');
+          resolve(false);
+        }
+      );
+    });
   }
 
   public removeItem(product: Product, quantity: number) {
     this.productReservationService.removeProductReservation(product.uuid, this.citySaverService.city.uuid, quantity).subscribe(
       res => {
-        let searchedItem = this.currentBasketSubject.value.items.find(i => i.productUUID === product.uuid);
+        const searchedItem = this.currentBasketSubject.value.items.find(i => i.productUUID === product.uuid);
         if (searchedItem == null) {
           this.currentBasketSubject.value.items.push(new OrderItem({
             price: product.price,
@@ -88,22 +93,14 @@ export class BasketService {
         localStorage.setItem('currentBasket', JSON.stringify(this.currentBasketSubject.value));
       },
       error => {
-        console.log(error);
+
       }
     );
   }
 
-  public clearItems(cityName: string): void {
-    this.currentBasketSubject.value.items.forEach(item => {
-      this.productReservationService.clearProductReservation(item.product.name, cityName).subscribe(
-        res => {
-          localStorage.removeItem('currentBasket');
-          this.currentBasketSubject.next(null);
-        },
-        error => {
-          console.log(error);
-        }
-      );
-    });
+  public clearItems(): void {
+
+    localStorage.removeItem('currentBasket');
+    this.currentBasketSubject.next(null);
   }
 }

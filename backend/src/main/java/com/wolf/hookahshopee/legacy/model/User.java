@@ -1,5 +1,6 @@
 package com.wolf.hookahshopee.legacy.model;
 
+import com.wolf.hookahshopee.city.model.City;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

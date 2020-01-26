@@ -1,13 +1,15 @@
 package com.wolf.hookahshopee.product.service;
 
+import com.wolf.hookahshopee.city.mapper.CityMapper;
+import com.wolf.hookahshopee.city.model.City;
+import com.wolf.hookahshopee.city.repository.CityRepository;
 import com.wolf.hookahshopee.legacy.dto.PageDTO;
 import com.wolf.hookahshopee.legacy.exception.EntityNotFoundException;
-import com.wolf.hookahshopee.legacy.mapper.CityMapper;
 import com.wolf.hookahshopee.legacy.mapper.UserMapper;
-import com.wolf.hookahshopee.legacy.model.*;
-import com.wolf.hookahshopee.legacy.repository.CityRepository;
+import com.wolf.hookahshopee.legacy.model.ProductItem;
+import com.wolf.hookahshopee.legacy.model.Role;
+import com.wolf.hookahshopee.legacy.model.User;
 import com.wolf.hookahshopee.legacy.repository.ProductItemRepository;
-import com.wolf.hookahshopee.legacy.repository.ProductReservationRepository;
 import com.wolf.hookahshopee.legacy.repository.UserRepository;
 import com.wolf.hookahshopee.manufacturer.model.Manufacturer;
 import com.wolf.hookahshopee.manufacturer.repository.ManufacturerRepository;
@@ -17,6 +19,8 @@ import com.wolf.hookahshopee.product.mapper.ProductMapper;
 import com.wolf.hookahshopee.product.model.Product;
 import com.wolf.hookahshopee.product.repository.ProductRepository;
 import com.wolf.hookahshopee.product.specification.ProductListSpecification;
+import com.wolf.hookahshopee.productreservation.model.ProductReservation;
+import com.wolf.hookahshopee.productreservation.repository.ProductReservationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

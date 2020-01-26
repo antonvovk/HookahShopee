@@ -1,13 +1,13 @@
 package com.wolf.hookahshopee.legacy.service.impl;
 
+import com.wolf.hookahshopee.city.model.City;
+import com.wolf.hookahshopee.city.repository.CityRepository;
 import com.wolf.hookahshopee.legacy.dto.UserDTO;
 import com.wolf.hookahshopee.legacy.dto.UserLightDTO;
 import com.wolf.hookahshopee.legacy.exception.EntityNotFoundException;
 import com.wolf.hookahshopee.legacy.mapper.UserMapper;
-import com.wolf.hookahshopee.legacy.model.City;
 import com.wolf.hookahshopee.legacy.model.Role;
 import com.wolf.hookahshopee.legacy.model.User;
-import com.wolf.hookahshopee.legacy.repository.CityRepository;
 import com.wolf.hookahshopee.legacy.repository.UserRepository;
 import com.wolf.hookahshopee.legacy.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -85,10 +85,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void register(UserLightDTO sellerDTO, Role role) {
-        City city = cityRepository.findByName(sellerDTO.getCityName()).orElse(null);
+        City city = cityRepository.findByUuid(sellerDTO.getCityUUID()).orElse(null);
 
         if (city == null) {
-            throw new EntityNotFoundException(City.class, "cityName", sellerDTO.getCityName());
+            throw new EntityNotFoundException(City.class, "cityUUID", sellerDTO.getCityUUID().toString());
         }
 
         User user = User.builder()
@@ -111,10 +111,10 @@ public class UserServiceImpl implements UserService {
             throw new EntityNotFoundException(User.class, "id", id.toString());
         }
 
-        City city = cityRepository.findByName(sellerDTO.getCityName()).orElse(null);
+        City city = cityRepository.findByUuid(sellerDTO.getCityUUID()).orElse(null);
 
         if (city == null) {
-            throw new EntityNotFoundException(City.class, "cityName", sellerDTO.getCityName());
+            throw new EntityNotFoundException(City.class, "cityUUID", sellerDTO.getCityUUID().toString());
         }
 
         user.setPhoneNumber(sellerDTO.getPhoneNumber());

@@ -1,13 +1,14 @@
-package com.wolf.hookahshopee.legacy.service.impl;
+package com.wolf.hookahshopee.productreservation.service;
 
+import com.wolf.hookahshopee.city.model.City;
+import com.wolf.hookahshopee.city.repository.CityRepository;
 import com.wolf.hookahshopee.legacy.exception.EntityNotFoundException;
-import com.wolf.hookahshopee.legacy.model.City;
-import com.wolf.hookahshopee.legacy.model.ProductReservation;
-import com.wolf.hookahshopee.legacy.repository.CityRepository;
-import com.wolf.hookahshopee.legacy.repository.ProductReservationRepository;
-import com.wolf.hookahshopee.legacy.service.ProductReservationService;
+import com.wolf.hookahshopee.legacy.exception.ReservationException;
+import com.wolf.hookahshopee.legacy.model.ProductItem;
 import com.wolf.hookahshopee.product.model.Product;
 import com.wolf.hookahshopee.product.repository.ProductRepository;
+import com.wolf.hookahshopee.productreservation.model.ProductReservation;
+import com.wolf.hookahshopee.productreservation.repository.ProductReservationRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -72,6 +73,15 @@ public class ProductReservationServiceImpl implements ProductReservationService 
                     .product(product)
                     .city(city)
                     .build();
+        }
+
+        long sum = product.getProductItems().stream()
+                .filter(productItem -> productItem.getSeller().getCity().getUuid().equals(cityUUID))
+                .mapToLong(ProductItem::getQuantity)
+                .sum();
+
+        if (quantity + productReservation.getQuantity() > sum) {
+            throw new ReservationException("Недостатньо продукту в наявності");
         }
 
         productReservation.addReservation(quantity);

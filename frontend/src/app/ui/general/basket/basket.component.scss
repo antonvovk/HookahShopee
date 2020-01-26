@@ -41,7 +41,7 @@
   font-weight: 500;
   font-size: 20px;
   color: #FF0000;
-  height: 50px;
+  height: 40px;
   width: 100%;
   background-color: #FFFFFF;
 }
@@ -83,10 +83,25 @@
 }
 
 .round-btn {
-  font-weight: 500;
-  font-size: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: #C4C4C4;
+  border-radius: 40px;
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
   color: #000000;
+
+  font-weight: 500;
+  font-size: 180%;
+  @media (max-width: 767px) {
+    font-size: 120%;
+  };
+}
+
+.round-btn:hover {
+  background: #a0a0a0;
 }
 
 .quantity {
@@ -95,8 +110,8 @@
   text-align: center;
   font-weight: 500;
   font-size: 20px;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .price-container {
@@ -114,7 +129,7 @@
   color: #FF0000;
   border: 2px solid #FF0000;
   border-radius: 15px;
-  height: 50px;
+  height: 40px;
   background-color: #FFFFFF;
 }
 

@@ -115,7 +115,13 @@ export class ShopComponent implements OnInit {
   }
 
   addToBasket(product: Product) {
-    this.basketService.addItem(product, 1);
+    this.basketService.addItem(product, 1).then(
+      data => {
+        if (data === false) {
+          this.updateFilters();
+        }
+      }
+    );
   }
 
   updateCity() {

@@ -1,10 +1,10 @@
 package com.wolf.hookahshopee.legacy.seeder;
 
-import com.wolf.hookahshopee.legacy.dto.CityDTO;
+import com.wolf.hookahshopee.city.dto.CityCreateDTO;
+import com.wolf.hookahshopee.city.service.CityService;
 import com.wolf.hookahshopee.legacy.dto.ProductItemLightDTO;
 import com.wolf.hookahshopee.legacy.dto.UserLightDTO;
 import com.wolf.hookahshopee.legacy.model.Role;
-import com.wolf.hookahshopee.legacy.service.CityService;
 import com.wolf.hookahshopee.legacy.service.ProductItemService;
 import com.wolf.hookahshopee.legacy.service.UserService;
 import com.wolf.hookahshopee.manufacturer.dto.ManufacturerCreateDTO;
@@ -51,7 +51,6 @@ public class DataSeeder {
     @EventListener
     public void seed(ContextRefreshedEvent event) {
         seedPosts();
-        seedCities();
         seedUsers();
         seedProducts();
     }
@@ -79,16 +78,14 @@ public class DataSeeder {
         postService.updateImage(uuid3, "Post3.png");
     }
 
-    private void seedCities() {
-        cityService.create(CityDTO.builder().name("Львів").build());
-        cityService.create(CityDTO.builder().name("Івано-франківськ").build());
-    }
-
     private void seedUsers() {
-        userService.register(new UserLightDTO("380963587506", "Богдан", "Данкович", "password", "Львів"), Role.ADMIN);
-        userService.register(new UserLightDTO("380970362116", "Віталій", "Боянівський", "password", "Івано-франківськ"), Role.SELLER);
-        userService.register(new UserLightDTO("380958674875", "Ярослав", "Мудрий", "password", "Львів"), Role.SELLER);
-        userService.register(new UserLightDTO("380965876896", "Антон", "Вовк", "password", "Івано-франківськ"), Role.CLIENT);
+        UUID city1UUID = cityService.create(new CityCreateDTO("Львів"));
+        UUID city2UUID = cityService.create(new CityCreateDTO("Івано-франківськ"));
+
+        userService.register(new UserLightDTO("380963587506", "Богдан", "Данкович", "password", city1UUID), Role.ADMIN);
+        userService.register(new UserLightDTO("380970362116", "Віталій", "Боянівський", "password", city2UUID), Role.SELLER);
+        userService.register(new UserLightDTO("380958674875", "Ярослав", "Мудрий", "password", city1UUID), Role.SELLER);
+        userService.register(new UserLightDTO("380965876896", "Антон", "Вовк", "password", city2UUID), Role.CLIENT);
     }
 
     private void seedProducts() {
@@ -108,13 +105,16 @@ public class DataSeeder {
         manufacturerService.updateImage(mUUID4, "Milano.png");
 
         for (int i = 0; i < 50; ++i) {
-            productService.create(new ProductCreateDTO("Adalya Blue Peach Mint" + i, 75L, 0L, "<p><strong style=\"color: rgb(61, 20, 102);\">Кращий табак в світі особливо якщо брати партії по двійній ціні</strong></p><p><strong style=\"color: rgb(61, 20, 102);\"> ● Milano</strong></p><p><strong style=\"color: rgb(61, 20, 102);\"> ● Adalya </strong></p><p><strong style=\"color: rgb(61, 20, 102);\">● Dark Side </strong></p><p><br></p>", mUUID1));
+            UUID uuid = productService.create(new ProductCreateDTO("Adalya Blue Peach Mint" + i, 75L, 0L, "<p><strong style=\"color: rgb(61, 20, 102);\">Кращий табак в світі особливо якщо брати партії по двійній ціні</strong></p><p><strong style=\"color: rgb(61, 20, 102);\"> ● Milano</strong></p><p><strong style=\"color: rgb(61, 20, 102);\"> ● Adalya </strong></p><p><strong style=\"color: rgb(61, 20, 102);\">● Dark Side </strong></p><p><br></p>", mUUID1));
+            productService.updateImage(uuid, "Rectangle 8.png");
             productItemService.create(new ProductItemLightDTO(10L, i + 1L, 1L));
         }
 
         for (int i = 0; i < 10; ++i) {
-            productService.create(new ProductCreateDTO("Hip Lem (Айс Апельсин Лайм) 100 Гр" + i, 150L, 15L, "<p><strong style=\"color: rgb(61, 20, 102);\">Кращий табак в світі особливо якщо брати партії по двійній ціні</strong></p><p><strong style=\"color: rgb(61, 20, 102);\"> ● Milano</strong></p><p><strong style=\"color: rgb(61, 20, 102);\"> ● Adalya </strong></p><p><strong style=\"color: rgb(61, 20, 102);\">● Dark Side </strong></p><p><br></p>", mUUID2));
-            productService.create(new ProductCreateDTO("Jibiar - Fresh Blue (Айс Черника) 100 гр" + i, 150L, 15L, "<p><strong style=\"color: rgb(61, 20, 102);\">Кращий табак в світі особливо якщо брати партії по двійній ціні</strong></p><p><strong style=\"color: rgb(61, 20, 102);\"> ● Milano</strong></p><p><strong style=\"color: rgb(61, 20, 102);\"> ● Adalya </strong></p><p><strong style=\"color: rgb(61, 20, 102);\">● Dark Side </strong></p><p><br></p>", mUUID2));
+            UUID uuid1 = productService.create(new ProductCreateDTO("Hip Lem (Айс Апельсин Лайм) 100 Гр" + i, 150L, 15L, "<p><strong style=\"color: rgb(61, 20, 102);\">Кращий табак в світі особливо якщо брати партії по двійній ціні</strong></p><p><strong style=\"color: rgb(61, 20, 102);\"> ● Milano</strong></p><p><strong style=\"color: rgb(61, 20, 102);\"> ● Adalya </strong></p><p><strong style=\"color: rgb(61, 20, 102);\">● Dark Side </strong></p><p><br></p>", mUUID2));
+            UUID uuid2 = productService.create(new ProductCreateDTO("Jibiar - Fresh Blue (Айс Черника) 100 гр" + i, 150L, 15L, "<p><strong style=\"color: rgb(61, 20, 102);\">Кращий табак в світі особливо якщо брати партії по двійній ціні</strong></p><p><strong style=\"color: rgb(61, 20, 102);\"> ● Milano</strong></p><p><strong style=\"color: rgb(61, 20, 102);\"> ● Adalya </strong></p><p><strong style=\"color: rgb(61, 20, 102);\">● Dark Side </strong></p><p><br></p>", mUUID2));
+            productService.updateImage(uuid1, "Rectangle 8.png");
+            productService.updateImage(uuid2, "Rectangle 8.png");
             productItemService.create(new ProductItemLightDTO(32L, i + 51L, 2L));
         }
     }

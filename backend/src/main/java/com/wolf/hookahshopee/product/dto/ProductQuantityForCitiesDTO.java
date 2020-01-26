@@ -1,6 +1,6 @@
 package com.wolf.hookahshopee.product.dto;
 
-import com.wolf.hookahshopee.legacy.dto.CityDTO;
+import com.wolf.hookahshopee.city.dto.CityDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
