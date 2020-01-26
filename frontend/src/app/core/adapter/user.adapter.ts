@@ -1,6 +1,6 @@
-import {Injectable} from "@angular/core";
-import {Adapter} from "./adapter";
-import {User} from "../model/user.model";
+import { Injectable } from '@angular/core';
+import { Adapter } from './adapter';
+import { User } from '../model/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -8,12 +8,14 @@ import {User} from "../model/user.model";
 export class UserAdapter implements Adapter<User> {
 
   adapt(item: any): User {
-    return new User(
-      item.phoneNumber,
-      item.firstName,
-      item.lastName,
-      item.role,
-      item.city
+    return new User({
+        uuid: item.uuid,
+        phoneNumber: item.phoneNumber,
+        firstName: item.firstName,
+        lastName: item.lastName,
+        role: item.role,
+        city: item.city
+      }
     );
   }
 }

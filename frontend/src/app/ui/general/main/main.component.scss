@@ -1,13 +1,16 @@
 .city-select-container {
   display: flex;
   justify-content: center;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+.full-width {
   font-weight: 500;
   font-size: 25px;
+  width: 30%;
   @media screen and (max-width: 700px) {
-    margin-top: 10px;
-  }
-  @media screen and (min-width: 700px) {
-    margin-top: 20px;
+    width: 100%;
   }
 }
 

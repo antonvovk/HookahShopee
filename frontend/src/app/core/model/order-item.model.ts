@@ -1,14 +1,23 @@
-import {Product} from "./product.model";
+import { Product } from './product.model';
 
 export class OrderItem {
 
-  price: number;
-  quantity: number;
-  product: Product;
+  price?: number;
+  quantity?: number;
+  product?: Product;
+  productUUID?: string;
 
-  constructor(price: number, quantity: number, product: Product) {
+  constructor(params: OrderItem = {} as OrderItem) {
+    let {
+      price,
+      quantity,
+      product,
+      productUUID
+    } = params;
+
     this.price = price;
     this.quantity = quantity;
     this.product = product;
+    this.productUUID = productUUID;
   }
 }

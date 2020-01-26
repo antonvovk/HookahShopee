@@ -1,6 +1,6 @@
 package com.wolf.hookahshopee.post.service;
 
-import com.wolf.hookahshopee.exception.EntityNotFoundException;
+import com.wolf.hookahshopee.legacy.exception.EntityNotFoundException;
 import com.wolf.hookahshopee.post.dto.PostCreateDTO;
 import com.wolf.hookahshopee.post.dto.PostDTO;
 import com.wolf.hookahshopee.post.dto.PostLightDTO;
@@ -8,7 +8,6 @@ import com.wolf.hookahshopee.post.dto.PostUpdateDTO;
 import com.wolf.hookahshopee.post.mapper.PostCreateMapper;
 import com.wolf.hookahshopee.post.mapper.PostLightMapper;
 import com.wolf.hookahshopee.post.mapper.PostMapper;
-import com.wolf.hookahshopee.post.mapper.PostUpdateMapper;
 import com.wolf.hookahshopee.post.model.Post;
 import com.wolf.hookahshopee.post.repository.PostRepository;
 import org.springframework.stereotype.Service;
@@ -60,7 +59,9 @@ public class PostServiceImpl implements PostService {
             throw new EntityNotFoundException(Post.class, "uuid", dto.getUuid().toString());
         }
 
-        postRepository.save(PostUpdateMapper.INSTANCE.fromDto(dto));
+        post.setName(dto.getName());
+        post.setHtmlContent(dto.getHtmlContent());
+        postRepository.save(post);
     }
 
     @Override

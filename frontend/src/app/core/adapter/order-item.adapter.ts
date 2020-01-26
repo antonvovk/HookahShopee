@@ -1,6 +1,6 @@
-import {Injectable} from "@angular/core";
-import {Adapter} from "./adapter";
-import {OrderItem} from "../model/order-item.model";
+import { Injectable } from '@angular/core';
+import { Adapter } from './adapter';
+import { OrderItem } from '../model/order-item.model';
 
 @Injectable({
   providedIn: 'root'
@@ -8,10 +8,11 @@ import {OrderItem} from "../model/order-item.model";
 export class OrderItemAdapter implements Adapter<OrderItem> {
 
   adapt(item: any): OrderItem {
-    return new OrderItem(
-      item.price,
-      item.quantity,
-      item.product
+    return new OrderItem({
+        price: item.price,
+        quantity: item.quantity,
+        product: item.product
+      }
     );
   }
 }

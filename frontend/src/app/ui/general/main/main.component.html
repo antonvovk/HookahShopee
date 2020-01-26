@@ -1,11 +1,11 @@
-<div *ngIf="cities[0]" class="city-select-container">
-  <mat-form-field class="full-width">
-    <mat-select (selectionChange)="updateCity()" [formControl]="city" value="{{cities[0].name}}">
-      <mat-option *ngFor="let city of cities" value="{{city.name}}">
-        {{city.name}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+<div class="city-select-container">
+    <mat-form-field class="full-width">
+        <mat-select (selectionChange)="updateCity()" [(ngModel)]="city" [compareWith]="compareObjects">
+            <mat-option *ngFor="let city of cities" [value]="city">
+                {{city.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
 </div>
 
 <div class="slider-container">
@@ -22,15 +22,31 @@
     </ng-template>
     <ng-template carouselSlide>
       <div class="item">
-        <img alt="lorem-image" src="https://picsum.photos/seed/3/980/400">
+          <img alt="lorem-image" src="https://picsum.photos/seed/3/980/400">
       </div>
     </ng-template>
-    <ng-template carouselSlide>
-      <div class="item">
-        <img alt="lorem-image" src="https://picsum.photos/seed/4/980/400">
-      </div>
-    </ng-template>
+      <ng-template carouselSlide>
+          <div class="item">
+              <img alt="lorem-image" src="https://picsum.photos/seed/4/980/400">
+          </div>
+      </ng-template>
   </owl-carousel-o>
 </div>
-<app-products-slider [products]="bestValueProducts" [city]="city.value" header="Найвигідніші пропозиції"></app-products-slider>
-<app-products-slider [products]="hitSaleProducts" [city]="city.value" header="Хіт продаж"></app-products-slider>
+<app-products-slider [city]="city" [products]="bestValueProducts"
+                     header="Найвигідніші пропозиції"></app-products-slider>
+<app-products-slider [city]="city" [products]="hitSaleProducts" header="Хіт продаж"></app-products-slider>
+
+<div class="title-center">
+    Новини та статті
+</div>
+
+<div class="items-container">
+    <div *ngFor="let post of posts;" [routerLink]="['/post', post.uuid]" class="block-item">
+        <div class="image">
+            <img [src]="imageService.getImage(post.imageName)">
+        </div>
+        <div class="text">
+            {{post.name}}
+        </div>
+    </div>
+</div>

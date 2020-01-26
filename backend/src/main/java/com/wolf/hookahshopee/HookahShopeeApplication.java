@@ -1,6 +1,6 @@
 package com.wolf.hookahshopee;
 
-import com.wolf.hookahshopee.config.FileStorageProperties;
+import com.wolf.hookahshopee.legacy.config.FileStorageProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

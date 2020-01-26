@@ -1,12 +1,12 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {Order} from "../../../../core/model/order.model";
-import {OrderService} from "../../../../services/order.service";
-import {OrderStatus} from "../../../../core/model/order-status.model.enum";
-import {User} from "../../../../core/model/user.model";
-import {AuthenticationService} from "../../../../services/authentication.service";
-import {MatPaginator, PageEvent} from "@angular/material/paginator";
-import {Page} from "../../../../core/model/page.model";
-import {MatSnackBar} from "@angular/material/snack-bar";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Order } from '../../../../core/model/order.model';
+import { OrderService } from '../../../../services/order.service';
+import { OrderStatus } from '../../../../core/model/order-status.enum';
+import { User } from '../../../../core/model/user.model';
+import { AuthenticationService } from '../../../../services/authentication.service';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { Page } from '../../../../core/model/page.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-orders',

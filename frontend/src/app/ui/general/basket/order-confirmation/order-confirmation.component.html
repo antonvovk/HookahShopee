@@ -1,0 +1,139 @@
+<mat-card style="margin-top: 30px;">
+    <div class="page-header">
+        Оформлення
+    </div>
+
+    <mat-vertical-stepper #stepper [linear]="true" class="stepper" style="max-width: 900px; margin-top: 30px;">
+        <mat-step [stepControl]="personalDataFormGroup">
+            <form [formGroup]="personalDataFormGroup">
+                <ng-template matStepLabel>Персональні дані</ng-template>
+                <mat-form-field appearance="outline" class="input-container" style="margin-top: 15px;">
+                    <mat-label>Ім'я</mat-label>
+                    <input class="custom-input" formControlName="firstNameFormControl" matInput placeholder="Ім'я">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="input-container">
+                    <mat-label>Прізвище</mat-label>
+                    <input class="custom-input" formControlName="lastNameControl" matInput placeholder="Прізвище">
+                </mat-form-field>
+                <div>
+                    <button color="primary" mat-raised-button matStepperNext>Далі</button>
+                </div>
+            </form>
+        </mat-step>
+
+        <mat-step [stepControl]="contactDataFormGroup">
+            <form [formGroup]="contactDataFormGroup">
+                <ng-template matStepLabel>Контактна інформація</ng-template>
+                <mat-form-field appearance="outline" class="input-container" style="margin-top: 15px;">
+                    <mat-label>Номер телефону</mat-label>
+                    <input class="custom-input" formControlName="phoneNumberFormControl" matInput
+                           placeholder="Номер телефону">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="input-container">
+                    <mat-label>email (не обов’язково)</mat-label>
+                    <input class="custom-input" formControlName="emailFormControl" matInput
+                           placeholder="email (не обов’язково)">
+                </mat-form-field>
+                <div>
+                    <button mat-raised-button matStepperPrevious style="margin-right: 15px;">Назад</button>
+                    <button color="primary" mat-raised-button matStepperNext>Далі</button>
+                </div>
+            </form>
+        </mat-step>
+
+        <mat-step [stepControl]="deliveryTypeFormGroup">
+            <form [formGroup]="deliveryTypeFormGroup">
+                <ng-template matStepLabel>Тип доставки</ng-template>
+                <mat-form-field appearance="outline" class="input-container" style="margin-top: 15px;">
+                    <mat-label>Тип доставки</mat-label>
+                    <mat-select formControlName="deliveryTypeFormControl">
+                        <mat-option [value]="DeliveryType.SELF_DELIVERY">
+                            Самовивіз
+                        </mat-option>
+                        <mat-option [value]="DeliveryType.NOVA_POSHTA">
+                            Нова пошта
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div>
+                    <button mat-raised-button matStepperPrevious style="margin-right: 15px;">Назад</button>
+                    <button color="primary" mat-raised-button matStepperNext>Далі</button>
+                </div>
+            </form>
+        </mat-step>
+
+        <mat-step *ngIf="deliveryTypeFormGroup.controls.deliveryTypeFormControl.value === 'novaposhta'"
+                  [stepControl]="deliveryDataFormGroup">
+            <form [formGroup]="deliveryDataFormGroup">
+                <ng-template matStepLabel>Відділення нової пошти</ng-template>
+                <mat-form-field appearance="outline" class="input-container">
+                    <mat-label>Місто</mat-label>
+                    <mat-select #singleSelect (selectionChange)="onCitySelected()" formControlName="cityFormControl"
+                                placeholder="Виберіть ваше місто">
+                        <mat-option>
+                            <ngx-mat-select-search formControlName="cityFilterFormControl"
+                                                   noEntriesFoundLabel="Не знайдено такого міста"
+                                                   placeholderLabel="Почніть вводити назву вашого міста"></ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option *ngFor="let bank of filteredBanks | async" [value]="bank">
+                            {{bank.Description}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="input-container">
+                    <mat-label>Відділення</mat-label>
+                    <mat-select formControlName="choosedWarehouse" placeholder="Виберіть відділення">
+                        <mat-option *ngFor="let warehouse of warehouses | async" [value]="warehouse">
+                            {{warehouse.Description}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div>
+                    <button mat-raised-button matStepperPrevious style="margin-right: 15px;">Назад</button>
+                    <button color="primary" mat-raised-button matStepperNext>Далі</button>
+                </div>
+            </form>
+        </mat-step>
+
+        <mat-step [stepControl]="paymentDataFormGroup">
+            <form [formGroup]="paymentDataFormGroup">
+                <ng-template matStepLabel>Оплата</ng-template>
+                <mat-form-field appearance="outline" class="input-container" style="margin-top: 15px;">
+                    <mat-label>Тип оплати</mat-label>
+                    <mat-select formControlName="paymentFormControl">
+                        <mat-option [value]="PaymentType.CASH">
+                            Готівкою
+                        </mat-option>
+
+                        <mat-option [value]="PaymentType.CARD">
+                            Картою
+                        </mat-option>
+
+                        <mat-option
+                                *ngIf="deliveryTypeFormGroup.controls.deliveryTypeFormControl.value === 'novaposhta'"
+                                [value]="PaymentType.CASH_ON_DELIVERY">
+                            Наложений платіж
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div>
+                    <button mat-raised-button matStepperPrevious style="margin-right: 15px;">Назад</button>
+                    <button color="primary" mat-raised-button matStepperNext>Далі</button>
+                </div>
+            </form>
+        </mat-step>
+
+        <mat-step>
+            <ng-template matStepLabel>Готово</ng-template>
+            <div style="font-weight: 500; font-size: 20px; margin-top: 15px;">
+                Вітаємо! Ваше замовлення оформлено.
+            </div>
+            <div style="margin-top: 15px;">
+                <button (click)="createOrder()" color="primary" mat-raised-button>Гаразд</button>
+            </div>
+        </mat-step>
+    </mat-vertical-stepper>
+</mat-card>

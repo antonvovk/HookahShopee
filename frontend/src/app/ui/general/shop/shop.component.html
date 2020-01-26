@@ -1,11 +1,11 @@
-<div *ngIf="cities[0]" class="city-select-container">
-  <mat-form-field class="full-width">
-    <mat-select (selectionChange)="updateCity()" [formControl]="city" value="{{cities[0].name}}">
-      <mat-option *ngFor="let city of cities" value="{{city.name}}">
-        {{city.name}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+<div class="city-select-container">
+    <mat-form-field class="full-width">
+        <mat-select (selectionChange)="updateCity()" [(ngModel)]="city" [compareWith]="compareObjects">
+            <mat-option *ngFor="let city of cities" [value]="city">
+                {{city.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
 </div>
 
 <div class="products-container">

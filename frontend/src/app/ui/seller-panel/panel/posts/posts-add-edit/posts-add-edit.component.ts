@@ -1,9 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Post} from "../../../../../core/model/post.model";
-import {ImageService} from "../../../../../services/image.service";
-import {FormControl} from "@angular/forms";
-import {PostService} from "../../../../../services/post.service";
-import {MatSnackBar} from "@angular/material/snack-bar";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Post } from '../../../../../core/model/post.model';
+import { ImageService } from '../../../../../services/image.service';
+import { FormControl } from '@angular/forms';
+import { PostService } from '../../../../../services/post.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-posts-add-edit',
@@ -27,17 +27,16 @@ export class PostsAddEditComponent implements OnInit {
 
   ngOnInit() {
     if (this.post != null) {
-      this.title.setValue(this.post.getName);
-      this.htmlContent.setValue(this.post.getHtmlContent);
+      this.title.setValue(this.post.name);
+      this.htmlContent.setValue(this.post.htmlContent);
     }
   }
 
   savePost() {
     if (this.post != null) {
-      const oldName = this.post.getName;
-      this.post.setName = this.title.value;
-      this.post.setHtmlContent = this.htmlContent.value;
-      this.postService.update(oldName, this.post).subscribe(
+      this.post.name = this.title.value;
+      this.post.htmlContent = this.htmlContent.value;
+      this.postService.update(this.post).subscribe(
         response => {
           this.snackBar.open(response.statusText, 'Відхилити', {duration: 2000,});
         },
@@ -46,8 +45,8 @@ export class PostsAddEditComponent implements OnInit {
         }
       );
     } else {
-      this.post = new Post(this.title.value, null, this.htmlContent.value);
-      this.postService.insert(this.post).subscribe(
+      this.post = new Post({name: this.title.value, htmlContent: this.htmlContent.value});
+      this.postService.create(this.post).subscribe(
         response => {
           this.snackBar.open(response.statusText, 'Відхилити', {duration: 2000,});
         },
@@ -60,24 +59,24 @@ export class PostsAddEditComponent implements OnInit {
 
   handleFileInput(files: any) {
     const uploadedFiles = files.target.files;
-    this.postService.updateImage(this.post.getName, uploadedFiles[0]).subscribe(
+    this.postService.updateImage(this.post.uuid, uploadedFiles[0]).subscribe(
       response => {
-        this.snackBar.open(response.statusText, 'Відхилити', {duration: 2000,});
+        this.snackBar.open(response.statusText, 'Відхилити', {duration: 2000});
       },
       error => {
-        this.snackBar.open(error.apierror.message, 'Відхилити', {duration: 2000,});
+        this.snackBar.open(error.apierror.message, 'Відхилити', {duration: 2000});
       }
     );
   }
 
   deletePost() {
-    this.postService.delete(this.post.getName).subscribe(
+    this.postService.delete(this.post.uuid).subscribe(
       response => {
-        this.snackBar.open(response.statusText, 'Відхилити', {duration: 2000,});
+        this.snackBar.open(response.statusText, 'Відхилити', {duration: 2000});
         this.returned.emit(true);
       },
       error => {
-        this.snackBar.open(error.apierror.message, 'Відхилити', {duration: 2000,});
+        this.snackBar.open(error.apierror.message, 'Відхилити', {duration: 2000});
       }
     );
   }

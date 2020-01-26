@@ -1,15 +1,18 @@
-import {Injectable} from "@angular/core";
-import {BehaviorSubject} from "rxjs";
-import {Basket} from "../core/model/basket.model";
-import {OrderItem} from "../core/model/order-item.model";
-import {ProductReservationService} from "./product-reservation.service";
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { Basket } from '../core/model/basket.model';
+import { OrderItem } from '../core/model/order-item.model';
+import { ProductReservationService } from './product-reservation.service';
+import { CitySaverService } from './city-saver.service';
+import { Product } from '../core/model/product.model';
 
 @Injectable({providedIn: 'root'})
 export class BasketService {
 
   private currentBasketSubject: BehaviorSubject<Basket>;
 
-  constructor(private productReservationService: ProductReservationService) {
+  constructor(private productReservationService: ProductReservationService,
+              private citySaverService: CitySaverService) {
     this.currentBasketSubject = new BehaviorSubject<Basket>(JSON.parse(localStorage.getItem('currentBasket')));
 
     if (this.currentBasketSubject.value == null) {
@@ -21,6 +24,10 @@ export class BasketService {
     return this.currentBasketSubject.value.items;
   }
 
+  public isEmpty(): boolean {
+    return this.currentBasketSubject.value.items.length == 0;
+  }
+
   public getTotalPrice(): number {
     let sum: number = 0;
     this.currentBasketSubject.value.items.forEach(value => {
@@ -29,10 +36,22 @@ export class BasketService {
     return sum;
   }
 
-  public addItem(item: OrderItem, cityName: string) {
-    this.productReservationService.addProductReservation(item.product.name, cityName, item.quantity).subscribe(
+  public addItem(product: Product, quantity: number) {
+    console.log(this.citySaverService.city);
+    this.productReservationService.addProductReservation(product.uuid, this.citySaverService.city.uuid, quantity).subscribe(
       res => {
-        this.currentBasketSubject.value.items.push(item);
+        let searchedItem = this.currentBasketSubject.value.items.find(i => i.productUUID === product.uuid);
+        if (searchedItem == null) {
+          this.currentBasketSubject.value.items.push(new OrderItem({
+            price: product.price,
+            quantity: quantity,
+            product: product,
+            productUUID: product.uuid
+          }));
+        } else {
+          searchedItem.quantity += quantity;
+        }
+
         localStorage.setItem('currentBasket', JSON.stringify(this.currentBasketSubject.value));
       },
       error => {
@@ -41,10 +60,21 @@ export class BasketService {
     );
   }
 
-  public removeItem(item: OrderItem, cityName: string) {
-    this.productReservationService.removeProductReservation(item.product.name, cityName, item.quantity).subscribe(
+  public removeItem(product: Product, quantity: number) {
+    this.productReservationService.removeProductReservation(product.uuid, this.citySaverService.city.uuid, quantity).subscribe(
       res => {
-        this.currentBasketSubject.value.items.splice(this.currentBasketSubject.value.items.indexOf(item), 1);
+        let searchedItem = this.currentBasketSubject.value.items.find(i => i.productUUID === product.uuid);
+        if (searchedItem == null) {
+          this.currentBasketSubject.value.items.push(new OrderItem({
+            price: product.price,
+            quantity: quantity,
+            product: product,
+            productUUID: product.uuid
+          }));
+        } else {
+          searchedItem.quantity -= quantity;
+        }
+
         localStorage.setItem('currentBasket', JSON.stringify(this.currentBasketSubject.value));
       },
       error => {

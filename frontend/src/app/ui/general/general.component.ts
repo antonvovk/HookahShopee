@@ -1,4 +1,5 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { BasketService } from '../../services/basket.service';
 
 @Component({
   selector: 'app-main-component',
@@ -9,7 +10,8 @@ export class General implements OnInit {
 
   currentMenuIndex: number = 3;
 
-  constructor(private changeDetector: ChangeDetectorRef) {
+  constructor(private changeDetector: ChangeDetectorRef,
+              private basketService: BasketService) {
 
   }
 

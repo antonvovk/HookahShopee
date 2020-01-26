@@ -1,7 +1,7 @@
-import {Injectable} from "@angular/core";
-import {HttpClient, HttpParams, HttpResponse} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {ApiConfig} from "../config/api.config";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { ApiConfig } from '../config/api.config';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +12,10 @@ export class ProductReservationService {
 
   }
 
-  addProductReservation(productName: string, cityName: string, quantity: number): Observable<HttpResponse<any>> {
+  addProductReservation(productUUID: string, cityUUID: string, quantity: number): Observable<HttpResponse<any>> {
     let params = new HttpParams();
-    params = params.append('productName', productName);
-    params = params.append('cityName', cityName);
+    params = params.append('productUUID', productUUID);
+    params = params.append('cityUUID', cityUUID);
     params = params.append('quantity', quantity.toString());
 
     return this.http.put<any>(
@@ -25,10 +25,10 @@ export class ProductReservationService {
     );
   }
 
-  removeProductReservation(productName: string, cityName: string, quantity: number): Observable<HttpResponse<any>> {
+  removeProductReservation(productUUID: string, cityUUID: string, quantity: number): Observable<HttpResponse<any>> {
     let params = new HttpParams();
-    params = params.append('productName', productName);
-    params = params.append('cityName', cityName);
+    params = params.append('productUUID', productUUID);
+    params = params.append('cityUUID', cityUUID);
     params = params.append('quantity', quantity.toString());
 
     return this.http.put<any>(
@@ -38,10 +38,10 @@ export class ProductReservationService {
     );
   }
 
-  clearProductReservation(productName: string, cityName: string): Observable<HttpResponse<any>> {
+  clearProductReservation(productUUID: string, cityUUID: string): Observable<HttpResponse<any>> {
     let params = new HttpParams();
-    params = params.append('productName', productName);
-    params = params.append('cityName', cityName);
+    params = params.append('productUUID', productUUID);
+    params = params.append('cityUUID', cityUUID);
 
     return this.http.put<any>(
       ApiConfig.apiUrl + '/reservation/clear',

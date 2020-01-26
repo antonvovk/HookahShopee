@@ -1,51 +1,62 @@
-import {Injectable} from "@angular/core";
-import {HttpClient, HttpResponse} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {ApiConfig} from "../config/api.config";
-import {map} from "rxjs/operators";
-import {ManufacturerAdapter} from "../core/adapter/manufacturer.adapter";
-import {Manufacturer} from "../core/model/manufacturer.model";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { ApiConfig } from '../config/api.config';
+import { map } from 'rxjs/operators';
+import { ManufacturerAdapter } from '../core/adapter/manufacturer.adapter';
+import { Manufacturer } from '../core/model/manufacturer.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ManufacturersService {
 
-  constructor(private http: HttpClient, private adapter: ManufacturerAdapter) {
-
+  constructor(private http: HttpClient,
+              private adapter: ManufacturerAdapter) {
   }
 
-  findAll(): Observable<Manufacturer[]> {
+  getAll(): Observable<Manufacturer[]> {
     return this.http
-      .get<Manufacturer[]>(ApiConfig.apiUrl + '/manufacturer')
+      .get<Manufacturer[]>(ApiConfig.MANUFACTURER_API_URL + '/all')
       .pipe(map((data: any[]) => data.map(item => this.adapter.adapt(item))));
   }
 
-  findByName(name: string): Observable<Manufacturer> {
-    return this.http
-      .get<Manufacturer>(ApiConfig.apiUrl + '/manufacturer/' + name)
-      .pipe(map((data: any) => data.map(item => this.adapter.adapt(item))));
+  create(manufacturer: Manufacturer): Observable<HttpResponse<string>> {
+    return this.http.post<string>(
+      ApiConfig.MANUFACTURER_API_URL + '/create',
+      manufacturer,
+      {observe: 'response'}
+    );
   }
 
-  insert(manufacturer: Manufacturer): Observable<HttpResponse<string>> {
-    return this.http
-      .post<string>(ApiConfig.apiUrl + '/manufacturer', manufacturer, {observe: 'response'});
+  update(manufacturer: Manufacturer): Observable<HttpResponse<any>> {
+    return this.http.put<any>(
+      ApiConfig.MANUFACTURER_API_URL + '/update',
+      manufacturer,
+      {observe: 'response'}
+    );
   }
 
-  update(manufacturer: Manufacturer, name: string): Observable<HttpResponse<string>> {
-    return this.http
-      .put<string>(ApiConfig.apiUrl + '/manufacturer/' + name, manufacturer, {observe: 'response'});
-  }
-
-  updateImage(name: string, image: File): Observable<HttpResponse<string>> {
+  updateImage(uuid: string, image: File): Observable<HttpResponse<any>> {
     const formData = new FormData();
     formData.append('file', image);
-    return this.http
-      .put<string>(ApiConfig.apiUrl + '/manufacturer/' + name + '/updateImage', formData, {observe: 'response'});
+    let params = new HttpParams();
+    params = params.append('uuid', uuid);
+
+    return this.http.put<any>(
+      ApiConfig.MANUFACTURER_API_URL + '/updateImage',
+      formData,
+      {observe: 'response', params: params}
+    );
   }
 
-  delete(name: string): Observable<HttpResponse<string>> {
-    return this.http
-      .delete<string>(ApiConfig.apiUrl + '/manufacturer/' + name, {observe: 'response'});
+  delete(uuid: string): Observable<HttpResponse<any>> {
+    let params = new HttpParams();
+    params = params.append('uuid', uuid);
+
+    return this.http.delete<any>(
+      ApiConfig.MANUFACTURER_API_URL + '/delete',
+      {observe: 'response', params: params}
+    );
   }
 }

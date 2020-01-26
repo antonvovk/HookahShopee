@@ -1,31 +1,23 @@
-import {Injectable} from "@angular/core";
-import {BehaviorSubject} from "rxjs";
-import {ProductReservationService} from "./product-reservation.service";
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { City } from '../core/model/city.model';
 
 @Injectable({providedIn: 'root'})
 export class CitySaverService {
 
-  private currentCitySubject: BehaviorSubject<string>;
+  private readonly LC_NAME = 'currentCity';
+  private currentCitySubject: BehaviorSubject<City>;
 
-  constructor(private productReservationService: ProductReservationService) {
-    this.currentCitySubject = new BehaviorSubject<string>(JSON.parse(localStorage.getItem('currentCity')));
-
-    if (this.currentCitySubject.value == null) {
-      this.currentCitySubject = new BehaviorSubject<string>(null);
-    }
+  constructor() {
+    this.currentCitySubject = new BehaviorSubject<City>(JSON.parse(localStorage.getItem(this.LC_NAME)));
   }
 
-  public getCityName(): string {
+  public get city(): City {
     return this.currentCitySubject.value;
   }
 
-  public setCity(cityName: string) {
-    localStorage.setItem('currentCity', JSON.stringify(cityName));
-    this.currentCitySubject.next(cityName);
-  }
-
-  public deleteCity(): void {
-    localStorage.removeItem('currentCity');
-    this.currentCitySubject.next(null);
+  public setCity(city: City): void {
+    localStorage.setItem(this.LC_NAME, JSON.stringify(city));
+    this.currentCitySubject.next(city);
   }
 }

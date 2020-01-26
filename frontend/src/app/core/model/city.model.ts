@@ -1,16 +1,15 @@
 export class City {
 
-  constructor(name?: string) {
-    this._name = name;
-  }
+  uuid?: string;
+  name?: string;
 
-  private _name: string;
+  constructor(params: City = {} as City) {
+    const {
+      uuid,
+      name
+    } = params;
 
-  get name(): string {
-    return this._name;
-  }
-
-  set name(value: string) {
-    this._name = value;
+    this.uuid = uuid;
+    this.name = name;
   }
 }

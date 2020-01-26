@@ -1,15 +1,14 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {CitiesService} from "../../../services/cities.service";
-import {City} from "../../../core/model/city.model";
-import {Page} from "../../../core/model/page.model";
-import {Product} from "../../../core/model/product.model";
-import {MatPaginator, PageEvent} from "@angular/material/paginator";
-import {ProductsService} from "../../../services/products.service";
-import {FormControl} from "@angular/forms";
-import {ManufacturersService} from "../../../services/manufacturers.service";
-import {BasketService} from "../../../services/basket.service";
-import {OrderItem} from "../../../core/model/order-item.model";
-import {CitySaverService} from "../../../services/city-saver.service";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CitiesService } from '../../../services/cities.service';
+import { City } from '../../../core/model/city.model';
+import { Page } from '../../../core/model/page.model';
+import { Product } from '../../../core/model/product.model';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { ProductsService } from '../../../services/products.service';
+import { FormControl } from '@angular/forms';
+import { ManufacturersService } from '../../../services/manufacturers.service';
+import { BasketService } from '../../../services/basket.service';
+import { CitySaverService } from '../../../services/city-saver.service';
 
 @Component({
   selector: 'app-shop',
@@ -21,10 +20,10 @@ export class ShopComponent implements OnInit {
   cities: City[] = [];
   products: Page<Product> = new Page<Product>();
   manufacturers: any[] = [];
-  city = new FormControl('Львів');
+  city: City = null;
   priceFrom = new FormControl(0);
   priceTo = new FormControl(10000);
-  @ViewChild("productsPaginator", {static: true}) productsPaginator: MatPaginator;
+  @ViewChild('productsPaginator', {static: true}) productsPaginator: MatPaginator;
   inStockChecked = new FormControl(false);
   onPromotionChecked = new FormControl(false);
 
@@ -40,6 +39,13 @@ export class ShopComponent implements OnInit {
     this.citiesService.findAll().subscribe(
       cities => {
         this.cities = cities;
+
+        if (this.citySaverService.city != null) {
+          this.city = this.citySaverService.city;
+        } else {
+          this.city = this.cities[0];
+          this.citySaverService.setCity(this.cities[0]);
+        }
       }
     );
 
@@ -69,10 +75,10 @@ export class ShopComponent implements OnInit {
   }
 
   isInStock(product: Product): boolean {
-    if (product.productQuantity.find(x => x.city.name === this.city.value) == null) {
+    if (product.productQuantity.find(x => x.city.name === this.city) == null) {
       return false;
     } else {
-      return product.productQuantity.find(x => x.city.name === this.city.value).quantity > 0;
+      return product.productQuantity.find(x => x.city.name === this.city).quantity > 0;
     }
   }
 
@@ -81,7 +87,7 @@ export class ShopComponent implements OnInit {
     let onPromotion = null;
 
     if (this.inStockChecked.value === true) {
-      cityName = this.city.value;
+      cityName = this.city.name;
     }
 
     if (this.onPromotionChecked.value == true) {
@@ -104,10 +110,14 @@ export class ShopComponent implements OnInit {
   }
 
   addToBasket(product: Product) {
-    this.basketService.addItem(new OrderItem(product.price, 1, product), this.city.value);
+    this.basketService.addItem(product, 1);
   }
 
   updateCity() {
-    this.citySaverService.setCity(this.city.value);
+    this.citySaverService.setCity(this.city);
+  }
+
+  compareObjects(o1: any, o2: any): boolean {
+    return o1.uuid === o2.uuid;
   }
 }

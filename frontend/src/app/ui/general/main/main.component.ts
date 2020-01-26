@@ -1,12 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {OwlOptions} from "ngx-owl-carousel-o";
-import {City} from "../../../core/model/city.model";
-import {FormControl} from "@angular/forms";
-import {CitiesService} from "../../../services/cities.service";
-import {CitySaverService} from "../../../services/city-saver.service";
-import {Page} from "../../../core/model/page.model";
-import {Product} from "../../../core/model/product.model";
-import {ProductsService} from "../../../services/products.service";
+import { Component, OnInit } from '@angular/core';
+import { OwlOptions } from 'ngx-owl-carousel-o';
+import { City } from '../../../core/model/city.model';
+import { CitiesService } from '../../../services/cities.service';
+import { CitySaverService } from '../../../services/city-saver.service';
+import { Page } from '../../../core/model/page.model';
+import { Product } from '../../../core/model/product.model';
+import { ProductsService } from '../../../services/products.service';
+import { Post } from '../../../core/model/post.model';
+import { PostService } from '../../../services/post.service';
+import { ImageService } from '../../../services/image.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -41,12 +44,16 @@ export class MainComponent implements OnInit {
 
   bestValueProducts: Page<Product> = new Page<Product>();
   hitSaleProducts: Page<Product> = new Page<Product>();
+  posts: Post[] = [];
   cities: City[] = [];
-  city = new FormControl('');
+  city: City = null;
 
   constructor(private citiesService: CitiesService,
               private citySaverService: CitySaverService,
-              private productsService: ProductsService) {
+              private productsService: ProductsService,
+              private postService: PostService,
+              private imageService: ImageService,
+              private router: Router) {
 
   }
 
@@ -54,40 +61,52 @@ export class MainComponent implements OnInit {
     this.citiesService.findAll().subscribe(
       cities => {
         this.cities = cities;
-        if (this.citySaverService.getCityName() != null) {
-          this.city.setValue(this.citySaverService.getCityName());
+
+        if (this.citySaverService.city != null) {
+          this.city = this.citySaverService.city;
         } else {
-          this.city.setValue(this.cities[0].name);
+          this.city = this.cities[0];
+          this.citySaverService.setCity(this.cities[0]);
         }
 
-        this.productsService.findAll(0, 9, null, null, null, this.city.value, null, "discount").subscribe(
+        this.productsService.findAll(0, 9, null, null, null, this.city.name, null, 'discount').subscribe(
           products => {
             this.bestValueProducts = products;
           }
         );
 
-        this.productsService.findAll(0, 9, null, null, null, this.city.value, null, "numberOfSales").subscribe(
+        this.productsService.findAll(0, 9, null, null, null, this.city.name, null, 'numberOfSales').subscribe(
           products => {
             this.hitSaleProducts = products;
           }
         );
       }
     );
+
+    this.postService.getAllLight().subscribe(
+      posts => {
+        this.posts = posts;
+      }
+    );
   }
 
   updateCity() {
-    this.citySaverService.setCity(this.city.value);
+    this.citySaverService.setCity(this.city);
 
-    this.productsService.findAll(0, 9, null, null, null, this.city.value, null, "discount").subscribe(
+    this.productsService.findAll(0, 9, null, null, null, this.city.name, null, 'discount').subscribe(
       products => {
         this.bestValueProducts = products;
       }
     );
 
-    this.productsService.findAll(0, 9, null, null, null, this.city.value, null, "numberOfSales").subscribe(
+    this.productsService.findAll(0, 9, null, null, null, this.city.name, null, 'numberOfSales').subscribe(
       products => {
         this.hitSaleProducts = products;
       }
     );
+  }
+
+  compareObjects(o1: any, o2: any): boolean {
+    return o1.uuid === o2.uuid;
   }
 }

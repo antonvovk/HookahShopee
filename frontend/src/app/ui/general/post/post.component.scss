@@ -1,0 +1,42 @@
+.main-container {
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  margin: 40px;
+  @media (max-width: 767px) {
+    margin: 20px;
+  }
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+}
+
+.image-container img {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.title {
+  display: flex;
+  text-align: center;
+  font-weight: 500;
+  font-size: 200%;
+  margin-top: 40px;
+  @media (max-width: 767px) {
+    font-size: 140%;
+    margin-top: 20px;
+  }
+}
+
+.htm-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  font-weight: 500;
+  max-width: 800px;
+  @media (max-width: 767px) {
+    margin-top: 10px;
+  }
+}

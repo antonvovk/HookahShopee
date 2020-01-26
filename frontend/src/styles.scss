@@ -11,8 +11,76 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$HookahShopee-primary: mat-palette($mat-grey);
-$HookahShopee-accent: mat-palette($mat-pink, A200, A100, A400);
+
+$md-mcgpalette0: (
+        50 : #fde8e9,
+        100 : #f9c6c7,
+        200 : #f6a0a2,
+        300 : #f27a7d,
+        400 : #ef5e61,
+        500 : #ec4145,
+        600 : #ea3b3e,
+        700 : #e73236,
+        800 : #e42a2e,
+        900 : #df1c1f,
+        A100 : #ffffff,
+        A200 : #ffe0e1,
+        A400 : #ffadae,
+        A700 : #ff9495,
+        contrast: (
+                50 : #000000,
+                100 : #000000,
+                200 : #000000,
+                300 : #000000,
+                400 : #000000,
+                500 : #ffffff,
+                600 : #ffffff,
+                700 : #ffffff,
+                800 : #ffffff,
+                900 : #ffffff,
+                A100 : #000000,
+                A200 : #000000,
+                A400 : #000000,
+                A700 : #000000,
+        )
+);
+
+$md-mcgpalette2: (
+        50 : #efe4e4,
+        100 : #d7bbbb,
+        200 : #bc8e8e,
+        300 : #a16060,
+        400 : #8d3e3e,
+        500 : #791c1c,
+        600 : #711919,
+        700 : #661414,
+        800 : #5c1111,
+        900 : #490909,
+        A100 : #ff8080,
+        A200 : #ff4d4d,
+        A400 : #ff1a1a,
+        A700 : #ff0000,
+        contrast: (
+                50 : #000000,
+                100 : #000000,
+                200 : #000000,
+                300 : #ffffff,
+                400 : #ffffff,
+                500 : #ffffff,
+                600 : #ffffff,
+                700 : #ffffff,
+                800 : #ffffff,
+                900 : #ffffff,
+                A100 : #000000,
+                A200 : #000000,
+                A400 : #ffffff,
+                A700 : #ffffff,
+        )
+);
+
+
+$HookahShopee-primary: mat-palette($md-mcgpalette0);
+$HookahShopee-accent: mat-palette($mat-red);
 
 // The warn palette is optional (defaults to red).
 $HookahShopee-warn: mat-palette($mat-red);
@@ -29,6 +97,7 @@ $HookahShopee-theme: mat-light-theme($HookahShopee-primary, $HookahShopee-accent
 
 @import '~ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
 @import '~ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
+@import '~ngx-toastr/toastr';
 
 html, body {
   height: 100%;
@@ -39,17 +108,17 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-.mat-form-field-infix {
-  border-top: 0 solid transparent !important;
-}
-
-.mat-form-field-underline {
-  display: none !important;
-}
-
-.mat-form-field-wrapper {
-  padding-bottom: 0 !important;
-}
+//.mat-form-field-infix {
+//  border-top: 0 solid transparent !important;
+//}
+//
+//.mat-form-field-underline {
+//  display: none !important;
+//}
+//
+//.mat-form-field-wrapper {
+//  padding-bottom: 0 !important;
+//}
 
 //.mat-select-arrow {
 //  color: #000000 !important;
@@ -103,6 +172,14 @@ body {
   justify-content: center;
 }
 
+.row-nowrap {
+  flex-flow: row nowrap;
+}
+
+.row-wrap {
+  flex-flow: row wrap;
+}
+
 .mt-40-20px {
   @media screen and (max-width: 690px) {
     margin-top: 20px;
@@ -110,4 +187,69 @@ body {
   @media screen and (min-width: 690px) {
     margin-top: 40px;
   }
+}
+
+*:focus {
+  outline: none !important;
+}
+
+.title-center {
+  display: flex;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 300%;
+  margin-top: 40px;
+  @media (max-width: 767px) {
+    margin-top: 20px;
+    font-size: 200%;
+  }
+}
+
+.items-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+.block-item {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  max-width: 300px;
+  min-width: 200px !important;
+  padding: 20px;
+  margin: 40px 20px;
+  @media (max-width: 767px) {
+    margin: 20px 10px;
+    padding: 10px;
+  }
+
+  .image {
+    display: flex;
+    justify-content: center;
+
+    img {
+      max-width: 100%;
+      height: 200px;
+      border-radius: 20px;
+    }
+  }
+
+  .text {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 130%;
+    margin-top: 20px;
+    @media (max-width: 767px) {
+      font-size: 110%;
+      margin-top: 10px;
+    }
+  }
+}
+
+.block-item:hover {
+  border-radius: 20px;
+  cursor: pointer;
 }

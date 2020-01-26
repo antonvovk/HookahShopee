@@ -1,11 +1,11 @@
 package com.wolf.hookahshopee.post.controller;
 
+import com.wolf.hookahshopee.legacy.service.FileStorageService;
 import com.wolf.hookahshopee.post.dto.PostCreateDTO;
 import com.wolf.hookahshopee.post.dto.PostDTO;
 import com.wolf.hookahshopee.post.dto.PostLightDTO;
 import com.wolf.hookahshopee.post.dto.PostUpdateDTO;
 import com.wolf.hookahshopee.post.service.PostService;
-import com.wolf.hookahshopee.service.FileStorageService;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

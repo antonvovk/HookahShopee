@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {PostService} from "../../../../services/post.service";
-import {Post} from "../../../../core/model/post.model";
-import {ImageService} from "../../../../services/image.service";
+import { Component, OnInit } from '@angular/core';
+import { PostService } from '../../../../services/post.service';
+import { Post } from '../../../../core/model/post.model';
+import { ImageService } from '../../../../services/image.service';
 
 @Component({
   selector: 'app-posts',
@@ -19,7 +19,7 @@ export class PostsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.postService.findAll().subscribe(
+    this.postService.getAll().subscribe(
       posts => {
         this.posts = posts;
       }
@@ -32,7 +32,7 @@ export class PostsComponent implements OnInit {
   }
 
   onReturn() {
-    this.postService.findAll().subscribe(
+    this.postService.getAll().subscribe(
       posts => {
         this.posts = posts;
         this.add_editComponentOpened = false;
