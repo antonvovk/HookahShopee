@@ -80,7 +80,7 @@ public class DataSeeder {
 
     private void seedUsers() {
         UUID city1UUID = cityService.create(new CityCreateDTO("Львів"));
-        UUID city2UUID = cityService.create(new CityCreateDTO("Івано-франківськ"));
+        UUID city2UUID = cityService.create(new CityCreateDTO("Івано-Франківськ"));
 
         userService.register(new UserLightDTO("380963587506", "Богдан", "Данкович", "password", city1UUID), Role.ADMIN);
         userService.register(new UserLightDTO("380970362116", "Віталій", "Боянівський", "password", city2UUID), Role.SELLER);
