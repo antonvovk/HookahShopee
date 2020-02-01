@@ -131,4 +131,17 @@ export class ShopComponent implements OnInit {
   compareObjects(o1: any, o2: any): boolean {
     return o1.uuid === o2.uuid;
   }
+
+  clearFilters() {
+    this.manufacturers.forEach(
+      manufacturer => {
+        manufacturer.checked.setValue(false);
+      }
+    );
+    this.priceFrom.setValue(0);
+    this.priceTo.setValue(1000);
+    this.inStockChecked.setValue(false);
+    this.onPromotionChecked.setValue(false);
+    this.updateFilters();
+  }
 }

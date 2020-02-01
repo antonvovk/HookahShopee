@@ -1,5 +1,5 @@
 <div style="display: flex; justify-content: center; width: 100%;">
-  <div style="max-width: 1400px;">
+  <div style="max-width: 1400px; width: 100%;">
     <div class="city-select-container">
       <mat-form-field class="full-width">
         <mat-select (selectionChange)="updateCity()" [(ngModel)]="city" [compareWith]="compareObjects"
@@ -67,7 +67,7 @@
           </div>
 
           <div class="buttons-container">
-            <button class="reset-btn" color="warn" mat-button>
+            <button class="reset-btn" color="warn" mat-button (click)="clearFilters()">
               Скинути
             </button>
             <button (click)="updateFilters()" class="apply-btn" color="warn" mat-button>
@@ -112,10 +112,14 @@
             </div>
           </div>
         </div>
+        <div *ngIf="products.items.length === 0" class="text-noje">
+          Нічого не знайдено
+        </div>
       </div>
     </div>
 
-    <mat-paginator #productsPaginator (page)="productsPaginatorChanged($event)"
+    <mat-paginator #productsPaginator
+                   (page)="productsPaginatorChanged($event)"
                    [length]="this.products.totalElements"
                    [pageSizeOptions]="[9, 18, 27, 36, 90]"
                    [pageSize]="9">

@@ -4,15 +4,13 @@
 
 <div
   *ngIf="!authenticationService.isSellerOrAdmin()  && authenticationService.isAuthenticated() && currentMenuIndex === 0">
-  <a routerLink="/control-panel">
     Вітаю!
     Ви користувач.
     Тут ви зможете міняти свої дані
-  </a>
 </div>
 
 <div *ngIf="authenticationService.isSellerOrAdmin() && currentMenuIndex === 0">
-  <a routerLink="/control-panel">
+  <a routerLink="/sp">
     Вітаю!
     Ви адмін або продавець, значить вам сюди.
   </a>

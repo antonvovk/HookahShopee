@@ -1,41 +1,17 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss']
 })
-export class SidenavComponent implements OnInit {
+export class SidenavComponent {
 
-  currentMenuItemIndex = 2;
-
-  constructor(private changeDetector: ChangeDetectorRef) {
+  constructor(private router: Router) {
   }
 
-  ngOnInit() {
-  }
-
-  sellersClicked() {
-    this.currentMenuItemIndex = 0;
-  }
-
-  clientsClicked() {
-    this.currentMenuItemIndex = 1;
-  }
-
-  categoriesClicked() {
-    this.currentMenuItemIndex = -1;
-    this.changeDetector.detectChanges();
-    this.currentMenuItemIndex = 2;
-  }
-
-  ordersClicked() {
-    this.currentMenuItemIndex = 3;
-  }
-
-  postsClicked() {
-    this.currentMenuItemIndex = -1;
-    this.changeDetector.detectChanges();
-    this.currentMenuItemIndex = 4;
+  getCurrentRoute() {
+    return this.router.url.slice(4);
   }
 }

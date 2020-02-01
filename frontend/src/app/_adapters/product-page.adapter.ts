@@ -13,9 +13,9 @@ export class ProductPageAdapter implements Adapter<Page<Product>> {
   }
 
   adapt(item: any): Page<Product> {
-    return new Page<Product>(
-      item.items.map(product => this.adapter.adapt(product)),
-      item.totalElements
-    );
+    return new Page<Product>({
+      items: item.items.map(product => this.adapter.adapt(product)),
+      totalElements: item.totalElements
+    });
   }
 }

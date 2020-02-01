@@ -8,7 +8,7 @@ import { AboutUsComponent } from './_components/about-us/about-us.component';
 import { ProfileComponent } from './_components/profile/profile.component';
 import { BasketComponent } from './_components/basket/basket.component';
 import { PostComponent } from './_components/post/post.component';
-import { CustomerPortalModule } from './customer-portal.module';
+import { ProductComponent } from './_components/product/product.component';
 
 const routes: Routes = [
   {
@@ -32,6 +32,9 @@ const routes: Routes = [
       },
       {
         path: 'post/:uuid', component: PostComponent
+      },
+      {
+        path: 'product/:uuid', component: ProductComponent
       }
     ]
   }
