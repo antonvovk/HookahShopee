@@ -1,5 +1,5 @@
-// export const API_URL = 'http://hookah-api.eu-west-3.elasticbeanstalk.com/api';
-export const API_URL = 'http://localhost:8080/api';
+export const API_URL = 'http://hookah-api.eu-west-3.elasticbeanstalk.com/api';
+// export const API_URL = 'http://localhost:8080/api';
 
 export const POST_API_URL = API_URL + '/post';
 export const MANUFACTURER_API_URL = API_URL + '/manufacturer';
