@@ -1,0 +1,75 @@
+<div class="header-container">
+  <header class="header">
+    <button (click)="triggerMenu()" [ngClass]="{'hamburger--collapse is-active': isOpen}" class="hamburger hamburger--elastic
+ mobile-show"
+            type="button">
+      <span class="hamburger-box">
+        <span class="hamburger-inner"></span>
+      </span>
+    </button>
+
+    <div class="logo-container" routerLink="">
+      <img alt="logo-image" src="../../../assets/img/hookah-img-2.png">
+    </div>
+
+    <div class="navigation-container">
+      <div
+        class="text-vertical-center mr-30"
+        routerLink=""
+      >
+        Головна
+      </div>
+      <div
+        class="text-vertical-center mr-30"
+        routerLink="/shop"
+      >
+        Магазин
+      </div>
+      <div
+        class="text-vertical-center mr-30"
+        routerLink="/about">
+        Про нас
+      </div>
+      <div class="text-vertical-center"
+           routerLink="/profile">
+        Профіль
+      </div>
+    </div>
+
+    <div class="basket-container" routerLink="/cart">
+          <span [matBadge]="basketService.getCount().toString()" matBadgeColor="primary" matBadgeOverlap="true"
+                matBadgePosition="above after" matBadgeSize="medium">
+            <img alt="logo-image" src="../../../assets/img/basket.png">
+          </span>
+    </div>
+  </header>
+
+  <div class="navigation-container2" *ngIf="isOpen">
+    <div
+      class="text-vertical-center"
+      (click)="triggerMenu()"
+      routerLink=""
+    >
+      Головна
+    </div>
+    <div
+      class="text-vertical-center"
+      (click)="triggerMenu()"
+      routerLink="/shop"
+    >
+      Магазин
+    </div>
+    <div
+      class="text-vertical-center"
+      (click)="triggerMenu()"
+      routerLink="/about">
+      Про нас
+    </div>
+    <div class="text-vertical-center"
+         (click)="triggerMenu()"
+         routerLink="/profile">
+      Профіль
+    </div>
+  </div>
+</div>
+

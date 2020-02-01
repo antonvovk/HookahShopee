@@ -1,0 +1,39 @@
+.footer {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  background: #1F1F1F;
+  height: 80px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.footer-text {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  color: #EC4145;
+  font-weight: 500;
+  font-size: 20px;
+  @media (max-width: 767px) {
+    font-size: 16px;
+  }
+}
+
+.margin {
+  margin-right: 40px;
+  @media (max-width: 767px) {
+    margin-right: 20px;
+  }
+}
+
+.images-container {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+}
+
+.images-container a img {
+  height: 40px;
+  cursor: pointer;
+}

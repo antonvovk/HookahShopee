@@ -1,0 +1,39 @@
+<div class="fill-height" fxLayout="row">
+  <div fxFlex="13" fxLayoutAlign="center center">
+    <div class="menu-container" fxLayout="column" fxLayoutGap="20px">
+      <div (click)="sellersClicked()" [ngClass]="{'menu-item-selected': currentMenuItemIndex == 0}" class="menu-item"
+           fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+        <img alt="user" src="../../../../../assets/img/user.png">
+        <div class="big-text" fxHide.sm fxHide.xs>Учасники</div>
+      </div>
+      <div (click)="clientsClicked()" [ngClass]="{'menu-item-selected': currentMenuItemIndex == 1}" class="menu-item"
+           fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+        <img alt="user" src="../../../../../assets/img/users.png">
+        <div class="big-text" fxHide.sm fxHide.xs>Користувачі</div>
+      </div>
+      <div (click)="categoriesClicked()" [ngClass]="{'menu-item-selected': currentMenuItemIndex == 2}" class="menu-item"
+           fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+        <img alt="user" src="../../../../../assets/img/categories.png">
+        <div class="big-text" fxHide.sm fxHide.xs>Категорії</div>
+      </div>
+      <div (click)="ordersClicked()" [ngClass]="{'menu-item-selected': currentMenuItemIndex == 3}" class="menu-item"
+           fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+        <img alt="user" src="../../../../../assets/img/order.png">
+        <div class="big-text" fxHide.sm fxHide.xs>Замовлення</div>
+      </div>
+      <div (click)="postsClicked()" [ngClass]="{'menu-item-selected': currentMenuItemIndex == 4}" class="menu-item"
+           fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+        <img alt="user" src="../../../../../assets/img/news.png">
+        <div class="big-text" fxHide.sm fxHide.xs>Статті</div>
+      </div>
+    </div>
+  </div>
+  <div style="width: 100%">
+    <!--    <app-sellers *ngIf="currentMenuItemIndex == 0"></app-sellers>-->
+    <!--    <app-clients *ngIf="currentMenuItemIndex == 1"></app-clients>-->
+    <!--    <app-manufacturers *ngIf="currentMenuItemIndex == 2"></app-manufacturers>-->
+    <!--    <app-orders *ngIf="currentMenuItemIndex == 3"></app-orders>-->
+    <!--    <app-posts *ngIf="currentMenuItemIndex == 4"></app-posts>-->
+    <router-outlet></router-outlet>
+  </div>
+</div>

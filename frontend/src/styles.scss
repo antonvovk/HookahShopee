@@ -13,69 +13,69 @@
 // hue. Available color palettes: https://material.io/design/color/
 
 $md-mcgpalette0: (
-        50 : #fde8e9,
-        100 : #f9c6c7,
-        200 : #f6a0a2,
-        300 : #f27a7d,
-        400 : #ef5e61,
-        500 : #ec4145,
-        600 : #ea3b3e,
-        700 : #e73236,
-        800 : #e42a2e,
-        900 : #df1c1f,
-        A100 : #ffffff,
-        A200 : #ffe0e1,
-        A400 : #ffadae,
-        A700 : #ff9495,
-        contrast: (
-                50 : #000000,
-                100 : #000000,
-                200 : #000000,
-                300 : #000000,
-                400 : #000000,
-                500 : #ffffff,
-                600 : #ffffff,
-                700 : #ffffff,
-                800 : #ffffff,
-                900 : #ffffff,
-                A100 : #000000,
-                A200 : #000000,
-                A400 : #000000,
-                A700 : #000000,
-        )
+  50 : #fde8e9,
+  100 : #f9c6c7,
+  200 : #f6a0a2,
+  300 : #f27a7d,
+  400 : #ef5e61,
+  500 : #ec4145,
+  600 : #ea3b3e,
+  700 : #e73236,
+  800 : #e42a2e,
+  900 : #df1c1f,
+  A100 : #ffffff,
+  A200 : #ffe0e1,
+  A400 : #ffadae,
+  A700 : #ff9495,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
 );
 
 $md-mcgpalette2: (
-        50 : #efe4e4,
-        100 : #d7bbbb,
-        200 : #bc8e8e,
-        300 : #a16060,
-        400 : #8d3e3e,
-        500 : #791c1c,
-        600 : #711919,
-        700 : #661414,
-        800 : #5c1111,
-        900 : #490909,
-        A100 : #ff8080,
-        A200 : #ff4d4d,
-        A400 : #ff1a1a,
-        A700 : #ff0000,
-        contrast: (
-                50 : #000000,
-                100 : #000000,
-                200 : #000000,
-                300 : #ffffff,
-                400 : #ffffff,
-                500 : #ffffff,
-                600 : #ffffff,
-                700 : #ffffff,
-                800 : #ffffff,
-                900 : #ffffff,
-                A100 : #000000,
-                A200 : #000000,
-                A400 : #ffffff,
-                A700 : #ffffff,
-        )
+  50 : #efe4e4,
+  100 : #d7bbbb,
+  200 : #bc8e8e,
+  300 : #a16060,
+  400 : #8d3e3e,
+  500 : #791c1c,
+  600 : #711919,
+  700 : #661414,
+  800 : #5c1111,
+  900 : #490909,
+  A100 : #ff8080,
+  A200 : #ff4d4d,
+  A400 : #ff1a1a,
+  A700 : #ff0000,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #ffffff,
+    400 : #ffffff,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #ffffff,
+    A700 : #ffffff,
+  )
 );
 
 
@@ -98,6 +98,7 @@ $HookahShopee-theme: mat-light-theme($HookahShopee-primary, $HookahShopee-accent
 @import '~ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
 @import '~ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
 @import '~ngx-toastr/toastr';
+@import "~hamburgers/_sass/hamburgers/hamburgers";
 
 html, body {
   height: 100%;
@@ -256,3 +257,14 @@ body {
   cursor: pointer;
 }
 
+.hamburger-inner, .hamburger-inner::before, .hamburger-inner::after {
+  background-color: #EC4145;
+}
+
+.hamburger.is-active .hamburger-inner, .hamburger.is-active .hamburger-inner::before, .hamburger.is-active .hamburger-inner::after {
+  background-color: #EC4145;
+}
+
+.hamburger--elastic.is-active .hamburger-inner::before {
+  opacity: 1;
+}
