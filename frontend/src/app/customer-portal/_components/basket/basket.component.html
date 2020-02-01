@@ -13,7 +13,7 @@
       </div>
 
       <div class="order-items-container">
-        <div *ngFor="let item of basketService.getItems()" class="order-item">
+        <div *ngFor="let item of items" class="order-item">
           <div class="row-container">
             <div class="product-image">
               <img alt="product-image" src="../../../../assets/img/Rectangle%208.png">
@@ -40,7 +40,7 @@
               {{item.price * item.quantity}} грн
             </div>
             <div>
-              <button class="delete-btn" type="button">Видалити</button>
+              <button class="delete-btn" type="button" (click)="deleteItems(item)">Видалити</button>
             </div>
           </div>
         </div>
@@ -75,6 +75,6 @@
       </div>
     </div>
 
-    <app-order-confirmation *ngIf="showConfirmation" [orderItems]="basketService.getItems()"></app-order-confirmation>
+    <app-order-confirmation *ngIf="showConfirmation" [orderItems]="items"></app-order-confirmation>
   </div>
 </div>

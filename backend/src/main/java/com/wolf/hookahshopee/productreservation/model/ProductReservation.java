@@ -38,8 +38,6 @@ public class ProductReservation {
     }
 
     public void removeReservation(Long quantity) {
-        if (this.quantity - quantity >= 0) {
-            this.quantity -= quantity;
-        }
+        this.quantity -= quantity;
     }
 }

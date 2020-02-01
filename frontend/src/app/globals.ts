@@ -5,6 +5,7 @@ export const POST_API_URL = API_URL + '/post';
 export const MANUFACTURER_API_URL = API_URL + '/manufacturer';
 export const PRODUCT_API_URL = API_URL + '/product';
 export const CITY_API_URL = API_URL + '/city';
+export const RESERVATION_API_URL = API_URL + '/reservation';
 
 export const ABSOLUTE_PATH = '/';
 export const CURRENT_PATH = './';

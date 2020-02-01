@@ -53,6 +53,10 @@ public class ProductReservationServiceImpl implements ProductReservationService 
 
     @Override
     public void addReservationQuantity(UUID productUUID, UUID cityUUID, Long quantity) {
+        if (quantity <= 0) {
+            throw new ReservationException("Кількість для резервування повинна бути більша нуля");
+        }
+
         Product product = productRepository.findByUuid(productUUID).orElse(null);
 
         if (product == null) {
@@ -75,12 +79,12 @@ public class ProductReservationServiceImpl implements ProductReservationService 
                     .build();
         }
 
-        long sum = product.getProductItems().stream()
+        long availableProductAmount = product.getProductItems().stream()
                 .filter(productItem -> productItem.getSeller().getCity().getUuid().equals(cityUUID))
                 .mapToLong(ProductItem::getQuantity)
                 .sum();
 
-        if (quantity + productReservation.getQuantity() > sum) {
+        if (quantity + productReservation.getQuantity() > availableProductAmount) {
             throw new ReservationException("Недостатньо продукту в наявності");
         }
 
@@ -90,6 +94,10 @@ public class ProductReservationServiceImpl implements ProductReservationService 
 
     @Override
     public void removeReservationQuantity(UUID productUUID, UUID cityUUID, Long quantity) {
+        if (quantity <= 0) {
+            throw new ReservationException("Кількість для резервування повинна бути більша нуля");
+        }
+
         Product product = productRepository.findByUuid(productUUID).orElse(null);
 
         if (product == null) {
@@ -112,24 +120,11 @@ public class ProductReservationServiceImpl implements ProductReservationService 
                     .build();
         }
 
+        if (productReservation.getQuantity() - quantity < 0) {
+            throw new ReservationException("Незарезервовано такої кількості продукту");
+        }
+
         productReservation.removeReservation(quantity);
         productReservationRepository.save(productReservation);
-    }
-
-    @Override
-    public void clearReservationQuantity(UUID productUUID, UUID cityUUID) {
-        Product product = productRepository.findByUuid(productUUID).orElse(null);
-
-        if (product == null) {
-            throw new EntityNotFoundException(Product.class, "productUUID", productUUID.toString());
-        }
-
-        City city = cityRepository.findByUuid(cityUUID).orElse(null);
-
-        if (city == null) {
-            throw new EntityNotFoundException(City.class, "cityUUID", cityUUID.toString());
-        }
-
-        productReservationRepository.findByProductAndCity(product, city).ifPresent(productReservationRepository::delete);
     }
 }

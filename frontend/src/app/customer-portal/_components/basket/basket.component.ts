@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { BasketService } from '../../../_services/basket.service';
-import { CitySaverService } from '../../../_services/city-saver.service';
 import { AuthenticationService } from '../../../_services/authentication.service';
 import { ToastrService } from 'ngx-toastr';
 import { OrderItem } from '../../../_models/order-item.model';
@@ -13,19 +12,15 @@ import { OrderItem } from '../../../_models/order-item.model';
 export class BasketComponent implements OnInit {
 
   showConfirmation: boolean = false;
+  items: OrderItem[] = [];
 
   constructor(public basketService: BasketService,
               private authenticationService: AuthenticationService,
-              private toastrService: ToastrService,
-              private citySaverService: CitySaverService) {
+              private toastrService: ToastrService) {
   }
 
   ngOnInit() {
-
-  }
-
-  clearItems() {
-    this.basketService.clearItems();
+    this.items = this.basketService.getItems();
   }
 
   openConfirmation() {
@@ -37,16 +32,53 @@ export class BasketComponent implements OnInit {
     this.showConfirmation = true;
   }
 
+  clearItems() {
+    this.basketService.clearItems().subscribe(
+      () => {
+        this.toastrService.info('Корзина ощишена', 'Інфо');
+      },
+      () => {
+        this.toastrService.error('Деталі в консолі', 'Помилка');
+      }
+    );
+  }
+
   increaseQuantity(item: OrderItem) {
-    this.basketService.addItem(item.product, 1);
+    this.basketService.addItem(item.product, 1).subscribe(
+      () => {
+        this.toastrService.info('Кількість збільшена', 'Інфо');
+      },
+      () => {
+        this.toastrService.error('Деталі в консолі', 'Помилка');
+      }
+    );
   }
 
   decreaseQuantity(item: OrderItem) {
-    if (item.quantity - 1 < 0) {
-      this.toastrService.info('Менше не ножна лол', 'Інформейшин');
+    if (item.quantity - 1 < 1) {
+      this.toastrService.info('Досятнуто мінімальної кількості', 'Інформейшин');
       return;
     }
 
-    this.basketService.removeItem(item.product, 1);
+    this.basketService.removeItem(item.product, 1).subscribe(
+      () => {
+        this.toastrService.info('Кількість зменшена', 'Інфо');
+      },
+      () => {
+        this.toastrService.error('Деталі в консолі', 'Помилка');
+      }
+    );
+  }
+
+  deleteItems(item: OrderItem) {
+    this.basketService.removeItem(item.product, item.quantity).subscribe(
+      items => {
+        this.items = items;
+        this.toastrService.info('Продукт видалено з корзини', 'Інфо');
+      },
+      () => {
+        this.toastrService.error('Деталі в консолі', 'Помилка');
+      }
+    );
   }
 }

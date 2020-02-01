@@ -9,6 +9,4 @@ public interface ProductReservationService {
     void addReservationQuantity(UUID productUUID, UUID cityUUID, Long quantity);
 
     void removeReservationQuantity(UUID productUUID, UUID cityUUID, Long quantity);
-
-    void clearReservationQuantity(UUID productUUID, UUID cityUUID);
 }

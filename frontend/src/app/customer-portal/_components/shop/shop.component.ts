@@ -115,9 +115,9 @@ export class ShopComponent implements OnInit {
   }
 
   addToBasket(product: Product) {
-    this.basketService.addItem(product, 1).then(
+    this.basketService.addItem(product, 1).subscribe(
       data => {
-        if (data === false) {
+        if (data.length === 0) {
           this.updateFilters();
         }
       }

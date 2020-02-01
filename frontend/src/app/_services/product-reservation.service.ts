@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { API_URL } from '../globals';
+import { RESERVATION_API_URL } from '../globals';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,6 @@ import { API_URL } from '../globals';
 export class ProductReservationService {
 
   constructor(private http: HttpClient) {
-
   }
 
   addProductReservation(productUUID: string, cityUUID: string, quantity: number): Observable<HttpResponse<any>> {
@@ -19,7 +18,7 @@ export class ProductReservationService {
     params = params.append('quantity', quantity.toString());
 
     return this.http.put<any>(
-      API_URL + '/reservation/add',
+      RESERVATION_API_URL + '/add',
       null,
       {params: params, observe: 'response'}
     );
@@ -32,19 +31,7 @@ export class ProductReservationService {
     params = params.append('quantity', quantity.toString());
 
     return this.http.put<any>(
-      API_URL + '/reservation/remove',
-      null,
-      {params: params, observe: 'response'}
-    );
-  }
-
-  clearProductReservation(productUUID: string, cityUUID: string): Observable<HttpResponse<any>> {
-    let params = new HttpParams();
-    params = params.append('productUUID', productUUID);
-    params = params.append('cityUUID', cityUUID);
-
-    return this.http.put<any>(
-      API_URL + '/reservation/clear',
+      RESERVATION_API_URL + '/remove',
       null,
       {params: params, observe: 'response'}
     );

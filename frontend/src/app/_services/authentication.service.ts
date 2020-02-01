@@ -22,7 +22,7 @@ export class AuthenticationService {
   }
 
   public isAuthenticated(): boolean {
-    return this.currentUserSubject.value !== undefined || true;
+    return this.currentUserSubject.value !=  null;
   }
 
   login(username: string, password: string) {

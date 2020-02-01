@@ -29,7 +29,8 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatCardModule } from '@angular/material/card';
 import { MatBadgeModule } from '@angular/material/badge';
 import { getDutchPaginatorIntl } from './_paginators/ukr-paginator-intl';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { HashLocationStrategy, JsonPipe, LocationStrategy } from '@angular/common';
+import { LoggerModule } from '@wuja/logger';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     NgxMatSelectSearchModule,
     MatStepperModule,
     MatCardModule,
-    MatBadgeModule
+    MatBadgeModule,
+    LoggerModule.forRoot()
   ],
   providers: [
     {

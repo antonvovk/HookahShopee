@@ -54,12 +54,4 @@ public class ProductReservationController {
         productReservationService.removeReservationQuantity(productUUID, cityUUID, quantity);
         return CompletableFuture.completedFuture(ResponseEntity.ok().build());
     }
-
-    @Async
-    @PutMapping("/clear")
-    public CompletableFuture<ResponseEntity<Object>> clearReservationQuantity(@RequestParam(name = "productUUID") UUID productUUID,
-                                                                              @RequestParam(name = "cityUUID") UUID cityUUID) {
-        productReservationService.clearReservationQuantity(productUUID, cityUUID);
-        return CompletableFuture.completedFuture(ResponseEntity.ok().build());
-    }
 }
