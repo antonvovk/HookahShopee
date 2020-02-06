@@ -26,6 +26,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCardModule } from '@angular/material/card';
 import { PostComponent } from './_components/post/post.component';
 import { ProductComponent } from './_components/product/product.component';
+import { ClientProfileComponent } from './_components/profile/client-profile/client-profile.component';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,8 @@ import { ProductComponent } from './_components/product/product.component';
     BasketComponent,
     LoginComponent,
     RegistrationComponent,
-    OrderConfirmationComponent
+    OrderConfirmationComponent,
+    ClientProfileComponent
   ],
   imports: [
     CommonModule,
@@ -59,6 +62,7 @@ import { ProductComponent } from './_components/product/product.component';
     FormsModule,
     MatPaginatorModule,
     MatCardModule,
+    MatTableModule,
   ]
 })
 export class CustomerPortalModule {

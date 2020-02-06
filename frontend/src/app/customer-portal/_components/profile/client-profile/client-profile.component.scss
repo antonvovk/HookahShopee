@@ -1,0 +1,9 @@
+.mw-1400 {
+  max-width: 1400px;
+}
+
+.phone-margin {
+  @media screen and (max-width: 1200px) {
+    margin-top: 40px;
+  }
+}

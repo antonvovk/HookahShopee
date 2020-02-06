@@ -4,9 +4,8 @@
 
 <div
   *ngIf="!authenticationService.isSellerOrAdmin()  && authenticationService.isAuthenticated() && currentMenuIndex === 0">
-    Вітаю!
-    Ви користувач.
-    Тут ви зможете міняти свої дані
+  <app-client-profile>
+  </app-client-profile>
 </div>
 
 <div *ngIf="authenticationService.isSellerOrAdmin() && currentMenuIndex === 0">

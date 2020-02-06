@@ -181,6 +181,14 @@ body {
   flex-flow: row wrap;
 }
 
+.flex-jc-end {
+  justify-content: flex-end;
+}
+
+.flex-jc-space-between {
+  justify-content: space-between;
+}
+
 .mt-40-20px {
   @media screen and (max-width: 690px) {
     margin-top: 20px;
@@ -267,4 +275,13 @@ body {
 
 .hamburger--elastic.is-active .hamburger-inner::before {
   opacity: 1;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 200%;
 }
